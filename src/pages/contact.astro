@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+---
+<Base title="Contact · Yoga Shakti" description="Get in touch with Yoga Shakti with Ashish Anant." active="/contact/">
+  <main class="wrap page">
+    <div class="kicker">Say namaste</div>
+    <h1>Contact</h1>
+    <p class="hero-tag">For sessions, workshops, or anything else — reach out any time.</p>
+
+    <div class="section">
+      <h2>Email</h2>
+      <p class="lead">
+        Yoga Shakti: <a href={`mailto:${site.contact.general}`} style="color:var(--teal)">{site.contact.general}</a><br />
+        Sessions &amp; workshops: <a href={`mailto:${site.contact.workshops}`} style="color:var(--teal)">{site.contact.workshops}</a>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>WhatsApp</h2>
+      <p class="lead"><a href={site.whatsappCommunity} target="_blank" rel="noopener" style="color:var(--teal)">Join the WhatsApp community →</a></p>
+    </div>
+
+    <p style="margin-top:24px"><a class="back" href="/">← Back to home</a></p>
+  </main>
+</Base>

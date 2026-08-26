@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { testimonials } from '../data/testimonials.js';
+---
+<Base title="Testimonials · Yoga Shakti" description="What practitioners say about practising with Ashish Anant." active="/testimonials/">
+  <main class="wrap page">
+    <div class="kicker">In their words</div>
+    <h1>Testimonials</h1>
+    <p class="hero-tag">A few words from practitioners around the world.</p>
+
+    {testimonials.map((t) => (
+      <div class="tcard">
+        <div class="q">“{t.quote}”</div>
+        <div class="who"><img src={t.photo} alt={t.name} /><div><b>{t.name}</b><span>{t.place}</span></div></div>
+      </div>
+    ))}
+
+    <div class="signoff" style="margin-top:26px">॥ SHIVOHAM ॥</div>
+    <p><a class="back" href="/">← Back to all links</a></p>
+  </main>
+</Base>

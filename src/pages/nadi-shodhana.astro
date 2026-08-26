@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+import { testimonials } from '../data/testimonials.js';
+const heal = site.forms.heal;
+const register = heal.url + '?usp=pp_url&' + heal.entry + '=Website';
+const t = testimonials.find(x => x.tag === 'nadi-shodhana');
+---
+<Base title="Nadi Shodhana — The Healing Breath · Yoga Shakti" description="Learn Nadi Shodhana, the yogic cleansing breath — a complimentary workshop with Ashish Anant, taught in an authentic Tantra lineage." bodyClass="theme-heal" active="/nadi-shodhana/">
+  <main class="wrap page">
+    <div class="kicker">The Healing Breath</div>
+    <h1>Nadi Shodhana</h1>
+    <p class="hero-tag">The yogic “cleansing of the channels” — a simple, powerful breath that calms the nerves, clears the mind, and prepares the body to heal.</p>
+
+    <div class="section">
+      <h2>What it is</h2>
+      <p class="lead">Nadi Shodhana (nadi-shuddhi) is often called the master-key practice. Done properly it promotes health, removes stress, balances the chakras, and deepens meditation. In the classical texts it is the one practice to master before any other pranayama.</p>
+    </div>
+
+    <div class="section">
+      <h2>What it gives you</h2>
+      <div class="chips">
+        <span class="chip">Builds immunity</span>
+        <span class="chip">Triggers natural healing</span>
+        <span class="chip">More oxygen, more energy</span>
+        <span class="chip">Calmer nerves, less anxiety</span>
+        <span class="chip">Sharper focus &amp; memory</span>
+        <span class="chip">Balances the chakras</span>
+      </div>
+      <p class="note">Hailed in the Hatha Yoga Pradeepika, Gheranda Samhita &amp; Shiva Samhita. Grounded in tradition and taught the authentic way.</p>
+    </div>
+
+    <div class="section">
+      <h2>Learn it the authentic way</h2>
+      <p class="lead">Nadi Shodhana as it is truly taught — with the do's and don'ts that keep the practice safe — from Ashish Anant, a direct disciple of revered Tantra Masters Ma Shakti Devpriya Anandnath ji &amp; Acharya Agyaatadarshan Anandnath ji.</p>
+    </div>
+
+    <div class="section">
+      <h2>Watch</h2>
+      <div class="video-soon">A guided introduction video is coming here soon.</div>
+    </div>
+
+    {t && (
+      <div class="section">
+        <h2>In their words</h2>
+        <div class="tcard">
+          <div class="q">“{t.quote}”</div>
+          <div class="who"><img src={t.photo} alt={t.name} /><div><b>{t.name}</b><span>{t.place}</span></div></div>
+        </div>
+      </div>
+    )}
+
+    <div class="section">
+      <h2>Join the workshop</h2>
+      <p class="lead">The Nadi Shodhana workshop is completely complimentary. Register and I'll send you the invite.</p>
+      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Join — completely FREE</a></div>
+      <p class="note">Registering is how you get into the workshop group and receive the invite. The <a href={site.whatsappCommunity} target="_blank" rel="noopener" style="color:var(--teal)">WhatsApp Community</a> is for general announcements only — it doesn't enrol you in the workshop.</p>
+    </div>
+
+    <div class="signoff">॥ SHIVOHAM ॥</div>
+    <p><a class="back" href="/">← Back to all links</a></p>
+  </main>
+</Base>

@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+---
+<Base active="/">
+  <main class="wrap hub">
+    <img class="hero-logo" src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
+    <div class="tag">{site.tagline}</div>
+    <div class="rule"></div>
+    <nav class="links" id="links"></nav>
+  </main>
+
+  <script>
+    import { site } from '../data/site.js';
+    function formHref(key){
+      const f = site.forms[key];
+      return f.url + '?usp=pp_url&' + f.entry + '=' + encodeURIComponent(window.SOURCE || 'Website');
+    }
+    const L = document.getElementById('links');
+    site.links.forEach(function(item){
+      const a = document.createElement('a');
+      a.href = item.type === 'form' ? formHref(item.form) : item.href;
+      if(item.type === 'form') a.target = '_blank';
+      a.innerHTML = item.label + (item.sub ? '<small>' + item.sub + '</small>' : '');
+      a.addEventListener('click', function(){ if(window.logClick) window.logClick(item.id); });
+      L.appendChild(a);
+    });
+  </script>
+</Base>
