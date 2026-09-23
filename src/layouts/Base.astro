@@ -2,12 +2,37 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { site } from '../data/site.js';
+const jsonld = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ashishanant.com/#org",
+      "name": "Yoga Shakti with Ashish Anant",
+      "url": "https://ashishanant.com/",
+      "logo": "https://ashishanant.com/assets/logo-full.png",
+      "email": site.contact.general,
+      "sameAs": site.socials.map((s) => s.href)
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ashishanant.com/#website",
+      "url": "https://ashishanant.com/",
+      "name": "Yoga Shakti with Ashish Anant",
+      "publisher": { "@id": "https://ashishanant.com/#org" }
+    }
+  ]
+});
 const {
   title = "Yoga Shakti with Ashish Anant",
-  description = "Yoga rooted in Tantra and the classical texts — complimentary live sessions, a healing-breath workshop, and a breathing guide.",
+  description = "Free live yoga rooted in Tantra and the classical texts — complimentary sessions, a healing-breath workshop, and a breathing guide.",
   bodyClass = "",
-  active = ""
+  active = "",
+  ogImage = "https://ashishanant.com/assets/og.jpg",
+  ogImageAlt = "Ashish Anant — Awaken the Shakti within. Yoga, breath, awareness; rooted in the Yogic & Tantric traditions."
 } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -16,10 +41,27 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="icon" href="/assets/logo.png" />
+  <link rel="canonical" href={canonical} />
+  <script type="application/ld+json" set:html={jsonld} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={ogImage} />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0E4A5E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Mukta:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css" />
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
@@ -44,5 +86,21 @@ const {
       </span>
     </div>
   </div>
+
+  <script is:inline>
+    (function(){
+      var nav=document.getElementById('siteNav');
+      if(!nav || nav.getAttribute('data-home')!=='1') return;
+      var hero=document.querySelector('.hv-frame') || document.querySelector('.home-hero');
+      function upd(){
+        if(!hero){nav.classList.add('show-logo');return;}
+        var b=hero.getBoundingClientRect().bottom;
+        if(b <= nav.offsetHeight + 4) nav.classList.add('show-logo'); else nav.classList.remove('show-logo');
+      }
+      window.addEventListener('scroll',upd,{passive:true});
+      window.addEventListener('resize',upd);
+      upd();
+    })();
+  </script>
 </body>
 </html>

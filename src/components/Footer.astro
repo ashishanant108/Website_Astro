@@ -1,27 +1,32 @@
 ---
 import { site } from '../data/site.js';
+import Socials from './Socials.astro';
 const fnav = [
   { label: "About", href: "/about/" },
+  { label: "Lineage", href: "/lineage/" },
   { label: "Sessions", href: "/sessions/" },
   { label: "Nadi Shodhana", href: "/nadi-shodhana/" },
+  { label: "Schedule", href: "/events/" },
+  { label: "Resources", href: "/resources/" },
+  { label: "Research", href: "/research/" },
+  { label: "Reading", href: "/reading/" },
   { label: "Testimonials", href: "/testimonials/" },
   { label: "Contact", href: "/contact/" },
-  { label: "Privacy", href: "/privacy/" }
+  { label: "Privacy", href: "/privacy/" },
+  { label: "Terms", href: "/terms/" }
 ];
 ---
 <footer class="site-foot">
   <div class="footwrap">
     <div class="follow-label">Follow along</div>
-    <div class="followrow">
-      {site.socials.map((s) => (
-        <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} style={`background:${s.color}`}>
-          <i class={`ti ti-${s.icon}`} aria-hidden="true"></i>
-        </a>
-      ))}
-    </div>
+    <Socials />
     <nav class="fnav">
       {fnav.map((n) => <a href={n.href}>{n.label}</a>)}
     </nav>
-    <div class="om">॥ SHIVOHAM ॥ · <a href={`mailto:${site.contact.general}`}>{site.contact.general}</a></div>
+    <p class="foot-note">
+      New practice every week — come say hello.
+      For general updates you can also <a href={site.whatsappCommunity} target="_blank" rel="noopener">join the announcements community</a>.
+    </p>
+    <div class="om">॥ SHIVOHAM ॥</div>
   </div>
 </footer>

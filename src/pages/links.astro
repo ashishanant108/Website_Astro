@@ -1,0 +1,149 @@
+---
+import { site } from '../data/site.js';
+const heal = site.forms.heal;
+const workshopReg = heal.url + '?usp=pp_url&' + heal.entry + '=LinkInBio';
+const SOC = {
+  'brand-youtube': '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5zM9.8 15.3V8.7l5.7 3.3z"/></svg>',
+  'brand-instagram': '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  'brand-facebook': '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>',
+  'brand-whatsapp': '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 8.9c0 1.8 1.3 3.5 1.5 3.7s2.6 4 6.3 5.4c2.3.9 2.3.6 2.7.6s1.4-.6 1.6-1.1.2-1 .1-1.1z"/></svg>',
+  'brand-threads': '<span style="font-weight:700;font-size:20px;line-height:1" aria-hidden="true">@</span>'
+};
+const IC = {
+  flower: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="6" r="2.7"/><path d="M12 9.2c-3.1 0-5.2 2.1-5.2 5.2V16h10.4v-1.6c0-3.1-2.1-5.2-5.2-5.2z"/></svg>',
+  wind: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h9a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12h13a2.5 2.5 0 1 1-2.5 2.5"/><path d="M5 16h6a2.5 2.5 0 1 1-2.5 2.5"/></svg>',
+  book: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11a1 1 0 0 1 1 1v15H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 4v16"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l1.3-3.6A8 8 0 1 1 8.6 18.7L4 19z"/></svg>',
+  user: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>',
+  cal_event: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/><circle cx="12" cy="15" r="1.4" fill="currentColor" stroke="none"/></svg>'
+};
+const links = [
+  { label: "Join a Free Live Yoga Session", sub: "Live, guided · beginner-friendly", href: "/sessions/yoga/", icon: "flower", primary: true },
+  { label: "Nadi Shodhana — Healing Breath", sub: "Complimentary · the yogic cleansing breath", href: "/nadi-shodhana/", icon: "wind" },
+  { label: "Free Yogic Breathing Guide", sub: "A simple practice to begin today", href: "/guide/", icon: "book" },
+  { label: "Message us on WhatsApp", sub: "Quick questions welcome", href: site.whatsappDirect, icon: "chat", external: true },
+  { label: "About Ashish & the Lineage", sub: "The tradition behind Yoga Shakti", href: "/about/", icon: "user" }
+];
+const nextWorkshop = { when: "29 Nov 2026 · 7 PM IST", href: workshopReg };
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yoga Shakti with Ashish Anant · Links</title>
+  <meta name="description" content="Yoga rooted in Tantra and the classical texts — free live sessions, a healing-breath workshop, and a breathing guide." />
+  <meta name="robots" content="noindex, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Yoga Shakti with Ashish Anant" />
+  <meta property="og:description" content="Free live yoga, a healing-breath workshop and a breathing guide — rooted in the Yogic & Tantric traditions." />
+  <meta property="og:image" content="https://ashishanant.com/assets/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://ashishanant.com/assets/og.jpg" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0E4A5E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--cream:#FAF6EF;--ink:#2B2B2B;--gold:#C9A24A;--gold-ink:#7A5E12;--teal:#0E4A5E;--muted:#8a8378;--line:#E4DCCC}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:480px;margin:0 auto;padding:28px 22px 40px;text-align:center;min-height:100vh}
+    .hero{display:flex;align-items:stretch;gap:16px;margin-top:8px;text-align:left}
+    .hero .hcol{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+    .hero .hlogo{width:150px;max-width:100%;height:auto;display:block;align-self:center}
+    .hero .hphoto{flex:0 0 auto;width:150px;object-fit:cover;object-position:top center;border-radius:14px}
+    .lead{margin-top:14px}
+    .lead-h{font-size:17px;font-weight:500;color:var(--ink);line-height:1.3;margin:0}
+    .lead-sub{font-size:13px;color:#605A52;line-height:1.6;font-weight:300;margin:6px 0 0}
+    .handle{font-size:13px;color:var(--teal);letter-spacing:.04em;margin-top:14px;text-align:center}
+    .handle a{color:var(--teal);text-decoration:none}
+    @media (max-width:380px){
+      .wrap{padding-left:16px;padding-right:16px}
+      .hero{gap:12px}
+      .hero .hlogo{width:132px}
+      .hero .hphoto{width:132px}
+    }
+    .rule{width:30px;height:2px;background:var(--gold);border-radius:2px;margin:16px auto 14px}
+    .banner{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 16px;margin-bottom:16px;background:#FBF4E4;border:1px solid var(--gold);border-radius:14px;text-decoration:none;color:var(--ink)}
+    .banner .ico{flex:0 0 auto;color:var(--gold-ink);display:flex}
+    .banner .bt{display:flex;flex-direction:column}
+    .banner .bt small{font-size:11px;color:var(--gold-ink);letter-spacing:.06em;text-transform:uppercase}
+    .banner .bt b{font-weight:500;font-size:14.5px}
+    .banner .bcta{margin-left:auto;font-size:13px;font-weight:500;color:var(--teal);white-space:nowrap}
+    .links{display:flex;flex-direction:column;gap:12px}
+    .btn{display:flex;align-items:center;gap:14px;text-align:left;padding:15px 18px;background:#fff;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);transition:border-color .12s, transform .06s}
+    .btn:hover{border-color:var(--teal)}
+    .btn:active{transform:scale(.99)}
+    .btn .ico{flex:0 0 auto;width:24px;color:var(--teal);display:flex;align-items:center;justify-content:center}
+    .btn .t{display:flex;flex-direction:column}
+    .btn .t b{font-weight:500;font-size:15.5px;line-height:1.25}
+    .btn .t small{color:#6b665c;font-size:12px;margin-top:2px}
+    .btn .chev{margin-left:auto;color:#8a8378;font-size:18px}
+    .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 6px 16px rgba(14,74,94,.18)}
+    .btn.primary .ico{color:#fff}
+    .btn.primary .t small{color:#d7e7ec}
+    .btn.primary .chev{color:#d7e7ec}
+    .btn:focus-visible,.banner:focus-visible,.socials a:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+    .socials{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:14px;margin-top:28px}
+    .socials a{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;flex:0 0 auto}
+    .socials a svg{width:20px;height:20px;display:block}
+    .foot{margin-top:26px;font-size:11px;color:#736a58;letter-spacing:.14em}
+    .foot a{color:#736a58}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="hero">
+      <div class="hcol">
+        <img class="hlogo" src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
+        <div class="lead">
+          <p class="lead-h">Awaken the Shakti within.</p>
+          <p class="lead-sub">Ancient wisdom rooted in the Yogic and Tantric traditions — for body, mind and spirit.</p>
+        </div>
+      </div>
+      <img class="hphoto" src="/assets/ashish-seated.jpg" alt="Ashish Anant in seated meditation" />
+    </div>
+    <div class="handle"><a href="https://www.instagram.com/yogashaktiwithashishanant/" target="_blank" rel="noopener">@yogashaktiwithashishanant</a></div>
+    <div class="rule"></div>
+
+    <a class="banner" href={nextWorkshop.href} target="_blank" rel="noopener">
+      <span class="ico" set:html={IC.cal_event}></span>
+      <span class="bt"><small>Next live workshop</small><b>{nextWorkshop.when}</b></span>
+      <span class="bcta">Register →</span>
+    </a>
+
+    <nav class="links">
+      {links.map((l) => (
+        <a class={`btn${l.primary ? ' primary' : ''}${l.external ? '' : ' ln'}`} href={l.href} {...(l.external ? { target: "_blank", rel: "noopener" } : {})}>
+          <span class="ico" set:html={IC[l.icon]}></span>
+          <span class="t"><b>{l.label}</b><small>{l.sub}</small></span>
+          <span class="chev" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="socials">
+      {site.socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} style={`background:${s.color}`} set:html={SOC[s.icon]}></a>
+      ))}
+    </div>
+
+    <div class="foot">॥ SHIVOHAM ॥ · <a href="/privacy/">Privacy</a></div>
+  </main>
+
+  <script is:inline>
+    (function(){
+      var src = new URLSearchParams(location.search).get('src');
+      if(!src) return;
+      document.querySelectorAll('a.ln').forEach(function(a){
+        var href = a.getAttribute('href');
+        if(href && href.charAt(0)==='/'){ a.setAttribute('href', href + (href.indexOf('?')>-1?'&':'?') + 'src=' + encodeURIComponent(src)); }
+      });
+    })();
+  </script>
+</body>
+</html>

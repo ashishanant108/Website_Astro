@@ -1,29 +1,167 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site.js';
+import { testimonials } from '../data/testimonials.js';
+const heal = site.forms.heal;
+const guide = heal.url + '?usp=pp_url&' + heal.entry + '=Website';
+const yt = "https://www.youtube.com/@YOGASHAKTIwithAshishAnant?sub_confirmation=1";
 ---
 <Base active="/">
-  <main class="wrap hub">
-    <img class="hero-logo" src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
-    <div class="tag">{site.tagline}</div>
-    <div class="rule"></div>
-    <nav class="links" id="links"></nav>
-  </main>
+  <section class="home-hero">
+    {site.heroVideo ? (
+      <div class="hero-vsplit">
+        <div class="hv-frame" id="heroMedia">
+          <video autoplay muted playsinline preload="auto" poster="/assets/hero-endingimage_v4.jpg">
+            <source src={site.heroVideo} type="video/mp4" />
+          </video>
+          <img class="hero-still" src="/assets/hero-endingimage_v4.jpg" alt="Yoga Shakti with Ashish Anant" />
+        </div>
+        <div class="hero-text">
+          <h1>Awaken the Shakti within.</h1>
+          <p class="lead">Ancient wisdom rooted in the Yogic and Tantric traditions — for body, mind and spirit.</p>
+          <div class="hero-cta">
+            {site.heroYouTubeCta ? (
+              <>
+                <a class="btn red" href={yt} target="_blank" rel="noopener"><i class="ti ti-brand-youtube" aria-hidden="true"></i> Watch on YouTube</a>
+                <a class="btn teal ghost-teal" href="/sessions/yoga/">Join FREE</a>
+              </>
+            ) : (
+              <a class="btn teal" href="/sessions/yoga/">Join FREE</a>
+            )}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="hero-inner">
+        <img class="hero-photo" src="/assets/ashish.jpg" alt="Ashish Anant" />
+        <div class="hero-text">
+          <h1>Awaken the Shakti within.</h1>
+          <p class="lead">Ancient wisdom rooted in the Yogic and Tantric traditions — for body, mind and spirit.</p>
+          <div class="hero-cta">
+            {site.heroYouTubeCta ? (
+              <>
+                <a class="btn red" href={yt} target="_blank" rel="noopener"><i class="ti ti-brand-youtube" aria-hidden="true"></i> Watch on YouTube</a>
+                <a class="btn teal ghost-teal" href="/sessions/yoga/">Join FREE</a>
+              </>
+            ) : (
+              <a class="btn teal" href="/sessions/yoga/">Join FREE</a>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
+  </section>
+
+  <section class="section alt">
+    <div class="inner intro">
+      <div class="atha"><span class="dev">अथ</span> Yoga Shakti</div>
+      <p class="lead-line">Yoga Shakti is a space to come back to yourself — to restore your natural state of balance, and create the conditions for healing.</p>
+      <p>Through movement, breath, stillness and the practical wisdom of the classical yogic texts, the journey begins with the body and breath — and gradually turns awareness towards the deeper dimensions of our being. Grounded, systematic and unhurried, and accessible to all ages and levels, from first steps to seasoned practice.</p>
+      <div class="cta-row"><a class="btn ghost" href="/about/">Know more →</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="inner">
+      <div class="kicker">Restore your natural balance</div>
+      <h2>What your practice supports</h2>
+      <div class="rule"></div>
+      <div class="grid cols-4">
+        <div class="bcard"><h3>Stronger body</h3><div class="bchips">Strength · Flexibility · Mobility</div><p>Build strength, ease stiffness and joint tightness, and move with greater stability and freedom.</p></div>
+        <div class="bcard"><h3>Balanced energy</h3><div class="bchips">Breath · Vitality · Balance</div><p>Deepen breath awareness and bring greater balance to your energy through conscious yogic practice.</p></div>
+        <div class="bcard"><h3>Calmer mind</h3><div class="bchips">Stress · Sleep · Focus · Calm</div><p>Release accumulated stress, support restful sleep, and cultivate focus, clarity and inner calm.</p></div>
+        <div class="bcard"><h3>Metabolic &amp; hormonal wellbeing</h3><div class="bchips">Metabolism · Blood sugar · BP · Hormones</div><p>A supportive, complementary practice for metabolic, cardiovascular and hormonal health.</p></div>
+      </div>
+      <div class="cta-row"><a class="btn" href="/sessions/">Explore the practice →</a></div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="inner">
+      <div class="kicker">Ways to practise</div>
+      <div class="rule"></div>
+      <div class="grid cols-3">
+        <div class="card">
+          <span class="badge">Live · Weekly</span>
+          <h3>Yoga Sessions</h3>
+          <div class="price-mini"><span class="was">₹1,500/mo</span><span class="free">FREE</span></div>
+          <p>Live, guided practice — experience transformation through breath, movement and stillness, in real time, together.</p>
+          <a class="btn ghost" href="/sessions/yoga/">Learn more →</a>
+        </div>
+        <div class="card">
+          <span class="badge">Free workshop</span>
+          <h3>Nadi Shodhana — The Healing Breath</h3>
+          <p>The yogic cleansing breath that calms the nerves, clears the mind, and prepares the body to heal.</p>
+          <a class="btn ghost" href="/nadi-shodhana/">Learn more →</a>
+        </div>
+        <div class="card">
+          <span class="badge">Complimentary</span>
+          <h3>Guides &amp; resources</h3>
+          <p>Simple yet powerful tools — starting with the Yogic Breathing Guide.</p>
+          <a class="btn ghost" href="/resources/">Browse resources →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="inner">
+      <div class="kicker">In their words</div>
+      <div class="rule"></div>
+      <div class="tcarousel">
+        <button class="tnav tprev" type="button" aria-label="Previous testimonials">‹</button>
+        <div class="tctrack" id="tctrack">
+          {testimonials.filter((t) => t.home !== false).map((t) => (
+            <div class="tcard">
+              <div class="q">“{t.quote}”</div>
+              <div class="who">{t.photo ? (<img src={t.photo} alt={t.name} />) : (<span class="avatar" aria-hidden="true">{t.name.charAt(0)}</span>)}<div><b>{t.name}</b><span>{t.place}</span></div></div>
+            </div>
+          ))}
+        </div>
+        <button class="tnav tnext" type="button" aria-label="Next testimonials">›</button>
+      </div>
+      <div class="tdots" id="tdots" role="tablist" aria-label="Testimonials"></div>
+      <div class="cta-row"><a class="btn ghost" href="/testimonials/">Read all →</a></div>
+
+      <script is:inline>
+        (function () {
+          var track = document.getElementById('tctrack'); if (!track) return;
+          var cards = [].slice.call(track.querySelectorAll('.tcard'));
+          var prev = document.querySelector('.tprev'), next = document.querySelector('.tnext');
+          var dotsWrap = document.getElementById('tdots');
+          cards.forEach(function (c, i) {
+            var b = document.createElement('button'); b.setAttribute('role', 'tab');
+            b.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
+            b.addEventListener('click', function () { track.scrollTo({ left: c.offsetLeft - track.offsetLeft, behavior: 'smooth' }); });
+            dotsWrap.appendChild(b);
+          });
+          var dots = [].slice.call(dotsWrap.children);
+          function step() { return cards[0].getBoundingClientRect().width + 18; }
+          if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+          if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+          function update() {
+            var i = Math.round(track.scrollLeft / step());
+            i = Math.max(0, Math.min(cards.length - 1, i));
+            dots.forEach(function (d, di) { d.setAttribute('aria-selected', di === i ? 'true' : 'false'); });
+            if (prev) prev.disabled = track.scrollLeft <= 2;
+            if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+          }
+          track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+          window.addEventListener('resize', update); update();
+        })();
+      </script>
+    </div>
+  </section>
 
   <script>
-    import { site } from '../data/site.js';
-    function formHref(key){
-      const f = site.forms[key];
-      return f.url + '?usp=pp_url&' + f.entry + '=' + encodeURIComponent(window.SOURCE || 'Website');
+    const hm = document.getElementById('heroMedia');
+    if (hm) {
+      const v = hm.querySelector('video');
+      if (v) {
+        v.addEventListener('ended', () => hm.classList.add('ended'));
+        const p = v.play();
+        if (p && p.catch) p.catch(() => hm.classList.add('ended'));
+      }
     }
-    const L = document.getElementById('links');
-    site.links.forEach(function(item){
-      const a = document.createElement('a');
-      a.href = item.type === 'form' ? formHref(item.form) : item.href;
-      if(item.type === 'form') a.target = '_blank';
-      a.innerHTML = item.label + (item.sub ? '<small>' + item.sub + '</small>' : '');
-      a.addEventListener('click', function(){ if(window.logClick) window.logClick(item.id); });
-      L.appendChild(a);
-    });
   </script>
 </Base>

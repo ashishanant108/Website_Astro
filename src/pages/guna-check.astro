@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+// Triguna self-reflection (Sattva / Rajas / Tamas).
+// Grounded in the classical guna descriptions — Bhagavad Gita ch. 14, 17, 18 and the Samkhya-Yoga tradition.
+// Reflective/educational only; NOT a clinical or diagnostic instrument.
+// 18 statements (6 per guna), interleaved. Rated 1 (Rarely) – 5 (Almost always).
+const items = [
+  { t: "I feel calm and clear-headed, even when things get busy.", g: "S" },
+  { t: "My mind is busy and it's hard to switch off.", g: "R" },
+  { t: "I feel heavy, sluggish or low on motivation.", g: "T" },
+  { t: "I'm drawn to simple, fresh food and a regular routine.", g: "S" },
+  { t: "I'm driven to achieve and dislike sitting still.", g: "R" },
+  { t: "I put things off or avoid what I know I should do.", g: "T" },
+  { t: "I can stay kind and patient when others are difficult.", g: "S" },
+  { t: "I crave stimulation — excitement, spice, or constant activity.", g: "R" },
+  { t: "I sleep a lot but still wake up tired.", g: "T" },
+  { t: "I feel content with what I have.", g: "S" },
+  { t: "I get irritated or impatient when things move slowly.", g: "R" },
+  { t: "I reach for comfort — oversleeping, screens, or heavy food.", g: "T" },
+  { t: "I wake up feeling light and rested.", g: "S" },
+  { t: "I take on more than I can comfortably handle.", g: "R" },
+  { t: "I find it hard to get started or to change a habit.", g: "T" },
+  { t: "I tend to act thoughtfully rather than on impulse.", g: "S" },
+  { t: "My mood and energy swing up and down through the day.", g: "R" },
+  { t: "I often feel foggy, flat or indifferent.", g: "T" }
+];
+const opts = [
+  { v: 1, t: "Rarely" }, { v: 2, t: "Sometimes" }, { v: 3, t: "Often" },
+  { v: 4, t: "Usually" }, { v: 5, t: "Almost always" }
+];
+const gunas = items.map((x) => x.g).join(",");
+---
+<Base
+  title="Which Guna Leads You? (Sattva · Rajas · Tamas) · Yoga Shakti"
+  description="A short, private self-reflection on the three gunas — Sattva, Rajas and Tamas. Discover which quality is leading you right now, with a gentle practice to bring you into balance."
+  active="">
+  <main class="wrap page">
+    <div class="kicker">Complimentary · private · about 2 minutes</div>
+    <h1>Which guna leads you?</h1>
+    <p class="lead">A gentle self-reflection on the three qualities of nature — <b>Sattva</b> (clarity &amp; calm), <b>Rajas</b> (activity &amp; drive) and <b>Tamas</b> (steadiness &amp; inertia). Notice which is leading you right now — and the practice that brings you back to balance.</p>
+    <p>All three gunas live in each of us, shifting day to day. This isn't a fixed "type" or a diagnosis — just a mirror. Answer for how you've felt <b>lately</b>. Everything is worked out privately in your browser; <b>nothing is stored or sent</b>.</p>
+
+    <form id="gForm" class="pss-form" novalidate>
+      <p class="pss-stem">Lately, how true has each of these felt?</p>
+      {items.map((it, i) => (
+        <div class="pss-q" role="group" aria-labelledby={`g${i + 1}lbl`}>
+          <p class="qtext" id={`g${i + 1}lbl`}><span class="qn">{i + 1}.</span> {it.t}</p>
+          <div class="opts">
+            {opts.map((o) => (
+              <span class="opt">
+                <input type="radio" id={`q${i + 1}o${o.v}`} name={`q${i + 1}`} value={o.v} />
+                <label for={`q${i + 1}o${o.v}`}>{o.t}</label>
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div class="pss-actions">
+        <button type="submit" class="btn red">See what leads me</button>
+        <span id="gProgress" class="pss-progress" aria-live="polite">0 of 18 answered</span>
+      </div>
+      <p id="gWarn" class="pss-warn" hidden>Please answer all 18 to see your result.</p>
+    </form>
+
+    <section id="gResult" class="pss-result" hidden aria-live="polite" tabindex="-1">
+      <div class="guna-head">
+        <div class="guna-lead">Leading you now: <b id="gDom">—</b></div>
+        <p id="gMsg" class="pss-msg"></p>
+      </div>
+      <div class="guna-bars">
+        <div class="gbar"><span class="glabel">Sattva</span><div class="gtrack"><i id="barS" class="gfill s"></i></div><span id="pctS" class="gpct">0%</span></div>
+        <div class="gbar"><span class="glabel">Rajas</span><div class="gtrack"><i id="barR" class="gfill r"></i></div><span id="pctR" class="gpct">0%</span></div>
+        <div class="gbar"><span class="glabel">Tamas</span><div class="gtrack"><i id="barT" class="gfill t"></i></div><span id="pctT" class="gpct">0%</span></div>
+      </div>
+
+      <h2 class="pss-next">A practice to bring balance</h2>
+      <div class="grid cols-3 pss-ctas">
+        <a class="card ctacard" data-cta="guide" href="/resources/">
+          <span class="badge">Complimentary</span>
+          <h3>Yogic Breathing Guide</h3>
+          <p>A simple breath practice to steady or awaken your energy.</p>
+          <span class="btn ghost">Get the guide →</span>
+        </a>
+        <a class="card ctacard" data-cta="nadi" href="/nadi-shodhana/">
+          <span class="badge">Free workshop</span>
+          <h3>Nadi Shodhana — The Healing Breath</h3>
+          <p>The balancing breath that harmonises the gunas.</p>
+          <span class="btn ghost">Register →</span>
+        </a>
+        <a class="card ctacard" data-cta="sessions" href="/sessions/">
+          <span class="badge">Live · Weekly</span>
+          <h3>Explore the practice</h3>
+          <p>Guided sessions to cultivate clarity and balance over time.</p>
+          <span class="btn ghost">Explore sessions →</span>
+        </a>
+      </div>
+
+      <p class="pss-disclaim">This is a self-reflection rooted in the classical description of the three gunas — it is not a personality test, a fixed type, or a diagnosis. The gunas rise and fall in all of us; the aim of practice is to cultivate sattva and move towards balance.</p>
+      <p class="pss-actions"><button type="button" id="gRetake" class="btn ghost">Take it again</button></p>
+      <p class="pss-cite">Grounded in the Bhagavad Gita (ch. 14, 17, 18) and the Sāṅkhya–Yoga tradition; the tri-guna framework also underlies research instruments such as the Vedic Personality Inventory (Wolf, 1998).</p>
+    </section>
+
+  </main>
+
+  <style>
+    .pss-stem{font-weight:500;color:var(--teal);margin:22px 0 6px;font-size:18px}
+    .pss-q{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;background:#fff}
+    .pss-q .qtext{font-weight:500;line-height:1.45;margin:0}
+    .pss-q .qn{color:var(--gold-ink);font-weight:600;margin-right:4px}
+    .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .opt{display:inline-flex}
+    .opt input{position:absolute;opacity:0;width:0;height:0}
+    .opt label{display:inline-block;padding:8px 14px;border:1px solid var(--line);border-radius:22px;font-size:14.5px;color:var(--ink);cursor:pointer;transition:all .15s ease;background:#FAF6EF}
+    .opt input:hover + label{border-color:var(--gold)}
+    .opt input:checked + label{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .opt input:focus-visible + label{outline:3px solid var(--teal);outline-offset:2px}
+    .pss-q.unanswered{border-color:#c98a8a;box-shadow:0 0 0 2px rgba(201,138,138,.18)}
+    .pss-actions{display:flex;align-items:center;gap:16px;margin-top:20px;flex-wrap:wrap}
+    .pss-progress{color:var(--muted);font-size:14px}
+    .pss-warn{color:#a12f2f;font-weight:500;margin-top:10px}
+    .pss-result{margin-top:26px;border-top:2px solid var(--line);padding-top:26px;scroll-margin-top:90px}
+    .guna-lead{font-size:24px}.guna-lead b{color:var(--teal)}
+    .pss-msg{margin-top:12px;font-size:17px;line-height:1.6}
+    .guna-bars{margin:22px 0 4px;max-width:520px}
+    .gbar{display:flex;align-items:center;gap:12px;margin:9px 0}
+    .glabel{width:66px;font-weight:500;font-size:14.5px}
+    .gtrack{flex:1;height:12px;background:#efe7d8;border-radius:8px;overflow:hidden}
+    .gfill{display:block;height:100%;width:0;border-radius:8px;transition:width .5s ease}
+    .gfill.s{background:#0E4A5E}.gfill.r{background:#C9A24A}.gfill.t{background:#7A1E2A}
+    .gpct{width:44px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted)}
+    .pss-next{margin-top:26px}.pss-ctas{margin-top:6px}
+    .ctacard{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+    .ctacard.primary{border:2px solid var(--gold);box-shadow:0 8px 22px rgba(201,162,74,.18)}
+    .ctacard .btn{margin-top:auto}
+    .pss-disclaim{margin-top:22px;font-size:13.5px;color:var(--muted);line-height:1.55;background:#FAF6EF;border-radius:12px;padding:14px 16px}
+    .pss-cite{font-size:12.5px;color:var(--muted);margin-top:14px}
+  </style>
+
+  <script is:inline define:vars={{ gunas }}>
+    (function () {
+      var form = document.getElementById('gForm');
+      if (!form) return;
+      var G = gunas.split(',');
+      var N = G.length;
+      var prog = document.getElementById('gProgress');
+      var warn = document.getElementById('gWarn');
+      var names = { S: 'Sattva', R: 'Rajas', T: 'Tamas' };
+      var desc = {
+        S: { title: 'Sattva (clarity & calm)', primary: ['sessions', 'nadi'],
+          msg: "Sattva is leading you — clarity, calm and balance. This is fertile ground. The invitation now is to deepen: subtle practice, meditation and pranayama, simple living and a steady rhythm. Keep tending the light, and let it settle ever more quietly." },
+        R: { title: 'Rajas (activity & drive)', primary: ['nadi', 'guide'],
+          msg: "Rajas is leading you — energy, drive and momentum, with some restlessness or a mind that won't switch off. The practice is to channel and settle: calming breath like Nadi Shodhana, slower movement, and small pockets of stillness. If it tips into stress, the Stress Check can help you gauge it." },
+        T: { title: 'Tamas (steadiness & inertia)', primary: ['sessions', 'guide'],
+          msg: "Tamas is leading you — grounding and steadiness, but also heaviness, fog or low motivation. The practice is to gently uplift and energise: regular movement, breath that awakens, sunlight and light, fresh food, and small consistent routines that build momentum." }
+      };
+      function answered() { var c = 0; for (var i = 1; i <= N; i++) if (form.querySelector('input[name="q' + i + '"]:checked')) c++; return c; }
+      form.addEventListener('change', function () { prog.textContent = answered() + ' of ' + N + ' answered'; });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var first = null, done = 0;
+        for (var i = 1; i <= N; i++) {
+          var fs = form.querySelectorAll('.pss-q')[i - 1];
+          var pick = form.querySelector('input[name="q' + i + '"]:checked');
+          if (pick) { done++; fs.classList.remove('unanswered'); } else { fs.classList.add('unanswered'); if (!first) first = fs; }
+        }
+        if (done < N) { warn.hidden = false; if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        warn.hidden = true;
+
+        var tot = { S: 0, R: 0, T: 0 };
+        for (var j = 1; j <= N; j++) {
+          var v = parseInt(form.querySelector('input[name="q' + j + '"]:checked').value, 10);
+          tot[G[j - 1]] += v;
+        }
+        var sum = tot.S + tot.R + tot.T || 1;
+        var pctS = Math.round(tot.S / sum * 100), pctR = Math.round(tot.R / sum * 100), pctT = Math.round(tot.T / sum * 100);
+        // dominant
+        var order = [['S', tot.S], ['R', tot.R], ['T', tot.T]].sort(function (a, b) { return b[1] - a[1]; });
+        var top = order[0][0], second = order[1][0];
+        var blended = (order[0][1] - order[1][1]) <= 1;
+        var d = desc[top];
+
+        var res = document.getElementById('gResult');
+        document.getElementById('gDom').textContent = blended ? (names[top] + ' + ' + names[second] + ' (blended)') : d.title;
+        document.getElementById('gMsg').textContent = d.msg;
+        document.getElementById('barS').style.width = pctS + '%';
+        document.getElementById('barR').style.width = pctR + '%';
+        document.getElementById('barT').style.width = pctT + '%';
+        document.getElementById('pctS').textContent = pctS + '%';
+        document.getElementById('pctR').textContent = pctR + '%';
+        document.getElementById('pctT').textContent = pctT + '%';
+        var cards = res.querySelectorAll('.ctacard');
+        cards.forEach(function (c) { c.classList.toggle('primary', d.primary.indexOf(c.getAttribute('data-cta')) !== -1); });
+
+        res.hidden = false; res.focus(); res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.getElementById('gRetake').addEventListener('click', function () {
+        form.reset(); document.getElementById('gResult').hidden = true;
+        prog.textContent = '0 of ' + N + ' answered';
+        form.querySelectorAll('.pss-q').forEach(function (fs) { fs.classList.remove('unanswered'); });
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+</Base>

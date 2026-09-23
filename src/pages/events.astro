@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+const heal = site.forms.heal;
+const healReg = heal.url + '?usp=pp_url&' + heal.entry + '=Website-Events';
+const shakti = site.forms.shakti;
+const sessReg = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Events';
+
+const recurring = [
+  { when: "Every Wed & Sat", time: "6:00–7:00 AM IST" },
+  { when: "Every Sunday", time: "5:00 PM IST" }
+];
+// Built-in fallback (used when no CSV feed is configured). ISO date drives auto-hide.
+const workshops = [
+  { title: "Nadi Shodhana — The Healing Breath", date: "2026-11-29", when: "29 Nov 2026", time: "7:00 PM IST" },
+  { title: "Nadi Shodhana — The Healing Breath", date: "2026-12-27", when: "27 Dec 2026", time: "7:00 PM IST" }
+];
+
+const eventsUrl = site.eventsCsvUrl || "";
+const settingsUrl = site.settingsCsvUrl || "";
+const fallbackMonths = site.eventsFallbackMonths || 6;
+---
+<Base title="Events & Schedule · Yoga Shakti" description="Upcoming free live yoga sessions and Nadi Shodhana healing-breath workshops with Ashish Anant." active="/events/">
+  <main class="wrap page">
+    <div class="kicker">Schedule</div>
+    <h1>Events &amp; schedule</h1>
+    <p class="hero-tag">Weekly live sessions and the Nadi Shodhana workshop — all complimentary. Register once and you're added to the group with the joining link.</p>
+
+    <div class="section">
+      <h2>Weekly Yoga Sessions</h2>
+      <div class="ev">
+        {recurring.map((e) => (
+          <div class="evrow">
+            <div class="evwhen">{e.when}<br /><span style="color:var(--muted);font-weight:400">{e.time}</span></div>
+            <div><p>Guided practice — breath, movement, stillness.</p></div>
+          </div>
+        ))}
+      </div>
+      <div class="cta-row"><a class="cta" href={sessReg} target="_blank" rel="noopener">Register FREE</a></div>
+    </div>
+
+    <div class="section">
+      <h2>Upcoming workshop</h2>
+      <div class="ev" id="workshopList">
+        {workshops.slice(0, 1).map((e) => (
+          <div class="evrow workshop" data-date={e.date}>
+            <div class="evwhen">{e.when}<br /><span style="color:var(--muted);font-weight:400">{e.time}</span></div>
+            <div><h3>{e.title}</h3><p>The yogic cleansing breath — learn it the authentic way.</p></div>
+          </div>
+        ))}
+        <p class="note" id="noUpcoming" style="display:none">New workshop dates are being scheduled — check back soon, or register and we'll invite you to the next one.</p>
+      </div>
+      <div class="cta-row"><a class="cta" href={healReg} target="_blank" rel="noopener">Register FREE</a></div>
+      <p class="wa-fallback">Questions about a date? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
+      <p class="note">How joining works: register above and you're added to the sessions group, where the joining link is shared before each session or workshop.</p>
+    </div>
+
+  </main>
+
+  <script define:vars={{ eventsUrl, settingsUrl, fallbackMonths }}>
+    (function () {
+      const MONTHS = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      const today = new Date(); today.setHours(0,0,0,0);
+      const list = document.getElementById('workshopList');
+      const noUp = document.getElementById('noUpcoming');
+
+      function parseDate(s){
+        if(!s) return null;
+        s=s.trim();
+        let m=s.match(/^(\d{1,2})[-\/\s]([A-Za-z]{3,})[-\/\s](\d{4})$/);
+        if(m){const mo=MONTHS[m[2].slice(0,3).toLowerCase()]; if(mo!=null) return new Date(+m[3],mo,+m[1]);}
+        m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if(m) return new Date(+m[1],+m[2]-1,+m[3]);
+        const d=new Date(s); return isNaN(d)?null:d;
+      }
+      function fmt(d){return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear();}
+      function parseCSV(text){
+        const rows=[]; let row=[], cur='', q=false;
+        for(let i=0;i<text.length;i++){const c=text[i];
+          if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+          else { if(c==='"') q=true; else if(c===','){row.push(cur);cur='';} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';} else if(c!=='\r') cur+=c; }
+        }
+        if(cur!==''||row.length){row.push(cur);rows.push(row);}
+        return rows.filter(r=>r.some(x=>x&&x.trim()!==''));
+      }
+      function col(headers,names){for(const n of names){const i=headers.findIndex(h=>h.toLowerCase().trim()===n);if(i>=0)return i;}
+        for(const n of names){const i=headers.findIndex(h=>h.toLowerCase().includes(n));if(i>=0)return i;} return -1;}
+
+      // Fallback behaviour first: auto-hide past on the built-in rows.
+      function applyStaticHide(){
+        const rows=Array.from(list.querySelectorAll('.workshop'));
+        let vis=0;
+        rows.forEach(r=>{const d=parseDate(r.getAttribute('data-date')); if(d&&d<today) r.style.display='none'; else vis++;});
+        if(vis===0) noUp.style.display='block';
+      }
+
+      async function loadFeed(){
+        if(!eventsUrl){ applyStaticHide(); return; }
+        try{
+          const bust='cb='+Date.now();
+          let months=fallbackMonths;
+          if(settingsUrl){
+            try{
+              const st=await fetch(settingsUrl+(settingsUrl.includes('?')?'&':'?')+bust);
+              const rows=parseCSV(await st.text());
+              for(const r of rows){ if((r[0]||'').toLowerCase().includes('months ahead')){ const n=parseInt(r[1]); if(!isNaN(n)) months=n; break; } }
+            }catch(e){}
+          }
+          const res=await fetch(eventsUrl+(eventsUrl.includes('?')?'&':'?')+bust);
+          if(!res.ok) throw new Error('csv '+res.status);
+          const rows=parseCSV(await res.text());
+          let hdr=rows.findIndex(r=>{const l=r.map(x=>x.toLowerCase().trim());return l.includes('title')&&l.includes('date');});
+          if(hdr<0) throw new Error('no header');
+          const H=rows[hdr].map(h=>h.toLowerCase());
+          const iT=col(H,['title']), iD=col(H,['date']), iTime=col(H,['time']),
+                iType=col(H,['type']), iS=col(H,['status']), iL=col(H,['location / mode','location','mode']), iN=col(H,['notes']);
+          const horizon=new Date(today); if(months<999) horizon.setMonth(horizon.getMonth()+months); else horizon.setFullYear(horizon.getFullYear()+50);
+          let items=[];
+          for(let r=hdr+1;r<rows.length;r++){
+            const row=rows[r]; const title=(row[iT]||'').trim(); const d=parseDate(row[iD]);
+            const status=((iS>=0?row[iS]:'')||'').trim().toLowerCase();
+            if(!title||!d) continue;
+            if(status==='cancelled') continue;
+            if(d<today || d>horizon) continue;
+            items.push({title, d, time:(iTime>=0?row[iTime]:'')||'', type:(iType>=0?row[iType]:'')||'', loc:(iL>=0?row[iL]:'')||'', notes:(iN>=0?row[iN]:'')||''});
+          }
+          items.sort((a,b)=>a.d-b.d);
+          items = items.slice(0,1); // show only the next upcoming workshop
+          // Replace the built-in rows with the live feed.
+          list.querySelectorAll('.workshop').forEach(n=>n.remove());
+          if(items.length===0){ noUp.style.display='block'; return; }
+          noUp.style.display='none';
+          const frag=document.createDocumentFragment();
+          items.forEach(it=>{
+            const div=document.createElement('div'); div.className='evrow workshop';
+            const meta=[it.loc, it.notes].filter(Boolean).join(' · ') || 'The yogic cleansing breath — learn it the authentic way.';
+            div.innerHTML='<div class="evwhen">'+fmt(it.d)+'<br><span style="color:var(--muted);font-weight:400">'+
+              (it.time||'')+'</span></div><div><h3>'+it.title.replace(/</g,'&lt;')+'</h3><p>'+
+              meta.replace(/</g,'&lt;')+'</p></div>';
+            frag.appendChild(div);
+          });
+          list.insertBefore(frag, noUp);
+        }catch(e){ applyStaticHide(); }
+      }
+      loadFeed();
+    })();
+  </script>
+</Base>

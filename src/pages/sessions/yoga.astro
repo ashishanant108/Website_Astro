@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site.js';
+import { testimonials } from '../../data/testimonials.js';
+const shakti = site.forms.shakti;
+const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Sessions';
+const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
+---
+<Base title="Live Yoga Sessions · Yoga Shakti" description="Live, guided yoga sessions with Ashish Anant — breath, movement and stillness, in real time, together. Free for now." active="/sessions/" ogImage="https://ashishanant.com/assets/og-sessions.jpg" ogImageAlt="FREE live yoga with Ashish Anant — breath, movement and stillness. Beginner-friendly; all levels.">
+  <main class="wrap page">
+    <figure class="sess-hero"><img src="/assets/sessions-header.png" alt="Yoga Shakti — live yoga sessions with Ashish Anant" /></figure>
+    <div class="kicker">Live · with Ashish Anant</div>
+    <h1>Live Yoga Sessions</h1>
+    <p class="hero-tag">Some things can't be learned from a screen alone. Every week I hold live, guided sessions — breath, movement, and stillness, in real time, together. Beginner or seasoned, you're welcome.</p>
+    <div class="chips" style="margin-top:16px">
+      <span class="chip">Beginner-friendly</span>
+      <span class="chip">Gentle movement</span>
+      <span class="chip">Asanas for mobility, flexibility &amp; balance</span>
+      <span class="chip">Guided breathwork</span>
+      <span class="chip">Stillness &amp; calm</span>
+    </div>
+
+    <div class="section">
+      <h2>What you'll gain</h2>
+      <p class="lead">Real-time guidance in a supportive group — so you practise safely and regularly. Here's what a regular practice supports, and what the research shows:</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>The body</h3>
+          <p>Build strength, ease stiffness and joint tightness, and move with more flexibility, balance and ease.</p>
+          <p class="cite">Among the most widely documented effects of regular yoga, across ages and levels.</p>
+        </div>
+        <div class="card">
+          <h3>The mind</h3>
+          <p>Release stress, steady your attention, and rest more easily. Yoga can meaningfully reduce anxiety and improve sleep quality.</p>
+          <p class="cite">Sources: <a href="https://pubmed.ncbi.nlm.nih.gov/29697885/" target="_blank" rel="noopener">anxiety</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/32357858/" target="_blank" rel="noopener">sleep</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Whole‑system health</h3>
+          <p>As a complementary practice, associated with better blood-sugar control and modest reductions in blood pressure.</p>
+          <p class="cite">Sources: <a href="https://link.springer.com/article/10.1007/s40200-025-01807-1" target="_blank" rel="noopener">glycaemic</a> · <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0323268" target="_blank" rel="noopener">blood pressure</a>.</p>
+        </div>
+      </div>
+      <div class="disclaimer">Offered as a supportive, complementary approach to wellbeing — not a substitute for medical care. Effects vary from person to person; if you have a health condition, please consult your doctor before beginning.</div>
+    </div>
+
+    <div class="section">
+      <h2>Sessions &amp; timings</h2>
+      <div class="offers">
+        <div class="offer">
+          <div class="o-name">Every Wed &amp; Sat<small>6:00–7:00 AM IST</small></div>
+          <div class="price"><span class="was">₹1,500/mo</span><span class="free">FREE</span></div>
+        </div>
+        <div class="offer">
+          <div class="o-name">Every Sunday<small>5:00 PM IST</small></div>
+          <div class="price"><span class="was">₹1,000/mo</span><span class="free">FREE</span></div>
+        </div>
+      </div>
+      <p class="note">Complimentary for now. Held at India- and US-friendly times so friends in both regions can join comfortably. See the full <a href="/events/" style="color:var(--teal)">schedule</a>.</p>
+    </div>
+
+    {feats.length > 0 && (
+      <div class="section">
+        <h2>In their words</h2>
+        <div class="grid cols-2">
+          {feats.map((t) => (
+            <div class="tcard">
+              <div class="q">“{t.quote}”</div>
+              <div class="who">{t.photo ? (<img src={t.photo} alt={t.name} />) : (<span class="avatar" aria-hidden="true">{t.name.charAt(0)}</span>)}<div><b>{t.name}</b><span>{t.place}</span></div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="section">
+      <h2>Reserve your spot</h2>
+      <p class="lead">Registering adds you to the sessions group, where the joining link is shared before each class.</p>
+      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register</a></div>
+      <p class="wa-fallback">Prefer to ask first? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
+    </div>
+
+    <div class="section">
+      <h2>Questions</h2>
+      <div class="faq">
+        <details><summary>Is it really free?</summary><p>Yes — it's free for now. If a modest fee is introduced later, your first class will always be free.</p></details>
+        <details><summary>I'm a complete beginner. Can I join?</summary><p>Absolutely. Sessions are gentle and guided — suitable for beginners and seasoned practitioners alike.</p></details>
+        <details><summary>When are the sessions?</summary><p>See the <a href="/events/" style="color:var(--teal)">schedule</a> for current days and timings.</p></details>
+        <details><summary>What do I need?</summary><p>Just a yoga mat, a quiet space, and comfortable clothing.</p></details>
+        <details><summary>How do I get the joining link?</summary><p>Register once and you're added to the sessions group, where the joining link is shared before each class.</p></details>
+      </div>
+    </div>
+
+  </main>
+</Base>

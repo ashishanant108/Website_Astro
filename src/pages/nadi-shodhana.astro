@@ -3,61 +3,182 @@ import Base from '../layouts/Base.astro';
 import { site } from '../data/site.js';
 import { testimonials } from '../data/testimonials.js';
 const heal = site.forms.heal;
-const register = heal.url + '?usp=pp_url&' + heal.entry + '=Website';
-const t = testimonials.find(x => x.tag === 'nadi-shodhana');
+const register = heal.url + '?usp=pp_url&' + heal.entry + '=Website-Nadi';
+const feats = testimonials.filter(x => x.tag === 'nadi-shodhana').slice(0, 2);
+const eventsUrl = site.eventsCsvUrl || "";
+const settingsUrl = site.settingsCsvUrl || "";
+const fallbackMonths = site.eventsFallbackMonths || 6;
+// Built-in fallback (shows immediately; auto-hides past dates; replaced by the live feed when available).
+const workshops = [
+  { title: "Nadi Shodhana — The Healing Breath", date: "2026-11-29", when: "29 Nov 2026", time: "7:00 PM IST" },
+  { title: "Nadi Shodhana — The Healing Breath", date: "2026-12-27", when: "27 Dec 2026", time: "7:00 PM IST" }
+];
 ---
-<Base title="Nadi Shodhana — The Healing Breath · Yoga Shakti" description="Learn Nadi Shodhana, the yogic cleansing breath — a complimentary workshop with Ashish Anant, taught in an authentic Tantra lineage." bodyClass="theme-heal" active="/nadi-shodhana/">
+<Base title="Nadi Shodhana — The Healing Breath · Yoga Shakti" description="Learn Nadi Shodhana, the yogic cleansing breath — a free workshop with Ashish Anant, taught in an authentic Tantra lineage." bodyClass="theme-heal" active="/nadi-shodhana/" ogImage="https://ashishanant.com/assets/og-nadi.jpg" ogImageAlt="FREE Nadi Shodhana Workshop — The Healing Breath. Calm, sleep, health, clarity; rooted in the Yogic & Tantric traditions.">
   <main class="wrap page">
     <div class="kicker">The Healing Breath</div>
     <h1>Nadi Shodhana</h1>
-    <p class="hero-tag">The yogic “cleansing of the channels” — a simple, powerful breath that calms the nerves, clears the mind, and prepares the body to heal.</p>
+
+    <div class="section nadi-hero">
+      <div class="nh-text">
+        <h2>What it is</h2>
+        <p class="lead"><b>Nadi Shodhana (Nadi Shuddhi)</b> is an <b>ancient, foundational practice</b> — <b>hailed in the Vedas and the yogic and tantric scriptures</b> such as the Hatha Yoga Pradeepika, Gheranda Samhita and Shiva Samhita. <b>These classical texts state that Nadi Shodhana is the one practice to master before any other pranayama.</b></p>
+        <p>Yet this profound practice is rarely taught in its complete form today — it has largely slipped out of mainstream yoga, preserved instead within authentic, living traditions. For this, we remain deeply grateful to the <a href="/lineage/" style="color:var(--teal)">Gurumandala</a> — the living lineage through which these timeless teachings and practices have been preserved and transmitted across generations.</p>
+      </div>
+      <figure class="nh-photo"><img src="/assets/nadi-side.jpg" alt="Ashish Anant practising Nadi Shodhana" /></figure>
+    </div>
 
     <div class="section">
-      <h2>What it is</h2>
-      <p class="lead">Nadi Shodhana (nadi-shuddhi) is often called the master-key practice. Done properly it promotes health, removes stress, balances the chakras, and deepens meditation. In the classical texts it is the one practice to master before any other pranayama.</p>
+      <h2>More than alternate‑nostril breathing</h2>
+      <p>Nadi Shodhana is often misunderstood as simply alternate‑nostril breathing. Yet in the Yogic tradition its purpose extends far beyond the mechanics of inhaling through one nostril and exhaling through the other. The Sanskrit reveals the deeper intent:</p>
+      <ul class="rlist">
+        <li><b>Nadi</b> — the subtle pathways through which Prana flows.</li>
+        <li><b>Shodhana</b> — purification, cleansing, refinement.</li>
+      </ul>
+      <p>So Nadi Shodhana is not merely about alternating the breath between the nostrils. <b>The breath is the means; the balancing and purification of the Nadis is the process.</b></p>
     </div>
 
     <div class="section">
       <h2>What it gives you</h2>
-      <div class="chips">
-        <span class="chip">Builds immunity</span>
-        <span class="chip">Triggers natural healing</span>
-        <span class="chip">More oxygen, more energy</span>
-        <span class="chip">Calmer nerves, less anxiety</span>
-        <span class="chip">Sharper focus &amp; memory</span>
-        <span class="chip">Balances the chakras</span>
+      <p class="lead">As the breath becomes balanced and refined, the movement of Prana finds greater equilibrium. Purification happens; natural healing is triggered. The body settles, the mind grows quieter, and the practice gradually creates the conditions for a deeper, more inward journey.</p>
+      <p>Done properly, Nadi Shodhana promotes physical health, removes stress, balances the chakras, and deepens meditation. This is why it has traditionally held such an important place in preparing for the deeper practices of Yoga and Pranayama.</p>
+      <div class="chips chips-lg">
+        <span class="chip">Calmer mind</span>
+        <span class="chip">Less stress</span>
+        <span class="chip">Balanced energy</span>
+        <span class="chip">Physical health</span>
+        <span class="chip">Deeper meditation</span>
       </div>
-      <p class="note">Hailed in the Hatha Yoga Pradeepika, Gheranda Samhita &amp; Shiva Samhita. Grounded in tradition and taught the authentic way.</p>
+    </div>
+
+    <div class="section">
+      <h2>What the research says</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Nervous-system balance</h3>
+          <ul class="rlist">
+            <li>In studies of Nadi Shodhana pranayama, regular practice has been linked to lower blood pressure in people with hypertension.</li>
+            <li>Practice is associated with improved heart-rate variability — a marker of a well-balanced, resilient nervous system.</li>
+          </ul>
+          <p class="cite">Sources: <a href="https://pubmed.ncbi.nlm.nih.gov/37499590/" target="_blank" rel="noopener">Nadishodhana &amp; Bhramari pranayama in hypertensives — RCT (2023)</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/40242728/" target="_blank" rel="noopener">Nadi Shodhan as an adjunct in hypertension — exploratory RCT (2025)</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Calm &amp; steadiness</h3>
+          <ul class="rlist">
+            <li>Slow, conscious yogic breathing shifts the balance toward the calming (parasympathetic) side of the nervous system.</li>
+            <li>It is associated with steadier attention and a lower stress response.</li>
+          </ul>
+          <p class="cite">Source: <a href="https://www.frontiersin.org/articles/10.3389/fnhum.2018.00353/full" target="_blank" rel="noopener">Zaccaro et al., slow breathing &amp; autonomic function (Frontiers in Human Neuroscience, 2018)</a>.</p>
+        </div>
+      </div>
+      <div class="disclaimer">Offered as a supportive, complementary practice — not a substitute for medical care. Research is evolving and effects vary from person to person; if you have a health condition, please consult your doctor before beginning.</div>
     </div>
 
     <div class="section">
       <h2>Learn it the authentic way</h2>
-      <p class="lead">Nadi Shodhana as it is truly taught — with the do's and don'ts that keep the practice safe — from Ashish Anant, a direct disciple of revered Tantra Masters Ma Shakti Devpriya Anandnath ji &amp; Acharya Agyaatadarshan Anandnath ji.</p>
+      <p class="lead">From time to time, Yoga Shakti conducts dedicated Nadi Shodhana workshops to introduce the practice and explore its deeper dimensions.</p>
+      <p>The workshops are suitable both for those encountering Nadi Shodhana for the first time and for practitioners who have learnt or practised it before but would like to deepen their understanding.</p>
     </div>
 
-    <div class="section">
-      <h2>Watch</h2>
-      <div class="video-soon">A guided introduction video is coming here soon.</div>
-    </div>
-
-    {t && (
+    {feats.length > 0 && (
       <div class="section">
         <h2>In their words</h2>
-        <div class="tcard">
-          <div class="q">“{t.quote}”</div>
-          <div class="who"><img src={t.photo} alt={t.name} /><div><b>{t.name}</b><span>{t.place}</span></div></div>
+        <div class="grid cols-2">
+          {feats.map((t) => (
+            <div class="tcard">
+              <div class="q">“{t.quote}”</div>
+              <div class="who">{t.photo ? (<img src={t.photo} alt={t.name} />) : (<span class="avatar" aria-hidden="true">{t.name.charAt(0)}</span>)}<div><b>{t.name}</b><span>{t.place}</span></div></div>
+            </div>
+          ))}
         </div>
       </div>
     )}
 
     <div class="section">
-      <h2>Join the workshop</h2>
-      <p class="lead">The Nadi Shodhana workshop is completely complimentary. Register and I'll send you the invite.</p>
-      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Join — completely FREE</a></div>
-      <p class="note">Registering is how you get into the workshop group and receive the invite. The <a href={site.whatsappCommunity} target="_blank" rel="noopener" style="color:var(--teal)">WhatsApp Community</a> is for general announcements only — it doesn't enrol you in the workshop.</p>
+      <h2>Upcoming workshop</h2>
+      <div class="ev" id="workshopList">
+        {workshops.slice(0, 1).map((e) => (
+          <div class="evrow workshop" data-date={e.date}>
+            <div class="evwhen">{e.when}<br /><span style="color:var(--muted);font-weight:400">{e.time}</span></div>
+            <div><h3>{e.title}</h3><p>The yogic cleansing breath — learn it the authentic way.</p></div>
+          </div>
+        ))}
+        <p class="note" id="noUpcoming" style="display:none">New workshop dates are being scheduled — register and we'll invite you to the next one, or see the <a href="/events/" style="color:var(--teal)">schedule</a>.</p>
+      </div>
+      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register FREE</a></div>
+      <p class="wa-fallback">Any questions? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
     </div>
 
-    <div class="signoff">॥ SHIVOHAM ॥</div>
-    <p><a class="back" href="/">← Back to all links</a></p>
+    <div class="section">
+      <h2>Questions</h2>
+      <div class="faq">
+        <details><summary>Is the workshop free?</summary><p>Yes — the Nadi Shodhana workshop is completely free.</p></details>
+        <details><summary>Do I need any experience?</summary><p>None at all. It's taught step by step — beginners are welcome.</p></details>
+        <details><summary>Is Nadi Shodhana safe?</summary><p>Practised correctly, yes. The workshop teaches the do's and don'ts so you practise safely.</p></details>
+        <details><summary>How long is it?</summary><p>A focused, guided workshop lasting around 90 minutes.</p></details>
+        <details><summary>How do I join?</summary><p>Register and join the workshop WhatsApp group. The invite and joining link are shared in the WhatsApp group itself.</p></details>
+      </div>
+    </div>
+
   </main>
+
+  <script define:vars={{ eventsUrl, settingsUrl, fallbackMonths }}>
+    (function () {
+      var MONTHS = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      var today = new Date(); today.setHours(0,0,0,0);
+      var list = document.getElementById('workshopList');
+      var noUp = document.getElementById('noUpcoming');
+      if (!list) return;
+      function parseDate(s){ if(!s) return null; s=s.trim();
+        var m=s.match(/^(\d{1,2})[-\/\s]([A-Za-z]{3,})[-\/\s](\d{4})$/);
+        if(m){var mo=MONTHS[m[2].slice(0,3).toLowerCase()]; if(mo!=null) return new Date(+m[3],mo,+m[1]);}
+        m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/); if(m) return new Date(+m[1],+m[2]-1,+m[3]);
+        var d=new Date(s); return isNaN(d)?null:d; }
+      function fmt(d){ return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear(); }
+      function parseCSV(t){ var rows=[],row=[],cur='',q=false;
+        for(var i=0;i<t.length;i++){var c=t[i];
+          if(q){ if(c==='"'){ if(t[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+          else { if(c==='"')q=true; else if(c===','){row.push(cur);cur='';} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';} else if(c!=='\r')cur+=c; } }
+        if(cur!==''||row.length){row.push(cur);rows.push(row);}
+        return rows.filter(function(r){return r.some(function(x){return x&&x.trim()!=='';});}); }
+      function col(H,names){ for(var k=0;k<names.length;k++){var i=H.findIndex(function(h){return h.toLowerCase().trim()===names[k];}); if(i>=0)return i;}
+        for(var k2=0;k2<names.length;k2++){var i2=H.findIndex(function(h){return h.toLowerCase().indexOf(names[k2])>=0;}); if(i2>=0)return i2;} return -1; }
+      function applyStaticHide(){
+        var rows=Array.prototype.slice.call(list.querySelectorAll('.workshop')); var vis=0;
+        rows.forEach(function(r){var d=parseDate(r.getAttribute('data-date')); if(d&&d<today) r.style.display='none'; else vis++;});
+        if(vis===0 && noUp) noUp.style.display='block';
+      }
+      (async function(){
+        if(!eventsUrl){ applyStaticHide(); return; }
+        try{
+          var bust='cb='+Date.now(), months=fallbackMonths;
+          if(settingsUrl){ try{ var st=await fetch(settingsUrl+(settingsUrl.indexOf('?')>=0?'&':'?')+bust); var sr=parseCSV(await st.text());
+            for(var i=0;i<sr.length;i++){ if((sr[i][0]||'').toLowerCase().indexOf('months ahead')>=0){ var n=parseInt(sr[i][1]); if(!isNaN(n))months=n; break; } } }catch(e){} }
+          var res=await fetch(eventsUrl+(eventsUrl.indexOf('?')>=0?'&':'?')+bust); if(!res.ok) throw new Error('csv');
+          var rows=parseCSV(await res.text());
+          var hdr=rows.findIndex(function(r){var l=r.map(function(x){return x.toLowerCase().trim();}); return l.indexOf('title')>=0&&l.indexOf('date')>=0;}); if(hdr<0) throw new Error('hdr');
+          var H=rows[hdr].map(function(h){return h.toLowerCase();});
+          var iT=col(H,['title']),iD=col(H,['date']),iTime=col(H,['time']),iType=col(H,['type']),iS=col(H,['status']),iL=col(H,['location / mode','location','mode']),iN=col(H,['notes']);
+          var horizon=new Date(today); if(months<999) horizon.setMonth(horizon.getMonth()+months); else horizon.setFullYear(horizon.getFullYear()+50);
+          var items=[];
+          for(var r=hdr+1;r<rows.length;r++){ var row=rows[r]; var title=(row[iT]||'').trim(); var d=parseDate(row[iD]);
+            var status=((iS>=0?row[iS]:'')||'').trim().toLowerCase(); var type=((iType>=0?row[iType]:'')||'').toLowerCase();
+            if(!title||!d) continue; if(status==='cancelled') continue; if(d<today||d>horizon) continue;
+            if(type.indexOf('workshop')<0 && title.toLowerCase().indexOf('nadi')<0) continue;
+            items.push({title:title,d:d,time:(iTime>=0?row[iTime]:'')||'',loc:(iL>=0?row[iL]:'')||'',notes:(iN>=0?row[iN]:'')||''}); }
+          items.sort(function(a,b){return a.d-b.d;});
+          items = items.slice(0, 1);
+          list.querySelectorAll('.workshop').forEach(function(n){n.remove();});
+          if(items.length===0){ if(noUp) noUp.style.display='block'; return; }
+          if(noUp) noUp.style.display='none';
+          var frag=document.createDocumentFragment();
+          items.forEach(function(it){ var div=document.createElement('div'); div.className='evrow workshop';
+            var meta=[it.loc,it.notes].filter(Boolean).join(' · ')||'The yogic cleansing breath — learn it the authentic way.';
+            div.innerHTML='<div class="evwhen">'+fmt(it.d)+'<br><span style="color:var(--muted);font-weight:400">'+(it.time||'')+'</span></div><div><h3>'+it.title.replace(/</g,'&lt;')+'</h3><p>'+meta.replace(/</g,'&lt;')+'</p></div>';
+            frag.appendChild(div); });
+          list.insertBefore(frag, noUp);
+        }catch(e){ applyStaticHide(); }
+      })();
+    })();
+  </script>
 </Base>

@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, SRC_MAP } from '../data/site.js';
+const WEBAPP_URL = site.WEBAPP_URL || "";
+const GA_ID = site.GA_ID || "";
+const nadi = "/nadi-shodhana/?src=yogicbreathingguide";
+const sessions = "/sessions/?src=yogicbreathingguide";
+const waGroup = site.whatsappCommunity;
+---
+<Base title="Yogic Breathing Guide · Yoga Shakti" description="Get the complimentary Yogic Breathing Guide — a simple 3-step practice to breathe fully, calm the mind and begin. Delivered free to your inbox." active="/resources/">
+  <main class="wrap page">
+    <div class="kicker">Complimentary guide</div>
+    <h1>The Yogic Breathing Guide</h1>
+    <p class="lead">Breathe the way your body was made to — in three simple steps. Enter your details and we'll email your guide right away, with an invitation to our next complimentary Nadi Shodhana workshop.</p>
+
+    <div class="section">
+      <div class="grid cols-2 gform-grid">
+        <div class="card">
+          <span class="badge">Free PDF · to your inbox</span>
+          <h3>Where should we send it?</h3>
+
+          <form id="guideForm" class="gform" novalidate>
+            <label class="fld">
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label class="fld">
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" inputmode="email" required />
+            </label>
+            <label class="fld">
+              <span>WhatsApp number <em>(with country code)</em></span>
+              <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 …" required />
+              <small class="hint">So we can add you to the group for the guide &amp; workshop invites.</small>
+            </label>
+            <!-- honeypot: hidden from humans, catches bots -->
+            <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <p class="err" id="gErr" hidden></p>
+            <button class="btn" type="submit" id="gBtn">Email me the guide →</button>
+            <p class="fineprint">We'll only use your details to send the guide and occasional practice invitations. No spam — unsubscribe anytime.</p>
+          </form>
+
+          <div id="gThanks" class="thanks" hidden>
+            <h3>Namaste — it's on its way. 🌿</h3>
+            <p>We've emailed your Yogic Breathing Guide to <b class="em"></b>. It should arrive within a few minutes — if you don't see it, please check your Promotions or Spam folder.</p>
+            <p class="note">Didn't get it? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll send it across.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="badge">What's inside</span>
+          <h3>A simple, calming practice</h3>
+          <ul class="rlist">
+            <li>The full, natural three-part breath — belly, chest and shoulder</li>
+            <li>How to join them into one smooth, calming wave</li>
+            <li>How to practise safely — the do's and don'ts</li>
+            <li>Your next step: the complimentary <a href={nadi}>Nadi Shodhana workshop</a></li>
+          </ul>
+          <p class="note" style="margin-top:10px">Yogic breathing is also part of our <a href={sessions}>free live yoga sessions</a> — come practise with us.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script define:vars={{ WEBAPP_URL, GA_ID, SRC_MAP, waGroup }}>
+    (function () {
+      var form = document.getElementById('guideForm');
+      var thanks = document.getElementById('gThanks');
+      var err = document.getElementById('gErr');
+      var btn = document.getElementById('gBtn');
+      if (!form) return;
+
+      // resolve funnel SOURCE from ?src=
+      var raw = (new URLSearchParams(location.search).get('src') || '').toLowerCase();
+      var source = SRC_MAP[raw] || 'Website-Guide';
+
+      function fail(msg) { err.textContent = msg; err.hidden = false; }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.hidden = true;
+        if (form.company.value) return; // honeypot tripped — silently drop
+
+        var name = form.name.value.trim();
+        var email = form.email.value.trim();
+        var whatsapp = form.whatsapp.value.trim();
+        if (!name) return fail('Please enter your name.');
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please enter a valid email address.');
+        if (whatsapp.replace(/\D/g, '').length < 8) return fail('Please enter your WhatsApp number with country code.');
+
+        if (!WEBAPP_URL) { return fail('The form is not connected yet — please message us on WhatsApp and we’ll send your guide.'); }
+
+        btn.disabled = true; btn.textContent = 'Sending…';
+        var payload = { magnet: 'Yogic Breathing Guide', name: name, email: email, whatsapp: whatsapp, source: source };
+
+        fetch(WEBAPP_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).then(function () {
+          try { if (window.gtag) gtag('event', 'generate_lead', { magnet: 'yogic-breathing-guide', source: source }); } catch (e2) {}
+          thanks.querySelector('.em').textContent = email;
+          form.hidden = true; thanks.hidden = false;
+          thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }).catch(function () {
+          btn.disabled = false; btn.textContent = 'Email me the guide →';
+          fail('Something went wrong sending your details. Please try again, or message us on WhatsApp.');
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    .gform-grid { align-items: start; }
+    .gform { margin-top: 6px; }
+    .gform .fld { display: block; margin-bottom: 14px; }
+    .gform .fld > span { display: block; font-weight: 500; font-size: 14px; margin-bottom: 5px; color: var(--ink); }
+    .gform .fld em { color: var(--muted); font-style: normal; font-weight: 400; }
+    .gform input { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; font: inherit; color: var(--ink); background: #fff; }
+    .gform input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,74,94,.12); }
+    .gform .hint { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .gform .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .gform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
+    .gform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+    .gform .btn { width: 100%; }
+    .thanks h3 { margin-top: 0; }
+    @media (max-width: 720px) { .gform-grid { grid-template-columns: 1fr; } }
+  </style>
+</Base>

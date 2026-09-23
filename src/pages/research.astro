@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+const studies = [
+  {
+    benefit: "Calms stress &amp; anxiety — out of &ldquo;fight-or-flight&rdquo;",
+    items: [
+      {
+        title: "How Breath-Control Can Change Your Life: A Systematic Review on Psycho-Physiological Correlates of Slow Breathing",
+        src: "Frontiers in Human Neuroscience, 2018",
+        url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6137615/",
+        take: "A review of the evidence found that slow breathing (under ~10 breaths a minute) shifts the nervous system toward parasympathetic (&ldquo;rest and digest&rdquo;) activity and is linked to greater calm, emotional control and wellbeing."
+      },
+      {
+        title: "Effect of short-term practice of pranayamic breathing exercises on cognition, anxiety, general well-being and heart rate variability",
+        src: "PubMed, 2014",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24968492/",
+        take: "Several weeks of slow pranayama practice significantly improved anxiety and general wellbeing, and raised heart-rate variability — a marker of a calm, resilient nervous system."
+      }
+    ]
+  },
+  {
+    benefit: "Lowers blood pressure",
+    items: [
+      {
+        title: "Effectiveness of Alternate Nostril Breathing on Blood Pressure: A Systematic Review and Meta-Analysis of Randomized Controlled Trials",
+        src: "Complementary Medicine Research (Karger), 2024",
+        url: "https://karger.com/cmr/article-abstract/31/5/449/910373/Effectiveness-of-Alternative-Nostril-Breathing-on",
+        take: "Pooling multiple randomized trials, alternate-nostril breathing (Nadi Shodhana) was associated with meaningful reductions in systolic and diastolic blood pressure."
+      },
+      {
+        title: "Alternate-Nostril Yoga Breathing Reduced Blood Pressure While Increasing Performance in a Vigilance Test",
+        src: "PubMed, 2017",
+        url: "https://pubmed.ncbi.nlm.nih.gov/29284770/",
+        take: "A single session of alternate-nostril breathing lowered blood pressure and, at the same time, improved sustained attention on a demanding task."
+      }
+    ]
+  },
+  {
+    benefit: "Sharpens focus, memory &amp; emotional balance",
+    items: [
+      {
+        title: "Pranayamas and Their Neurophysiological Effects",
+        src: "International Journal of Yoga, 2020",
+        url: "https://pubmed.ncbi.nlm.nih.gov/33343147/",
+        take: "A review of how controlled breathing acts on the brain and autonomic nervous system — supporting attention, emotional regulation and mental steadiness."
+      },
+      {
+        title: "Effect of short-term practice of pranayamic breathing exercises on cognition, anxiety, general well-being and heart rate variability",
+        src: "PubMed, 2014",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24968492/",
+        take: "The same trial above also recorded a significant improvement in cognition alongside the calming effects."
+      }
+    ]
+  },
+  {
+    benefit: "Strengthens respiratory function",
+    items: [
+      {
+        title: "Effect of Yoga Breathing (Pranayama) on Exercise Tolerance in Patients with Chronic Obstructive Pulmonary Disease: A Randomized, Controlled Trial",
+        src: "PubMed, 2017",
+        url: "https://pubmed.ncbi.nlm.nih.gov/28714735/",
+        take: "In a randomized trial, pranayama practice improved exercise tolerance and measures of breathing capacity — even in people with compromised lung function."
+      },
+      {
+        title: "Immediate Effect of Pranayama on Pulmonary Function in Healthy Adults: An Experimental Study",
+        src: "PubMed, 2025",
+        url: "https://pubmed.ncbi.nlm.nih.gov/40982747/",
+        take: "Even a single guided pranayama session produced measurable improvements in pulmonary (lung) function in healthy adults."
+      }
+    ]
+  }
+];
+---
+<Base title="The Science of Yogic Breathing · Yoga Shakti" description="Peer-reviewed research behind the benefits of yogic breathing (pranayama) — for stress, blood pressure, focus, and respiratory health." active="/resources/">
+  <main class="wrap page">
+    <div class="kicker">The evidence</div>
+    <h1>The science of yogic breathing</h1>
+    <p class="lead">Yogic breathing is an ancient practice — and modern research is catching up to what the tradition has long taught. Below are peer-reviewed studies behind the benefits we describe, grouped by what they show. Each links to its source so you can read further.</p>
+
+    {studies.map((group) => (
+      <div class="section">
+        <h2 set:html={group.benefit}></h2>
+        <div class="rstack">
+          {group.items.map((s) => (
+            <div class="card">
+              <div class="study">
+                <p class="study-take" set:html={s.take}></p>
+                <p class="study-cite">
+                  <a href={s.url} target="_blank" rel="noopener" set:html={s.title}></a>
+                  <br /><span class="study-src">{s.src}</span>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <div class="section">
+      <p class="note"><b>A gentle note.</b> This page is educational and not medical advice. Yogic breathing supports wellbeing, but it is not a substitute for medical care. If you have a heart, lung or blood-pressure condition — or you are pregnant — please learn under guidance and check with your doctor. Results vary from person to person.</p>
+    </div>
+
+    <div class="cta-row">
+      <a class="cta" href="/guide/?src=research">Get the Yogic Breathing Guide</a>
+    </div>
+  </main>
+
+  <style>
+    .rstack { display: flex; flex-direction: column; gap: 14px; }
+    .study-take { font-size: 15.5px; line-height: 1.55; margin: 0 0 10px; }
+    .study-cite { margin: 0; font-size: 13.5px; line-height: 1.45; }
+    .study-cite a { color: var(--teal); font-weight: 600; text-decoration: none; }
+    .study-cite a:hover { text-decoration: underline; }
+    .study-src { color: var(--muted); font-size: 12.5px; }
+  </style>
+</Base>

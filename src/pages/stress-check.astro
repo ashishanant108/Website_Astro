@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+const heal = site.forms.heal;
+const guide = heal.url + '?usp=pp_url&' + heal.entry + '=Stress-Check';
+// Perceived Stress Scale (PSS-10) — Cohen, Kamarck & Mermelstein (1983).
+// Items 4,5,7,8 are positively worded and reverse-scored. Response 0–4; total 0–40.
+const items = [
+  "been upset because of something that happened unexpectedly?",
+  "felt that you were unable to control the important things in your life?",
+  "felt nervous and stressed?",
+  "felt confident about your ability to handle your personal problems?",
+  "felt that things were going your way?",
+  "found that you could not cope with all the things that you had to do?",
+  "been able to control irritations in your life?",
+  "felt that you were on top of things?",
+  "been angered because of things that were outside of your control?",
+  "felt difficulties were piling up so high that you could not overcome them?"
+];
+const reverse = [4, 5, 7, 8]; // 1-based item numbers
+const opts = [
+  { v: 0, t: "Never" },
+  { v: 1, t: "Almost never" },
+  { v: 2, t: "Sometimes" },
+  { v: 3, t: "Fairly often" },
+  { v: 4, t: "Very often" }
+];
+---
+<Base
+  title="Stress Check (PSS-10) · Yoga Shakti"
+  description="A private, 2-minute Perceived Stress Scale (PSS-10) self-check. Get a sense of your stress over the last month — with gentle, practical next steps to feel calmer."
+  ogImage="https://ashishanant.com/assets/og-stress.jpg"
+  ogImageAlt="FREE 2-minute Stress Check (PSS-10) with Ashish Anant — private, with gentle next steps."
+  active="">
+  <main class="wrap page">
+    <div class="kicker">Complimentary · private · about 2 minutes</div>
+    <h1>How stressed are you, really?</h1>
+    <p class="lead">A short, well-researched self-check to help you notice where your stress is right now — and take a small, calming next step.</p>
+    <p>This uses the <b>Perceived Stress Scale (PSS-10)</b>, a widely used questionnaire that asks how unpredictable, uncontrollable and overloaded your last month has felt. Answer honestly — there are no right or wrong answers. Everything is worked out privately in your browser; <b>nothing is stored or sent</b>.</p>
+
+    <form id="pssForm" class="pss-form" novalidate>
+      <p class="pss-stem">Over the <b>last month</b>, how often have you…</p>
+
+      {items.map((text, i) => (
+        <div class="pss-q" role="group" aria-labelledby={`q${i + 1}lbl`} data-reverse={reverse.includes(i + 1) ? "1" : "0"}>
+          <p class="qtext" id={`q${i + 1}lbl`}><span class="qn">{i + 1}.</span> …{text}</p>
+          <div class="opts">
+            {opts.map((o) => (
+              <span class="opt">
+                <input type="radio" id={`q${i + 1}o${o.v}`} name={`q${i + 1}`} value={o.v} />
+                <label for={`q${i + 1}o${o.v}`}>{o.t}</label>
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div class="pss-actions">
+        <button type="submit" class="btn red">See my result</button>
+        <span id="pssProgress" class="pss-progress" aria-live="polite">0 of 10 answered</span>
+      </div>
+      <p id="pssWarn" class="pss-warn" hidden>Please answer all 10 questions to see your result.</p>
+    </form>
+
+    <section id="pssResult" class="pss-result" hidden aria-live="polite" tabindex="-1">
+      <div class="pss-scorecard">
+        <div class="pss-score"><span id="pssNum">0</span><small>/40</small></div>
+        <div class="pss-band">
+          <div id="pssBand" class="pss-bandlabel">—</div>
+          <div id="pssMeter" class="pss-meter"><span id="pssFill"></span></div>
+        </div>
+      </div>
+      <p id="pssMsg" class="pss-msg"></p>
+
+      <h2 class="pss-next">Gentle next steps</h2>
+      <div class="grid cols-3 pss-ctas">
+        <a class="card ctacard" data-cta="guide" href="/resources/">
+          <span class="badge">Complimentary</span>
+          <h3>Yogic Breathing Guide</h3>
+          <p>A simple, calming breath practice you can start today.</p>
+          <span class="btn ghost">Get the guide →</span>
+        </a>
+        <a class="card ctacard" data-cta="nadi" href="/nadi-shodhana/">
+          <span class="badge">Free workshop</span>
+          <h3>Nadi Shodhana — The Healing Breath</h3>
+          <p>Learn the yogic cleansing breath that calms the nervous system.</p>
+          <span class="btn ghost">Register →</span>
+        </a>
+        <a class="card ctacard" data-cta="sessions" href="/sessions/">
+          <span class="badge">Live · Weekly</span>
+          <h3>Explore practices to de-stress</h3>
+          <p>Guided sessions to build calm, focus and balance over time.</p>
+          <span class="btn ghost">Explore sessions →</span>
+        </a>
+      </div>
+
+      <p class="pss-disclaim">This self-check is for personal reflection and education — it is not a medical diagnosis. The score bands are a general guide, not clinical cut-offs. If stress feels overwhelming or persistent, please consider speaking with your doctor or a mental-health professional.</p>
+      <p class="pss-actions"><button type="button" id="pssRetake" class="btn ghost">Retake the check</button></p>
+      <p class="pss-cite">Source: Perceived Stress Scale (PSS-10). Cohen, S., Kamarck, T., &amp; Mermelstein, R. (1983), <i>Journal of Health and Social Behavior</i>, 24, 385–396.</p>
+    </section>
+
+  </main>
+
+  <style>
+    .pss-stem{font-weight:500;color:var(--teal);margin:22px 0 6px;font-size:18px}
+    .pss-q{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;background:#fff}
+    .pss-q .qtext{font-weight:500;line-height:1.45;margin:0}
+    .pss-q .qn{color:var(--gold-ink);font-weight:600;margin-right:4px}
+    .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .opt{display:inline-flex}
+    .opt input{position:absolute;opacity:0;width:0;height:0}
+    .opt label{display:inline-block;padding:8px 14px;border:1px solid var(--line);border-radius:22px;font-size:14.5px;color:var(--ink);cursor:pointer;transition:all .15s ease;background:#FAF6EF}
+    .opt input:hover + label{border-color:var(--gold)}
+    .opt input:checked + label{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .opt input:focus-visible + label{outline:3px solid var(--teal);outline-offset:2px}
+    .pss-q.unanswered{border-color:#c98a8a;box-shadow:0 0 0 2px rgba(201,138,138,.18)}
+    .pss-actions{display:flex;align-items:center;gap:16px;margin-top:20px;flex-wrap:wrap}
+    .pss-progress{color:var(--muted);font-size:14px}
+    .pss-warn{color:#a12f2f;font-weight:500;margin-top:10px}
+    .pss-result{margin-top:26px;border-top:2px solid var(--line);padding-top:26px;scroll-margin-top:90px}
+    .pss-scorecard{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .pss-score{font-size:56px;font-weight:600;color:var(--teal);line-height:1}
+    .pss-score small{font-size:22px;color:var(--muted);font-weight:400}
+    .pss-band{flex:1;min-width:220px}
+    .pss-bandlabel{font-size:22px;font-weight:600;margin-bottom:10px}
+    .pss-meter{height:12px;border-radius:8px;background:linear-gradient(90deg,#7bbf8f 0%,#e6c15a 50%,#d98a6a 100%);position:relative;overflow:hidden}
+    .pss-meter span{position:absolute;top:-3px;width:4px;height:18px;background:var(--ink);border-radius:3px;transform:translateX(-50%)}
+    .pss-msg{margin-top:16px;font-size:17px;line-height:1.6}
+    .band-low .pss-bandlabel{color:#2f8f4e}.band-mod .pss-bandlabel{color:#b8860b}.band-high .pss-bandlabel{color:#a12f2f}
+    .pss-next{margin-top:26px}
+    .pss-ctas{margin-top:6px}
+    .ctacard{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+    .ctacard.primary{border:2px solid var(--gold);box-shadow:0 8px 22px rgba(201,162,74,.18)}
+    .ctacard .btn{margin-top:auto}
+    .pss-disclaim{margin-top:22px;font-size:13.5px;color:var(--muted);line-height:1.55;background:#FAF6EF;border-radius:12px;padding:14px 16px}
+    .pss-cite{font-size:12.5px;color:var(--muted);margin-top:14px}
+  </style>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('pssForm');
+      if (!form) return;
+      var reverseItems = [4, 5, 7, 8];
+      var N = 10;
+      var progress = document.getElementById('pssProgress');
+      var warn = document.getElementById('pssWarn');
+
+      function countAnswered() {
+        var c = 0;
+        for (var i = 1; i <= N; i++) { if (form.querySelector('input[name="q' + i + '"]:checked')) c++; }
+        return c;
+      }
+      form.addEventListener('change', function () {
+        progress.textContent = countAnswered() + ' of ' + N + ' answered';
+      });
+
+      function bandFor(score) {
+        if (score <= 13) return {
+          key: 'low', cls: 'band-low', label: 'Low perceived stress',
+          msg: "Your stress looks low right now — a good place to be. The aim from here is simple: keep the balance you’ve found. A short, steady practice a few times a week helps stress stay low and your energy steady.",
+          primary: 'sessions'
+        };
+        if (score <= 26) return {
+          key: 'mod', cls: 'band-mod', label: 'Moderate perceived stress',
+          msg: "You’re carrying a moderate load — very common, and very workable. Conscious breathing is one of the fastest ways to settle the nervous system. A few minutes a day can take the edge off and help you sleep and focus better.",
+          primary: 'nadi'
+        };
+        return {
+          key: 'high', cls: 'band-high', label: 'High perceived stress',
+          msg: "Your stress is running high at the moment — please be gentle with yourself. Ease it in layers: begin with the breath today for quick relief, learn Nadi Shodhana to calm the nervous system, and build a steady rhythm through the live sessions so calm becomes your baseline. If it feels overwhelming or lasting, please also reach out to your doctor or a mental-health professional.",
+          primary: ['guide', 'nadi']
+        };
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // validate
+        var firstMissing = null, answered = 0;
+        for (var i = 1; i <= N; i++) {
+          var fs = form.querySelectorAll('.pss-q')[i - 1];
+          var picked = form.querySelector('input[name="q' + i + '"]:checked');
+          if (picked) { answered++; fs.classList.remove('unanswered'); }
+          else { fs.classList.add('unanswered'); if (!firstMissing) firstMissing = fs; }
+        }
+        if (answered < N) {
+          warn.hidden = false;
+          if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        warn.hidden = true;
+
+        // score
+        var total = 0;
+        for (var j = 1; j <= N; j++) {
+          var raw = parseInt(form.querySelector('input[name="q' + j + '"]:checked').value, 10);
+          total += (reverseItems.indexOf(j) !== -1) ? (4 - raw) : raw;
+        }
+        var b = bandFor(total);
+
+        var res = document.getElementById('pssResult');
+        document.getElementById('pssNum').textContent = total;
+        var bandEl = document.getElementById('pssBand');
+        bandEl.textContent = b.label;
+        res.className = 'pss-result ' + b.cls;
+        document.getElementById('pssMsg').textContent = b.msg;
+        document.getElementById('pssFill').style.left = Math.round((total / 40) * 100) + '%';
+
+        // emphasise the most-relevant CTA
+        var prim = Array.isArray(b.primary) ? b.primary : [b.primary];
+        var cards = res.querySelectorAll('.ctacard');
+        cards.forEach(function (c) {
+          c.classList.toggle('primary', prim.indexOf(c.getAttribute('data-cta')) !== -1);
+        });
+
+        res.hidden = false;
+        res.focus();
+        res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.getElementById('pssRetake').addEventListener('click', function () {
+        form.reset();
+        document.getElementById('pssResult').hidden = true;
+        progress.textContent = '0 of ' + N + ' answered';
+        form.querySelectorAll('.pss-q').forEach(function (fs) { fs.classList.remove('unanswered'); });
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+</Base>

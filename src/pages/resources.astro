@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+const guide = "/guide/?src=website";
+---
+<Base title="Free Resources · Yoga Shakti" description="Complimentary guides, downloads and reading to begin and deepen your practice." active="/resources/">
+  <main class="wrap page">
+    <div class="kicker">For you</div>
+    <h1>Free resources</h1>
+    <p class="lead">Complimentary guides, downloads and reading to begin — and to deepen — your practice. More will be added here over time.</p>
+
+    <!-- Stress Check (PSS-10) tool built & finalized; ACTIVATE after Phase 0 (before Phase 1) by uncommenting this card. Page lives at /stress-check/. -->
+    <!--
+    <div class="section">
+      <div class="card">
+        <span class="badge">Interactive · about 2 min · private</span>
+        <h3>Stress Check (PSS-10)</h3>
+        <p>Not sure how stressed you really are? Take this short, well-researched self-check to see where your stress is right now — worked out privately in your browser, with gentle next steps to feel calmer.</p>
+        <a class="btn red" href="/stress-check/">Take the stress check →</a>
+      </div>
+    </div>
+    -->
+
+    <div class="section">
+      <div class="grid cols-2">
+        <div class="card">
+          <span class="badge">Guides &amp; Downloads</span>
+          <h3>Reference material &amp; guides</h3>
+          <ul class="rlist">
+            <li><a href={guide}>Yogic Breathing Guide</a> — a simple yet powerful conscious breathing process that significantly reduces stress and anxiety by shifting the body out of &ldquo;fight-or-flight&rdquo; into a deeply calm, restful state. It strengthens respiratory function and lowers blood pressure while simultaneously boosting cognitive focus, memory, and emotional balance. <a href="/research/">See the research &rarr;</a></li>
+          </ul>
+          <p class="note" style="margin-top:8px">More guides, downloads and reference material will be added here soon.</p>
+        </div>
+        <div class="card">
+          <span class="badge">Reading</span>
+          <h3>Books for the journey</h3>
+          <p>A short, carefully chosen reading list — books that inspire and orient the seeker, plus authentic works from our lineage.</p>
+          <a class="btn ghost" href="/reading/">Browse the books →</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</Base>

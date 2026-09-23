@@ -2,13 +2,15 @@
 const { active = "" } = Astro.props;
 const nav = [
   { label: "About", href: "/about/" },
+  { label: "Lineage", href: "/lineage/" },
   { label: "Sessions", href: "/sessions/" },
   { label: "Nadi Shodhana", href: "/nadi-shodhana/" },
-  { label: "Testimonials", href: "/testimonials/" },
+  { label: "Schedule", href: "/events/" },
+  { label: "Resources", href: "/resources/" },
   { label: "Contact", href: "/contact/" }
 ];
 ---
-<header class="site-nav">
+<header class="site-nav" id="siteNav" data-home={active === "/" ? "1" : "0"}>
   <div class="navwrap">
     <a class="brandmark" href="/" aria-label="Yoga Shakti with Ashish Anant">
       <img src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
@@ -16,7 +18,7 @@ const nav = [
     <button class="menutoggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
     <nav class="menu" id="menu">
       {nav.map((n) => <a href={n.href} class={active === n.href ? 'active' : ''}>{n.label}</a>)}
-      <a class="btn-teal" href="/sessions/">Join free</a>
+      <a class="btn-teal" href="/sessions/yoga/">Join</a>
     </nav>
   </div>
 </header>

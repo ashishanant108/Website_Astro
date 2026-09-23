@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site.js';
+const shakti = site.forms.shakti;
+const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Pranayama';
+---
+<Base title="Pranayama Sessions · Yoga Shakti" description="Dedicated pranayama sessions with Ashish Anant — the yogic science of breath. Starting soon." active="/sessions/">
+  <main class="wrap page">
+    <figure class="sess-hero"><img src="/assets/sessions-header-pranayama.png" alt="Yoga Shakti — pranayama sessions with Ashish Anant" /></figure>
+    <div class="kicker">Live · with Ashish Anant</div>
+    <h1>Pranayama Sessions</h1>
+    <p class="hero-tag">The yogic science of breath — dedicated sessions to steady the mind, balance the energy, and prepare the body for deeper practice.</p>
+
+    <div class="section">
+      <div class="video-soon">Starting soon — register below and we'll invite you the moment these sessions open.</div>
+      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register your interest</a></div>
+      <p class="wa-fallback">Questions? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
+    </div>
+
+    <div class="section">
+      <h2>What to expect</h2>
+      <p>Guided pranayama drawn from the classical tradition — taught slowly and safely, with the do's and don'ts that keep the practice sound. Register above and we'll share the schedule and full details with you first.</p>
+    </div>
+
+  </main>
+</Base>

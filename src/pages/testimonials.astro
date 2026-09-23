@@ -11,11 +11,9 @@ import { testimonials } from '../data/testimonials.js';
     {testimonials.map((t) => (
       <div class="tcard">
         <div class="q">“{t.quote}”</div>
-        <div class="who"><img src={t.photo} alt={t.name} /><div><b>{t.name}</b><span>{t.place}</span></div></div>
+        <div class="who">{t.photo ? (<img src={t.photo} alt={t.name} />) : (<span class="avatar" aria-hidden="true">{t.name.charAt(0)}</span>)}<div><b>{t.name}</b><span>{t.place}</span></div></div>
       </div>
     ))}
 
-    <div class="signoff" style="margin-top:26px">॥ SHIVOHAM ॥</div>
-    <p><a class="back" href="/">← Back to all links</a></p>
   </main>
 </Base>
