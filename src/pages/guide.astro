@@ -14,7 +14,7 @@ const waGroup = site.whatsappCommunity;
     <p class="lead">Breathe the way your body was made to — in three simple steps. Enter your details and we'll email your guide right away, with an invitation to our next complimentary Nadi Shodhana workshop.</p>
 
     <div class="section">
-      <div class="grid cols-2 gform-grid">
+      <div class="grid cols-2 gform-grid" id="gGrid">
         <div class="card">
           <span class="badge">Free PDF · to your inbox</span>
           <h3>Where should we send it?</h3>
@@ -40,12 +40,6 @@ const waGroup = site.whatsappCommunity;
             <button class="btn" type="submit" id="gBtn">Email me the guide →</button>
             <p class="fineprint">We'll only use your details to send the guide and occasional practice invitations. No spam — unsubscribe anytime.</p>
           </form>
-
-          <div id="gThanks" class="thanks" hidden>
-            <h3>Namaste — it's on its way. 🌿</h3>
-            <p>We've emailed your Yogic Breathing Guide to <b class="em"></b>. It should arrive within a few minutes — if you don't see it, please check your Promotions or Spam folder.</p>
-            <p class="note">Didn't get it? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll send it across.</p>
-          </div>
         </div>
 
         <div class="card">
@@ -59,6 +53,13 @@ const waGroup = site.whatsappCommunity;
           </ul>
           <p class="note" style="margin-top:10px">Yogic breathing is also part of our <a href={sessions}>free live yoga sessions</a> — come practise with us.</p>
         </div>
+      </div>
+
+      <div id="gThanks" class="card thanks" hidden>
+        <h2>Namaste — it's on its way. 🌿</h2>
+        <p>We've emailed your Yogic Breathing Guide to <b class="em"></b>. It should arrive within a few minutes — if you don't see it, please check your Promotions or Spam folder.</p>
+        <p class="note">Didn't get it? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll send it across.</p>
+        <div class="cta-row" style="margin-top:6px"><a class="cta" href={nadi}>See the Nadi Shodhana workshop →</a></div>
       </div>
     </div>
   </main>
@@ -101,7 +102,9 @@ const waGroup = site.whatsappCommunity;
         }).then(function () {
           try { if (window.gtag) gtag('event', 'generate_lead', { magnet: 'yogic-breathing-guide', source: source }); } catch (e2) {}
           thanks.querySelector('.em').textContent = email;
-          form.hidden = true; thanks.hidden = false;
+          var grid = document.getElementById('gGrid');
+          if (grid) grid.hidden = true;
+          thanks.hidden = false;
           thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }).catch(function () {
           btn.disabled = false; btn.textContent = 'Email me the guide →';
@@ -124,7 +127,9 @@ const waGroup = site.whatsappCommunity;
     .gform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
     .gform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
     .gform .btn { width: 100%; }
-    .thanks h3 { margin-top: 0; }
+    .thanks { max-width: 620px; margin: 0 auto; text-align: center; }
+    .thanks h2 { margin-top: 0; }
+    .thanks .cta-row { justify-content: center; display: flex; }
     @media (max-width: 720px) { .gform-grid { grid-template-columns: 1fr; } }
   </style>
 </Base>
