@@ -1,47 +1,43 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const begin = [
-  { title: "Living with the Himalayan Masters", author: "Swami Rama", lang: "English · Hindi",
-    why: "A collection of Swami Rama's experiences growing up and learning in the Himalayan tradition, through encounters with remarkable teachers, yogis and sages. Through these lived stories, the book offers glimpses into sadhana, the Guru–Shishya relationship and India's living spiritual traditions.",
-    link: "https://www.goodreads.com/search?q=Living+with+the+Himalayan+Masters+Swami+Rama" },
-  { title: "Light on Life", author: "B.K.S. Iyengar", lang: "English",
-    why: "An accessible collection of reflections connecting the different dimensions of yoga with everyday living. Its warm, conversational style makes it an approachable introduction to the broader philosophy and purpose of yoga.",
-    link: "https://www.goodreads.com/search?q=Light+on+Life+Iyengar" }
+const scriptures = [
+  { title: "Bhagavad Gita",
+    why: "A timeless dialogue on Yoga, Dharma, action, knowledge, devotion and equanimity — showing how the principles of Yoga can be lived amidst the challenges of everyday life." },
+  { title: "Yoga Sutras of Patanjali",
+    why: "A remarkably concise exploration of the mind and the path of Yoga — from disciplined practice and the eight limbs to meditation and liberation." },
+  { title: "Yogachudamani Upanishad",
+    why: "An important Yoga Upanishad exploring Prana, Nadis, Chakras, Kundalini, Pranayama and the subtle dimensions of Yogic practice." },
+  { title: "Hatha Yoga Pradipika (Swami Svatmarama), Gheranda Samhita & Shiva Samhita",
+    why: "Classical scriptures covering Asana, Nadi Shodhana, Pranayama, Shatkarma, Mudra, Bandha, and more." }
 ];
 
 const lineage = [
-  { title: "Tattva Shakti Vigyaan — Introducing Tantra to Modern Man", author: "Ma Shakti Devpriya", lang: "English", guru: true,
+  { title: "Tattva Shakti Vigyaan — Introducing Tantra to Modern Man", author: "Ma Shakti Devpriya", lang: "English",
     why: "An accessible introduction to Tantra and the Tattvas for the contemporary seeker — a doorway into a deeper philosophical worldview of Tantra, beyond many of its popular misconceptions.",
-    link: "https://www.goodreads.com/book/show/34041517-tattva-shakti-vigyaan" },
-  { title: "Dhyan Sutras — The Ancient Operating System for the Modern Mind", author: "Acharya Agyaatadarshan Anand Nath", lang: "English", guru: true,
+    link: "https://shaktimultiversity.com/shop/tattva-shakti-vigyaan-introducing-tantra-to-modern-man" },
+  { title: "Dhyana Sutras — Ancient Operating System for the Modern Mind", author: "Acharya Agyaatadarshan Anand Nath", lang: "English",
     why: "A contemporary exploration of dhyana and the inner workings of the mind, emerging from Acharyaji's own meditation retreats and experiential teaching. It moves beyond an intellectual understanding of meditation towards its practical, lived dimensions.",
-    link: "https://www.shaktimultiversity.com/master-detail/acharya-agyaatadarshan-anand-nath" }
+    link: "https://www.amazon.in/DHYANA-SUTRAS-Ancient-operating-System/dp/9358694149" },
+  { title: "The Silent Guru — The Song of Sri Dakshinamurti", author: "Acharya Agyaatadarshan Anand Nath", lang: "English",
+    why: "A contemplative guide to Adi Shankaracharya's Dakshinamurti Stotram, based on the satsangs of Acharya Agyaatadarshan Anandnath. It offers a verse-by-verse commentary, contemplative reflections, practical exercises, a forty-day Dakshinamurti Sadhana, and complimentary guided meditation recordings for an immersive contemplative experience.",
+    link: "https://shaktimultiversity.com/shop/the-silent-guru" }
 ];
 ---
-<Base title="Books for the Journey · Yoga Shakti" description="A short, carefully chosen reading list — books that inspire and orient the seeker, and authentic works from our lineage." active="/reading/">
+<Base title="Reading & Reflection · Yoga Shakti" description="Authentic Yoga scriptures and works from our lineage — books to inspire, orient and deepen the seeker's journey." active="/reading/">
   <main class="wrap page">
     <div class="kicker">Reading &amp; reflection</div>
     <h1>Books for the journey</h1>
-    <p class="lead">A few books to inspire and orient you — and to keep you company between practices.</p>
+    <p class="lead">A few works to inspire and orient you — the classical scriptures at the root of the tradition, and authentic books from our lineage.</p>
 
     <div class="section">
-      <h2>A word before you read</h2>
-      <p>The Yogic and Tantric traditions have given us an extraordinary body of knowledge — preserved through texts, through teachings, and through living traditions of transmission.</p>
-      <p>Yet not everything that can be read is meant to be learnt from a book alone.</p>
-      <p>In our tradition, the classical scriptures — the Hatha Yoga Pradeepika, Gheranda Samhita, Shiva Samhita and the deeper Tantric works — are not meant to be self-studied. They are received directly from a Guru, in context and in the right sequence, so that they are understood rightly and practised safely. For this reason, Yoga Shakti does not prescribe the classical Yogic and Tantric scriptures as independent self-study.</p>
-      <p>What you will find here instead are books that <b>inspire and orient</b> the seeker — safe to read on your own — and a few <b>authentic works from our lineage</b>. Let them kindle the longing; the living teaching unfolds in practice.</p>
-    </div>
-
-    <div class="section">
-      <h2>Begin here — read on your own</h2>
+      <h2>Authentic Yoga Scriptures</h2>
+      <p>The classical yogic scriptures —</p>
       <div class="booklist">
-        {begin.map((b) => (
+        {scriptures.map((b) => (
           <div class="book">
-            <h3>{b.title} <span class="lang">{b.lang}</span></h3>
-            <p class="bauthor">{b.author}</p>
+            <h3>{b.title}</h3>
             <p class="bwhy">{b.why}</p>
-            <a class="blink" href={b.link} target="_blank" rel="noopener">Find the book →</a>
           </div>
         ))}
       </div>
@@ -53,9 +49,9 @@ const lineage = [
         {lineage.map((b) => (
           <div class="book">
             <h3>{b.title} <span class="lang">{b.lang}</span></h3>
-            <p class="bauthor">{b.author}{b.guru ? " · from Ashish Anant's Guru" : ""}</p>
+            <p class="bauthor">{b.author} · from Ashish Anant's Guru</p>
             <p class="bwhy">{b.why}</p>
-            <a class="blink" href={b.link} target="_blank" rel="noopener">Find the book →</a>
+            <a class="blink" href={b.link} target="_blank" rel="noopener">View the book →</a>
           </div>
         ))}
       </div>
