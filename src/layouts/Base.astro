@@ -73,8 +73,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
   </script>
 </head>
 <body class={bodyClass}>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
   <Header active={active} />
-  <slot />
+  <div id="maincontent" tabindex="-1"><slot /></div>
   <Footer />
 
   <div id="consent">
