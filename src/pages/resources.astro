@@ -27,7 +27,16 @@ const guide = "/guide/?src=website";
           <span class="badge">Guides &amp; Downloads</span>
           <h3>Reference material &amp; guides</h3>
           <ul class="rlist">
-            <li><a href={guide}>Yogic Breathing Guide</a> — a simple yet powerful conscious breathing process that significantly reduces stress and anxiety by shifting the body out of &ldquo;fight-or-flight&rdquo; into a deeply calm, restful state. It strengthens respiratory function and lowers blood pressure while simultaneously boosting cognitive focus, memory, and emotional balance. <a href="/research/">See the research &rarr;</a></li>
+            <li><a href={guide}>Yogic Breathing Guide</a> — a simple yet powerful conscious breathing process.
+              <div class="chips">
+                <span class="chip">Reduces stress &amp; anxiety</span>
+                <span class="chip">Calms the nervous system</span>
+                <span class="chip">Sharper focus &amp; memory</span>
+                <span class="chip">Lowers blood pressure</span>
+                <span class="chip">Stronger breathing</span>
+              </div>
+              <a href="/research/">See the research &rarr;</a>
+            </li>
           </ul>
           <p class="note" style="margin-top:8px">More guides, downloads and reference material will be added here soon.</p>
         </div>
@@ -43,14 +52,18 @@ const guide = "/guide/?src=website";
     <div class="section">
       <div class="card">
         <span class="badge">Additional Resources · from our lineage</span>
-        <h3>Scripture discourses on YouTube</h3>
+        <h3>Discourses on Yoga Scriptures — YouTube</h3>
         <ul class="rlist">
           <li><a href="https://www.youtube.com/watch?v=FMRhXn93sfQ&list=PLXIZhgO2mfLviYHy3IDbuA08akAOt7nT2" target="_blank" rel="noopener">Swara Yoga Sutras — full playlist</a>, explained by <b>Ma Shakti Devpriya Ji</b>.</li>
-          <li><a href="https://www.youtube.com/watch?v=lQ4L7GQDyoU&list=PLXIZhgO2mfLue_ExCXeB1rQbmITcwKLUI" target="_blank" rel="noopener">Patanjali Yoga Sutras — discourse playlist</a> by <b>Acharya Agyaatadarshan Anandnath Ji</b>.</li>
+          <li><a href="https://www.youtube.com/watch?v=lQ4L7GQDyoU&list=PLXIZhgO2mfLue_ExCXeB1rQbmITcwKLUI" target="_blank" rel="noopener">Patanjali Yoga Sutras — discourse playlist</a>, explained by <b>Acharya Agyaatadarshan Anandnath Ji</b>.</li>
         </ul>
-        <p class="note" style="margin-top:8px">Watch on the lineage's channels for the complete teachings.</p>
       </div>
     </div>
 
   </main>
+
+  <style>
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .chip { background: #e8f0f2; color: var(--teal); font-weight: 500; font-size: 13px; padding: 5px 12px; border-radius: 20px; line-height: 1.3; }
+  </style>
 </Base>
