@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="About · Yoga Shakti with Ashish Anant" description="Yoga Shakti — ancient wisdom rooted in the Yogic and Tantric traditions, carried in a living Guru–Shishya lineage." active="/about/">
   <main class="wrap page">
+    <figure class="about-hero"><img src="/assets/about-hero.jpg" alt="A serene Himalayan sunrise over misty hills with a temple diya and flowers" /></figure>
     <div class="kicker">Guru–Shishya Parampara</div>
     <h1>About Yoga Shakti</h1>
     <p class="lead">Yoga Shakti is a space to come back to yourself.</p>
@@ -49,4 +50,9 @@ import Base from '../layouts/Base.astro';
     </div>
 
   </main>
+
+  <style>
+    .about-hero { margin: 0 0 22px; border-radius: 16px; overflow: hidden; }
+    .about-hero img { display: block; width: 100%; height: auto; }
+  </style>
 </Base>
