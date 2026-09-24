@@ -1,11 +1,11 @@
 name: Deploy site to GitHub Pages
 
 on:
-  # Manual publishing only: the site goes live ONLY when you click "Run workflow".
-  # Committing/pushing saves your work to GitHub but does NOT publish.
-  # To return to auto-publish on every push, uncomment the two "push" lines below.
-  # push:
-  #   branches: [ main ]
+  # Auto-publish: the site rebuilds and goes live automatically on every push to main.
+  # (You can also still trigger it manually from the Actions tab.)
+  # To go back to manual-only publishing, comment out the two "push" lines below.
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
