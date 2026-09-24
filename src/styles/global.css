@@ -348,7 +348,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,.c
 .guru-hero{margin:16px 0 6px}
 .guru-hero img{width:100%;height:auto;display:block;border-radius:14px}
 .guru-hero figcaption{font-size:13px;color:#5F584F;margin-top:10px;text-align:center;line-height:1.5}
-.guru .shloka-img{max-width:560px}
+.guru .shloka-img{max-width:680px;margin-left:auto;margin-right:auto}
 
 /* Sessions page header banner (stopgap decorative motif; swap for a real teaching photo later) */
 .sess-hero{margin:2px 0 22px;border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(122,30,42,.06)}
