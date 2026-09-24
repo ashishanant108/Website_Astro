@@ -3,6 +3,7 @@
   --muted:#8a8378; --line:#E4DCCC;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}   /* ensure the hidden attribute always wins over display classes */
 html,body{margin:0}
 body{background:var(--cream);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}
