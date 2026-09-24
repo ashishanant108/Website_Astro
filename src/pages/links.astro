@@ -52,18 +52,20 @@ const nextWorkshop = { when: "29 Nov 2026 · 7 PM IST", href: workshopReg };
     *{box-sizing:border-box}
     body{margin:0;background:var(--cream);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
     .wrap{max-width:480px;margin:0 auto;padding:28px 22px 40px;text-align:center;min-height:100vh}
-    .hero{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:8px;text-align:center}
+    .hero{display:flex;align-items:center;gap:16px;margin-top:8px;text-align:left}
+    .hero .hcol{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
     .hero .hlogo{width:150px;max-width:100%;height:auto;display:block}
-    .hero .avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;object-position:top center;border:3px solid #fff;box-shadow:0 4px 14px rgba(43,43,43,.12)}
-    .lead{margin-top:2px}
+    .hero .avatar{flex:0 0 auto;width:152px;height:152px;border-radius:50%;object-fit:cover;object-position:center;border:3px solid #fff;box-shadow:0 4px 14px rgba(43,43,43,.12)}
+    .lead{margin-top:12px}
     .lead-h{font-size:17px;font-weight:500;color:var(--ink);line-height:1.3;margin:0}
     .lead-sub{font-size:13px;color:#605A52;line-height:1.6;font-weight:300;margin:6px 0 0}
     .handle{font-size:13px;color:var(--teal);letter-spacing:.04em;margin-top:14px;text-align:center}
     .handle a{color:var(--teal);text-decoration:none}
     @media (max-width:380px){
       .wrap{padding-left:16px;padding-right:16px}
-      .hero .hlogo{width:132px}
-      .hero .avatar{width:104px;height:104px}
+      .hero{gap:12px}
+      .hero .hlogo{width:120px}
+      .hero .avatar{width:120px;height:120px}
     }
     .rule{width:30px;height:2px;background:var(--gold);border-radius:2px;margin:16px auto 14px}
     .banner{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 16px;margin-bottom:16px;background:#FBF4E4;border:1px solid var(--gold);border-radius:14px;text-decoration:none;color:var(--ink)}
@@ -96,12 +98,14 @@ const nextWorkshop = { when: "29 Nov 2026 · 7 PM IST", href: workshopReg };
 <body>
   <main class="wrap">
     <div class="hero">
-      <img class="hlogo" src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
-      <img class="avatar" src="/assets/ashish-avatar.jpg" alt="Ashish Anant" />
-      <div class="lead">
-        <p class="lead-h">Awaken the Shakti within.</p>
-        <p class="lead-sub">Ancient wisdom rooted in the Yogic and Tantric traditions — for body, mind and spirit.</p>
+      <div class="hcol">
+        <img class="hlogo" src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
+        <div class="lead">
+          <p class="lead-h">Awaken the Shakti within.</p>
+          <p class="lead-sub">Ancient wisdom rooted in the Yogic and Tantric traditions — for body, mind and spirit.</p>
+        </div>
       </div>
+      <img class="avatar" src="/assets/ashish-avatar.jpg" alt="Ashish Anant" />
     </div>
     <div class="handle"><a href="https://www.instagram.com/yogashaktiwithashishanant/" target="_blank" rel="noopener">@yogashaktiwithashishanant</a></div>
     <div class="rule"></div>
