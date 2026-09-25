@@ -9,7 +9,7 @@ export const site = {
   tagline: "Yoga rooted in Tantra and the classical texts — breath, calm, and healing.",
   signoff: "॥ SHIVOHAM ॥",
 
-  GA_ID: "",        // GA4 id e.g. "G-XXXXXXXXXX" (blank = analytics off)
+  GA_ID: "G-LW2ETQ7QGN",        // GA4 id (analytics on; loads after cookie consent)
   WEBAPP_URL: "https://script.google.com/macros/s/AKfycbwhnfVyoPvF7ymlbBuypAagnBkn0zHjA0y-HnIYJMls7PGzIlt8RSGRONoPpos4hLUYyQ/exec",   // Apps Script /exec URL (native guide form + click logging)
 
   // Events auto-feed: paste the two "Publish to web -> CSV" links from the YS Events sheet.
