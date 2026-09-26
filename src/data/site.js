@@ -22,8 +22,8 @@ export const site = {
   // Built-in fallback for the weekly timetable (the sheet's Schedule tab overrides it live).
   // key must match the Key column in the sheet. was = regular price in ₹/month (blank = no strike-through).
   schedule: [
-    { key: "morning", days: "Mon, Wed & Fri", time: "6:00–7:00 AM IST", was: 2000, now: "FREE", show: true },
-    { key: "evening", days: "Sunday",         time: "5:00 PM IST",      was: 1000, now: "FREE", show: true }
+    { key: "morning", name: "Morning sessions (Hinglish)", days: "Mon, Wed & Fri", time: "6:00–7:00 AM IST", was: 2000, now: "FREE", show: true },
+    { key: "evening", name: "Sunday evening (English)",    days: "Sunday",         time: "5:00 PM IST",      was: 1000, now: "FREE", show: true }
   ],
   statsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQurwDFxEAjf94Per8cVx0Uo3xmliRXFq2DRg_98H7yaBg0OZ_RUQaHVEAiXPVniyPBLsdJyGiUOn8K/pub?gid=1155328677&single=true&output=csv",      // published CSV of the "Stats" tab (for a future "by the numbers" section)
 

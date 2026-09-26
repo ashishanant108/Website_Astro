@@ -1,6 +1,7 @@
 // Real, consented testimonials. photo: null → a lettered avatar is shown instead.
 // tag routes to pages: "sessions" → Yoga Sessions page; "nadi-shodhana" → Nadi Shodhana page.
 // Each of those pages shows the first 2 matching its tag.
+// excerpt (optional) = a short verbatim line from the quote, used on the registration pages.
 export const testimonials = [
   {
     id: "pablo",
@@ -8,6 +9,7 @@ export const testimonials = [
     place: "Chile",
     photo: "/assets/pablo.jpg",
     tag: "sessions",
+    excerpt: "After each practice I feel deeply relaxed and, at the same time, alert.",
     quote: "After each practice I feel deeply relaxed and, at the same time, alert. The teaching is completely practical — in a single session the whole body is worked. Ashish shows admirable patience and commitment, always willing to answer any question. I now have more energy, better emotional balance, and clearer awareness — even my colds pass faster. I sincerely recommend him."
   },
   {
@@ -24,6 +26,7 @@ export const testimonials = [
     place: "USA",
     photo: "/assets/tatyana.jpg",
     tag: "nadi-shodhana",
+    excerpt: "After practice I feel balanced energy, calmness, and ready for the demanding world outside.",
     quote: "It's a wonderful opportunity to join Nadi Shodhana with Ashish ji. After practice I feel balanced energy, calmness, and ready for the demanding world outside. Nadi Shodhana gives strength and clarity, and has changed my life energies for good. I enjoy the welcoming group energy and Ashish ji's calm teaching style, and I'm deeply grateful for his selfless service and kindness."
   },
   {

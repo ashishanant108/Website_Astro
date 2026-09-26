@@ -1,40 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import RegisterForm from '../../components/RegisterForm.astro';
-import ScheduleFeed from '../../components/ScheduleFeed.astro';
+import RegisterPage from '../../components/RegisterPage.astro';
 ---
 <Base title="Register · Live Yoga Sessions · Yoga Shakti" description="Register for the complimentary live yoga sessions with Ashish Anant: breath, movement and stillness, guided in real time." active="/sessions/" ogImage="https://ashishanant.com/assets/og-sessions.jpg" ogImageAlt="FREE live yoga with Ashish Anant — breath, movement and stillness. Beginner-friendly; all levels.">
-  <main class="wrap page">
-    <div class="kicker">Complimentary · live with Ashish Anant</div>
-    <h1>Register for Live Yoga Sessions</h1>
-    <p class="lead">Register once. We'll add you to the sessions group on WhatsApp, where the joining link is shared before each class.</p>
-
-    <div class="section">
-      <div class="grid cols-2 reg-grid">
-        <div class="card">
-          <span class="badge">Takes about a minute</span>
-          <h3>Your details</h3>
-          <RegisterForm type="shakti" button="Register for the sessions →" />
-        </div>
-        <div class="card">
-          <span class="badge">What happens next</span>
-          <h3>Simple and unhurried</h3>
-          <ol class="rlist steps">
-            <li>You register here, once.</li>
-            <li>You join the sessions WhatsApp group.</li>
-            <li>Before each class, the joining link is shared in the group.</li>
-            <li>You join live, practise with us, and go at your own pace.</li>
-          </ol>
-          <p class="note" style="margin-top:10px">Beginner or seasoned, you're welcome. <a href="/sessions/yoga/">More about the sessions →</a></p>
-        </div>
-      </div>
-    </div>
-  </main>
-  <ScheduleFeed />
-  <style>
-    .reg-grid { align-items: start; }
-    .steps { padding-left: 20px; }
-    .steps li { margin-bottom: 6px; }
-    @media (max-width: 720px) { .reg-grid { grid-template-columns: 1fr; } }
-  </style>
+  <RegisterPage type="shakti" />
 </Base>

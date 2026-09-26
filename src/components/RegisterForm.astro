@@ -10,7 +10,9 @@ const defaultSource = reg.defaultSource;
 const waGroup = reg.waGroup || '';
 const waDirect = site.whatsappDirect;
 const heal = type === 'heal';
-const eventsUrl = heal ? (site.eventsCsvUrl || '') : '';
+const shareUrl = 'https://wa.me/?text=' + encodeURIComponent((heal
+  ? 'I just registered for the complimentary Nadi Shodhana workshop with Ashish Anant. Join me: https://ashishanant.com/nadi-shodhana/register/?src=share'
+  : 'I just joined the complimentary live yoga sessions with Ashish Anant. Join me: https://ashishanant.com/sessions/register/?src=share'));
 const ages = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
 const codes = ['+91', '+1', '+44', '+971', '+65', '+61'];
 const reasons = ['Stress/anxiety', 'BP/Hypertension', 'Weight', 'Flexibility/mobility', 'General wellness', 'Other'];
@@ -84,36 +86,32 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
     <p class="fineprint">We'll only use your details for this registration and occasional practice invitations. No spam — unsubscribe anytime.</p>
   </form>
 
-  <div class="rthanks card" hidden tabindex="-1">
+  <div class="rthanks" hidden tabindex="-1">
     <h2>Namaste<span class="t-name"></span> 🙏</h2>
     <p class="t-lead">You're registered for {heal ? 'the Nadi Shodhana workshop' : 'the Live Yoga Sessions'}.</p>
-    {waGroup ? (
-      <div class="t-step">
-        <span class="t-kicker">One last step</span>
-        <p>Join the WhatsApp group. {heal ? 'The invite and joining link are shared there.' : 'The joining link for each class is shared there.'}</p>
-        <p><a class="cta wa" href={waGroup} target="_blank" rel="noopener"><Fragment set:html={waIcon} /> Join the WhatsApp group</a></p>
-        <p class="t-note">Please join now, before you close this page.</p>
-      </div>
-    ) : (
-      <p>We'll message you on WhatsApp shortly with the group link and joining details.</p>
-    )}
-    {heal ? (
-      <p class="t-when" data-next-workshop hidden></p>
-    ) : (
-      <p class="t-when">
-        {site.schedule.filter((s) => s.show).map((s, i) => (
-          <span data-sched={s.key}>{i > 0 && <br />}<span data-f="when">Every {s.days}</span> · <span data-f="time">{s.time}</span></span>
-        ))}
-      </p>
-    )}
+    <ol class="t-steps">
+      <li><span class="dot ok" aria-hidden="true">✓</span><div><b>Registered</b><div class="small">Your details are saved.<span class="t-mailnote" hidden> We've also emailed you the group link.</span></div></div></li>
+      {waGroup && (
+        <li><span class="dot" aria-hidden="true">2</span><div><b>Join the WhatsApp group</b>
+          <div class="small">{heal ? 'The invite and joining link are shared there.' : 'The joining link for each class is shared there.'}</div>
+          <div class="t-act"><a class="cta wa" href={waGroup} target="_blank" rel="noopener"><Fragment set:html={waIcon} /> Join the WhatsApp group</a></div></div></li>
+      )}
+      <li data-save hidden><span class="dot" aria-hidden="true">3</span><div><b>Save the date</b>
+        <div class="t-date" data-save-line></div>
+        <div class="t-act" data-cal-buttons></div>
+        {!heal && <div class="small">Each button adds a repeating weekly event, so every session is blocked in one go.</div>}</div></li>
+    </ol>
+    {waGroup ? <p class="t-note">Please join the group now, before you close this page.</p>
+             : <p>We'll message you on WhatsApp shortly with the group link and joining details.</p>}
     {heal && <p>We are glad that you have chosen this step in your yogic journey. 🌿</p>}
-    <p>{heal ? 'See you soon' : 'See you on the mat'} 🧘‍♂️</p>
+    {!heal && <p>See you on the mat 🧘‍♂️</p>}
     <p class="t-sign">In the service of divinity within you,<br /><b>Ashish Anant</b></p>
+    <div class="t-act"><a class="btn ghost" href={shareUrl} target="_blank" rel="noopener"><Fragment set:html={waIcon} /> Invite a friend</a></div>
     <p class="note">Questions? <a href={waDirect} target="_blank" rel="noopener">Message us on WhatsApp</a>.</p>
   </div>
 </div>
 
-<script define:vars={{ fid, type, WEBAPP_URL, SRC_MAP, defaultSource, eventsUrl }}>
+<script define:vars={{ fid, type, WEBAPP_URL, SRC_MAP, defaultSource }}>
   (function () {
     var wrap = document.getElementById(fid);
     if (!wrap) return;
@@ -130,32 +128,6 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
     // Lead ID from a comment→DM link (?ref=L…) so the engine updates that lead instead of adding a new one
     var ref = qs.get('ref') || '';
     if (!/^[A-Za-z0-9-]{3,40}$/.test(ref)) ref = '';
-
-    // Nadi: show the next workshop date from the Events sheet on the thank-you screen
-    if (eventsUrl) {
-      var slot = thanks.querySelector('[data-next-workshop]');
-      var MON = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-      var pd = function (s) { s = (s || '').trim(); var m = s.match(/^(\d{1,2})[-\/\s]([A-Za-z]{3,})[-\/\s](\d{4})$/);
-        if (m && MON[m[2].slice(0,3).toLowerCase()] != null) return new Date(+m[3], MON[m[2].slice(0,3).toLowerCase()], +m[1]);
-        m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; };
-      fetch(eventsUrl + (eventsUrl.indexOf('?') > -1 ? '&' : '?') + 'cb=' + Date.now()).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) {
-        var rows = t.split(/\r?\n/).map(function (l) { var o = [], c = '', q = false; for (var i = 0; i < l.length; i++) { var ch = l[i];
-          if (q) { if (ch === '"') { if (l[i+1] === '"') { c += '"'; i++; } else q = false; } else c += ch; }
-          else if (ch === '"') q = true; else if (ch === ',') { o.push(c); c = ''; } else c += ch; } o.push(c); return o; });
-        var h = rows.findIndex(function (r) { var l = r.map(function (x) { return x.toLowerCase().trim(); }); return l.indexOf('title') > -1 && l.indexOf('date') > -1; });
-        if (h < 0) return; var H = rows[h].map(function (x) { return x.toLowerCase().trim(); });
-        var iD = H.indexOf('date'), iT = H.indexOf('time'), iS = H.indexOf('status');
-        var today = new Date(); today.setHours(0,0,0,0); var best = null;
-        rows.slice(h + 1).forEach(function (r) { var d = pd(r[iD]); if (!d || d < today) return;
-          if (iS > -1 && (r[iS] || '').trim().toLowerCase() === 'cancelled') return;
-          if (!best || d < best.d) best = { d: d, t: (iT > -1 ? r[iT] : '') || '' }; });
-        if (best && slot) {
-          var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          slot.textContent = 'Next workshop · ' + best.d.getDate() + ' ' + M[best.d.getMonth()] + ' ' + best.d.getFullYear() + (best.t ? ' · ' + best.t.trim() : '');
-          slot.hidden = false;
-        }
-      }).catch(function () {});
-    }
 
     form.cc.addEventListener('change', function () {
       var o = form.cc.value === 'other';
@@ -208,10 +180,12 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
         try { if (window.gtag) gtag('event', 'generate_lead', { form: type, source: source }); } catch (e2) {}
         var first = name.split(/\s+/)[0];
         thanks.querySelector('.t-name').textContent = first ? ', ' + first : '';
+        if (email) thanks.querySelector('.t-mailnote').hidden = false;
+        var root = wrap.closest('.reg-root'); if (root) root.classList.add('is-done');
         form.hidden = true;
         thanks.hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         thanks.focus();
-        thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }).catch(function () {
         btn.disabled = false; btn.textContent = label;
         fail('Something went wrong sending your details. Please try again, or message us on WhatsApp.');
@@ -244,17 +218,22 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
   .rform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
   .rform .rbtn { width: 100%; }
   .rform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
-  .rthanks { text-align: center; }
-  .rthanks h2 { margin-top: 0; }
+  .rthanks h2 { margin: 0 0 4px; font-size: 24px; font-weight: 400; }
   .rthanks:focus { outline: none; }
-  .rthanks .t-lead { font-size: 17px; }
-  .rthanks .t-step { border: 1.5px solid var(--gold); border-radius: 16px; padding: 16px 18px 12px; margin: 16px auto; max-width: 480px; background: #fff; }
-  .rthanks .t-kicker { display: block; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; color: #a3341f; margin-bottom: 4px; }
-  .rthanks .cta.wa { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #1f8f4e; font-weight: 500; white-space: nowrap; padding: 12px 22px; }
-  .rthanks .t-when [data-f="time"] { white-space: nowrap; }
-  .rthanks .t-note { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .rthanks .t-when { display: inline-block; background: var(--cream); border-radius: 10px; padding: 7px 14px; font-size: 14px; line-height: 1.6; font-variant-numeric: tabular-nums; }
-  .theme-heal .rthanks .t-when { background: #EEF8FB; }
+  .rthanks .t-lead { font-size: 16px; margin: 0 0 6px; }
+  .rthanks .t-steps { list-style: none; margin: 16px 0 6px; padding: 0; display: grid; gap: 16px; }
+  .rthanks .t-steps li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+  .rthanks .t-steps b { font-weight: 500; }
+  .rthanks .dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 500; border: 1.5px solid var(--gold); color: var(--gold-ink); background: #fff; }
+  .rthanks .dot.ok { background: #1f8f4e; border-color: #1f8f4e; color: #fff; }
+  .rthanks .small { font-size: 13px; color: var(--muted); }
+  .rthanks .t-date { margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .rthanks .t-act { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+  .rthanks .t-act .btn, .rthanks .t-act .cta { margin: 0; }
+  .rthanks .cta.wa { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #1f8f4e; font-weight: 500; white-space: nowrap; padding: 11px 20px; }
+  .rthanks .btn.ghost { display: inline-flex; align-items: center; gap: 8px; }
+  .rthanks .btn.cal { white-space: nowrap; font-size: 14px; padding: 9px 16px; }
+  .rthanks .t-note { font-size: 14px; font-weight: 500; color: #a3341f; margin-top: 10px; }
   .rthanks .t-sign { margin-top: 14px; }
   @media (max-width: 560px) { .rform .row2 { grid-template-columns: 1fr; } }
 </style>

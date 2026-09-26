@@ -1,68 +1,115 @@
 ---
+// Yogic Breathing Guide — gated capture (name, email, WhatsApp) → Apps Script → emailed guide.
+// Layout 1 (form + live side panel), same pattern as the registration pages.
 import Base from '../layouts/Base.astro';
+import NextUp from '../components/NextUp.astro';
 import { site, SRC_MAP } from '../data/site.js';
 const WEBAPP_URL = site.WEBAPP_URL || "";
-const GA_ID = site.GA_ID || "";
-const nadi = "/nadi-shodhana/?src=yogicbreathingguide";
-const sessions = "/sessions/?src=yogicbreathingguide";
-const waGroup = site.whatsappCommunity;
+const waCommunity = site.whatsappCommunity;
+const waDirect = site.whatsappDirect;
+const codes = ['+91', '+1', '+44', '+971', '+65', '+61'];
+const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatadarshan Anandnath ji. Rooted in Yogic and Tantric traditions.';
+const waIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 8.9c0 1.8 1.3 3.5 1.5 3.7s2.6 4 6.3 5.4c2.3.9 2.3.6 2.7.6s1.4-.6 1.6-1.1.2-1 .1-1.1z"/></svg>';
 ---
 <Base title="Yogic Breathing Guide · Yoga Shakti" description="Get the complimentary Yogic Breathing Guide — a simple 3-step practice to breathe fully, calm the mind and begin. Delivered free to your inbox." active="/resources/" ogImage="https://ashishanant.com/assets/og-guide.jpg" ogImageAlt="FREE Yogic Breathing Guide — calm, focus, better sleep. 3 steps, 5 minutes a day, delivered to your inbox.">
-  <main class="wrap page">
-    <div class="kicker">Complimentary guide</div>
-    <h1>The Yogic Breathing Guide</h1>
-    <p class="lead">Breathe the way your body was made to — in three simple steps. Enter your details and we'll email your guide right away.</p>
+  <main class="wrap page reg-root" data-type="guide">
+    <div class="pre-only">
+      <div class="kicker">Complimentary guide</div>
+      <h1>The Yogic Breathing Guide</h1>
+      <p class="lead">Breathe the way your body was made to — in three simple steps. Enter your details and we'll email your guide right away.</p>
+    </div>
 
-    <div class="section">
-      <div class="grid cols-2 gform-grid" id="gGrid">
-        <div class="card">
+    <div class="reg-grid">
+      <div class="card reg-main">
+        <div class="pre-only">
           <span class="badge">Free PDF · to your inbox</span>
           <h3>Where should we send it?</h3>
-
-          <form id="guideForm" class="gform" novalidate>
-            <label class="fld">
-              <span>Name</span>
-              <input name="name" type="text" autocomplete="name" required />
-            </label>
-            <label class="fld">
-              <span>Email</span>
-              <input name="email" type="email" autocomplete="email" inputmode="email" required />
-            </label>
-            <label class="fld">
-              <span>WhatsApp number <em>(with country code)</em></span>
-              <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 …" required />
-              <small class="hint">So we can add you to the group for the guide &amp; workshop invites.</small>
-            </label>
-            <!-- honeypot: hidden from humans, catches bots -->
-            <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-            <p class="err" id="gErr" hidden></p>
-            <button class="btn" type="submit" id="gBtn">Email me the guide →</button>
-            <p class="fineprint">We'll only use your details to send the guide and occasional practice invitations. No spam — unsubscribe anytime.</p>
-          </form>
         </div>
 
-        <div class="card">
-          <span class="badge">What's inside</span>
-          <h3>A simple, calming practice</h3>
-          <ul class="rlist">
-            <li>The full, natural three-part breath — belly, chest and shoulder</li>
+        <form id="guideForm" class="gform" novalidate>
+          <label class="fld">
+            <span>Name <b class="req" aria-hidden="true">*</b></span>
+            <input name="name" type="text" autocomplete="name" maxlength="80" required />
+          </label>
+          <label class="fld">
+            <span>Email <b class="req" aria-hidden="true">*</b></span>
+            <input name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" required />
+            <small class="hint">Your guide arrives here within a few minutes.</small>
+          </label>
+          <div class="fld">
+            <span id="g-ph">WhatsApp number <b class="req" aria-hidden="true">*</b></span>
+            <div class="phone" role="group" aria-labelledby="g-ph">
+              <select name="cc" aria-label="Country code">
+                {codes.map((c) => <option value={c}>{c}</option>)}
+                <option value="other">Other</option>
+              </select>
+              <input name="ccOther" type="text" inputmode="numeric" maxlength="4" placeholder="e.g. 63" aria-label="Your country dialing code (digits)" hidden />
+              <input name="mobile" type="tel" autocomplete="tel-national" inputmode="numeric" maxlength="15" placeholder="Mobile number" aria-label="Mobile number" required />
+            </div>
+            <small class="hint">Without the country code, no spaces. So we can invite you to the complimentary workshops.</small>
+          </div>
+          <!-- honeypot: hidden from humans, catches bots -->
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <p class="err" id="gErr" role="alert" hidden></p>
+          <button class="btn" type="submit" id="gBtn">Email me the guide →</button>
+          <p class="fineprint">We'll only use your details to send the guide and occasional practice invitations. No spam — unsubscribe anytime.</p>
+        </form>
+
+        <div id="gThanks" class="gthanks" hidden tabindex="-1">
+          <h2>Namaste<span class="t-name"></span> 🙏</h2>
+          <p class="t-lead">Your Yogic Breathing Guide is on its way.</p>
+          <ol class="t-steps">
+            <li><span class="dot ok" aria-hidden="true">✓</span><div><b>Check your inbox</b>
+              <div class="small">We've emailed the guide to <b class="em"></b>. If it isn't there in a few minutes, look in Promotions or Spam.</div></div></li>
+            <li><span class="dot" aria-hidden="true">2</span><div><b>Begin today</b>
+              <div class="small">Start with Step 1, the Belly Breath. Three steps, five minutes a day.</div></div></li>
+            <li data-save hidden><span class="dot" aria-hidden="true">3</span><div><b>Go deeper: Nadi Shodhana</b>
+              <div class="small">A complimentary live workshop on the healing breath, taught step by step.</div>
+              <div class="t-date" data-save-line></div>
+              <div class="t-act"><a class="btn" href="/nadi-shodhana/register/?src=Guide">Register for the workshop →</a></div></div></li>
+          </ol>
+          <p class="t-sign">In the service of divinity within you,<br /><b>Ashish Anant</b></p>
+          <div class="t-act"><a class="btn ghost" href={waCommunity} target="_blank" rel="noopener"><Fragment set:html={waIcon} /> Join the updates community</a></div>
+          <p class="note">Didn't get the email? <a href={waDirect} target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll send it across.</p>
+        </div>
+      </div>
+
+      <aside class="reg-side">
+        <div class="card cover pre-only">
+          <img src="/assets/guide-cover.jpg" alt="Cover of The Yogic Breathing Guide" width="560" height="840" loading="eager" />
+          <span class="cover-tag">3 steps · 5 minutes a day</span>
+        </div>
+        <div class="card pre-only">
+          <h3>What's inside</h3>
+          <ul class="ticks">
+            <li>The full, natural three-part breath: belly, chest and shoulder</li>
             <li>How to join them into one smooth, calming wave</li>
-            <li>How to practise safely — the do's and don'ts</li>
+            <li>How to practise safely: the do's and don'ts</li>
           </ul>
-          <p class="note" style="margin-top:10px">Yogic breathing is also part of our <a href={sessions}>free live yoga sessions</a> — come practise with us.</p>
         </div>
-      </div>
-
-      <div id="gThanks" class="card thanks" hidden>
-        <h2>Namaste — it's on its way. 🌿</h2>
-        <p>We've emailed your Yogic Breathing Guide to <b class="em"></b>. It should arrive within a few minutes — if you don't see it, please check your Promotions or Spam folder.</p>
-        <p class="note">Didn't get it? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll send it across.</p>
-      </div>
+        <div class="card side-next" data-next-card hidden>
+          <div class="live">Next workshop · Nadi Shodhana</div>
+          <div class="big" data-next-date></div>
+          <div class="small" data-next-local hidden></div>
+          <span class="next-rel" data-next-rel></span>
+          <p class="side-note">Complimentary · the natural next step after the guide.</p>
+        </div>
+        <div class="card post-only">
+          <h3>Practise live</h3>
+          <p>Live Yoga Sessions with Ashish Anant, complimentary. Breath, movement and stillness, guided in real time.</p>
+          <a class="btn ghost" href="/sessions/yoga/?src=Guide">See the sessions →</a>
+        </div>
+        <div class="card teacher">
+          <img src="/assets/ashish-avatar.jpg" alt="Ashish Anant" width="56" height="56" />
+          <div><b>Ashish Anant</b><p>{teacher}</p></div>
+        </div>
+      </aside>
     </div>
   </main>
+  <NextUp type="heal" />
 
-  <script define:vars={{ WEBAPP_URL, GA_ID, SRC_MAP, waGroup }}>
+  <script define:vars={{ WEBAPP_URL, SRC_MAP }}>
     (function () {
       var form = document.getElementById('guideForm');
       var thanks = document.getElementById('gThanks');
@@ -70,12 +117,12 @@ const waGroup = site.whatsappCommunity;
       var btn = document.getElementById('gBtn');
       if (!form) return;
 
-      // resolve funnel SOURCE from ?src=
-      var raw = (new URLSearchParams(location.search).get('src') || '').toLowerCase();
+      // funnel SOURCE from ?src= (known shortcut → SRC_MAP; any safe tag passes through)
       var rawTag = new URLSearchParams(location.search).get('src') || '';
-      var source = SRC_MAP[raw] || (/^[A-Za-z0-9-]{2,40}$/.test(rawTag) ? rawTag : 'Website-Guide');
+      var source = SRC_MAP[rawTag.toLowerCase()] || (/^[A-Za-z0-9-]{2,40}$/.test(rawTag) ? rawTag : 'Website-Guide');
 
-      function fail(msg) { err.textContent = msg; err.hidden = false; }
+      form.cc.addEventListener('change', function () { var o = form.cc.value === 'other'; form.ccOther.hidden = !o; if (o) form.ccOther.focus(); });
+      function fail(msg, el) { err.textContent = msg; err.hidden = false; if (el) el.focus(); }
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -84,15 +131,16 @@ const waGroup = site.whatsappCommunity;
 
         var name = form.name.value.trim();
         var email = form.email.value.trim();
-        var whatsapp = form.whatsapp.value.trim();
-        if (!name) return fail('Please enter your name.');
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please enter a valid email address.');
-        if (whatsapp.replace(/\D/g, '').length < 8) return fail('Please enter your WhatsApp number with country code.');
-
+        var cc = form.cc.value === 'other' ? form.ccOther.value.replace(/\D/g, '') : form.cc.value.replace('+', '');
+        var mobile = form.mobile.value.replace(/\D/g, '').replace(/^0+/, '');
+        if (!name) return fail('Please enter your name.', form.name);
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please enter a valid email address.', form.email);
+        if (!cc) return fail('Please type your country dialing code (digits only).', form.ccOther);
+        if (mobile.length < 6 || mobile.length > 14) return fail('Please enter your WhatsApp number (digits only, without the country code).', form.mobile);
         if (!WEBAPP_URL) { return fail('The form is not connected yet — please message us on WhatsApp and we’ll send your guide.'); }
 
         btn.disabled = true; btn.textContent = 'Sending…';
-        var payload = { magnet: 'Yogic Breathing Guide', name: name, email: email, whatsapp: whatsapp, source: source };
+        var payload = { magnet: 'Yogic Breathing Guide', name: name, email: email, whatsapp: '+' + cc + mobile, source: source };
 
         fetch(WEBAPP_URL, {
           method: 'POST', mode: 'no-cors',
@@ -100,11 +148,14 @@ const waGroup = site.whatsappCommunity;
           body: JSON.stringify(payload)
         }).then(function () {
           try { if (window.gtag) gtag('event', 'generate_lead', { magnet: 'yogic-breathing-guide', source: source }); } catch (e2) {}
+          var first = name.split(/\s+/)[0];
+          thanks.querySelector('.t-name').textContent = first ? ', ' + first : '';
           thanks.querySelector('.em').textContent = email;
-          var grid = document.getElementById('gGrid');
-          if (grid) grid.hidden = true;
+          var root = document.querySelector('.reg-root'); if (root) root.classList.add('is-done');
+          form.hidden = true;
           thanks.hidden = false;
-          thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          thanks.focus();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }).catch(function () {
           btn.disabled = false; btn.textContent = 'Email me the guide →';
           fail('Something went wrong sending your details. Please try again, or message us on WhatsApp.');
@@ -114,21 +165,38 @@ const waGroup = site.whatsappCommunity;
   </script>
 
   <style>
-    .gform-grid { align-items: start; }
-    .gform { margin-top: 6px; }
     .gform .fld { display: block; margin-bottom: 14px; }
     .gform .fld > span { display: block; font-weight: 500; font-size: 14px; margin-bottom: 5px; color: var(--ink); }
-    .gform .fld em { color: var(--muted); font-style: normal; font-weight: 400; }
-    .gform input { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; font: inherit; color: var(--ink); background: #fff; }
-    .gform input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,74,94,.12); }
-    .gform .hint { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .gform .req { color: #a3341f; font-weight: 500; }
+    .gform input[type=text], .gform input[type=email], .gform input[type=tel], .gform select { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; font: inherit; color: var(--ink); background: #fff; box-sizing: border-box; }
+    .gform input:focus, .gform select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,74,94,.12); }
+    .gform .phone { display: flex; gap: 8px; }
+    .gform .phone select { flex: 0 0 96px; width: 96px; }
+    .gform .phone input[name=ccOther] { flex: 0 0 84px; width: 84px; }
+    .gform .phone input[name=mobile] { flex: 1 1 auto; min-width: 0; }
+    .gform .hint { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.45; }
     .gform .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
     .gform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
     .gform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
     .gform .btn { width: 100%; }
-    .thanks { max-width: 620px; margin: 0 auto; text-align: center; }
-    .thanks h2 { margin-top: 0; }
-    .thanks .cta-row { justify-content: center; display: flex; }
-    @media (max-width: 720px) { .gform-grid { grid-template-columns: 1fr; } }
+    .gthanks h2 { margin: 0 0 4px; font-size: 24px; font-weight: 400; }
+    .gthanks:focus { outline: none; }
+    .gthanks .t-lead { font-size: 16px; margin: 0 0 6px; }
+    .gthanks .t-steps { list-style: none; margin: 16px 0 6px; padding: 0; display: grid; gap: 16px; }
+    .gthanks .t-steps li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+    .gthanks .t-steps b { font-weight: 500; }
+    .gthanks .dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 500; border: 1.5px solid var(--gold); color: var(--gold-ink); background: #fff; }
+    .gthanks .dot.ok { background: #1f8f4e; border-color: #1f8f4e; color: #fff; }
+    .gthanks .small { font-size: 13px; color: var(--muted); }
+    .gthanks .t-date { margin-top: 6px; font-variant-numeric: tabular-nums; }
+    .gthanks .t-act { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+    .gthanks .t-act .btn { margin: 0; }
+    .gthanks .btn.ghost { display: inline-flex; align-items: center; gap: 8px; }
+    .gthanks .t-sign { margin-top: 14px; }
+    .reg-root .cover { padding: 0 !important; overflow: hidden; position: relative; }
+    .reg-root .cover img { display: block; width: 100%; height: auto; }
+    .reg-root .cover-tag { position: absolute; left: 14px; bottom: 14px; background: #2e5b34; color: #fff; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 5px 12px; }
+    .reg-root .side-note { margin: 8px 0 0 !important; font-size: 13px !important; }
+    @media (max-width: 560px) { .gform .phone select { flex-basis: 84px; width: 84px; } }
   </style>
 </Base>

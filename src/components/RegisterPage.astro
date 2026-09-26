@@ -1,0 +1,124 @@
+---
+// Registration page (Layout 1 · side panel). Used by /sessions/register/ and /nadi-shodhana/register/.
+// Left: the form (becomes the 3-step thank-you screen after submit).
+// Right: a live panel. "Next class / next workshop" + calendar buttons are worked out in the browser
+// from the Schedule tab (sessions) or the Events tab (workshop) — see the script at the bottom.
+import RegisterForm from './RegisterForm.astro';
+import ScheduleFeed from './ScheduleFeed.astro';
+import NextUp from './NextUp.astro';
+import { site } from '../data/site.js';
+import { testimonials } from '../data/testimonials.js';
+const { type = 'shakti' } = Astro.props;
+const heal = type === 'heal';
+const t = testimonials.find((x) => x.tag === (heal ? 'nadi-shodhana' : 'sessions') && x.excerpt);
+const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatadarshan Anandnath ji. Rooted in Yogic and Tantric traditions.';
+---
+<main class="wrap page reg-root" data-type={type}>
+  <div class="pre-only">
+    <div class="kicker">{heal ? 'Complimentary workshop' : 'Complimentary · live with Ashish Anant'}</div>
+    <h1>{heal ? 'Register for Nadi Shodhana: The Healing Breath' : 'Register for Live Yoga Sessions'}</h1>
+    <p class="lead">{heal
+      ? "Register once. We'll add you to the workshop group on WhatsApp, where the invite and joining link are shared before the session."
+      : "Register once. We'll add you to the sessions group on WhatsApp, where the joining link is shared before each class."}</p>
+    <div class="next-bar" data-next-card hidden>
+      <span><b>{heal ? 'Next workshop' : 'Next live class'}:</b> <span data-next-date></span></span>
+      <span class="next-rel" data-next-rel></span>
+    </div>
+  </div>
+
+  <div class="reg-grid">
+    <div class="card reg-main">
+      <div class="pre-only">
+        <span class="badge">Takes about a minute</span>
+        <h3>Your details</h3>
+      </div>
+      <RegisterForm type={type} button={heal ? 'Register for the workshop →' : 'Register for the sessions →'} />
+    </div>
+
+    <aside class="reg-side">
+      <div class="card side-next pre-only" data-next-card hidden>
+        <div class="live">{heal ? 'Next workshop' : 'Next live class'}</div>
+        <div class="big" data-next-date></div>
+        <div class="small" data-next-local hidden></div>
+        <span class="next-rel" data-next-rel></span>
+        {heal && <div class="small" data-next-extra></div>}
+      </div>
+      {heal && (
+        <div class="card pre-only" data-next-none hidden>
+          <div class="live">Next workshop</div>
+          <p>New dates are being scheduled. Register and we'll invite you to the next one.</p>
+        </div>
+      )}
+
+      {heal ? (
+        <div class="card pre-only">
+          <h3>In the workshop</h3>
+          <ul class="ticks">
+            <li>Equally valuable for first-timers and for those deepening their practice</li>
+            <li>Taught as per tradition, step by step, with the do's and don'ts</li>
+            <li>A focused, guided session of around 90 minutes</li>
+          </ul>
+        </div>
+      ) : (
+        <div class="card pre-only">
+          <h3>Weekly timetable</h3>
+          <table class="tt">
+            <tbody>
+              {site.schedule.map((s) => (
+                <tr data-sched={s.key} hidden={!s.show}>
+                  <td><span data-f="when">Every {s.days}</span><br /><span class="small" data-f="time">{s.time}</span></td>
+                  <td class="tt-price"><span class="was" data-f="was" hidden={!s.was}>{s.was ? '₹' + Number(s.was).toLocaleString('en-IN') + '/mo' : ''}</span><span class="free" data-f="now">{s.now}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div class="card pre-only">
+        <h3>Keep ready</h3>
+        <ul class="ticks">
+          <li>A mat or a folded blanket</li>
+          <li>Comfortable clothes</li>
+          <li>A silent, distraction-free space</li>
+        </ul>
+      </div>
+
+      <div class="card post-only">
+        {heal ? (
+          <>
+            <h3>Also practise weekly</h3>
+            <p>Live Yoga Sessions with Ashish Anant, complimentary. Breath, movement and stillness, guided in real time.</p>
+            <a class="btn ghost" href="/sessions/yoga/">See the sessions →</a>
+          </>
+        ) : (
+          <>
+            <h3>While you wait</h3>
+            <p>The Yogic Breathing Guide: a simple, calming practice you can begin today.</p>
+            <a class="btn ghost" href="/guide/?src=Website-Registered">Get the guide →</a>
+          </>
+        )}
+      </div>
+
+      {t && (
+        <div class="card quote">
+          <p class="q">“{t.excerpt}”</p>
+          <div class="who">
+            {t.photo ? <img src={t.photo} alt="" width="36" height="36" /> : <span class="av" aria-hidden="true">{t.name.charAt(0)}</span>}
+            <span><b>{t.name}</b> · {t.place}</span>
+          </div>
+        </div>
+      )}
+
+      <div class="card teacher">
+        <img src="/assets/ashish-avatar.jpg" alt="Ashish Anant" width="56" height="56" />
+        <div><b>Ashish Anant</b><p>{teacher}</p></div>
+      </div>
+    </aside>
+  </div>
+</main>
+{!heal && <ScheduleFeed />}
+
+<NextUp type={type} />
+<!-- styles for .reg-root pages live in src/styles/global.css (shared with /guide/) -->
+
