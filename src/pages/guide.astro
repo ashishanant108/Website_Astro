@@ -72,7 +72,8 @@ const waGroup = site.whatsappCommunity;
 
       // resolve funnel SOURCE from ?src=
       var raw = (new URLSearchParams(location.search).get('src') || '').toLowerCase();
-      var source = SRC_MAP[raw] || 'Website-Guide';
+      var rawTag = new URLSearchParams(location.search).get('src') || '';
+      var source = SRC_MAP[raw] || (/^[A-Za-z0-9-]{2,40}$/.test(rawTag) ? rawTag : 'Website-Guide');
 
       function fail(msg) { err.textContent = msg; err.hidden = false; }
 

@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { site } from '../data/site.js';
 import { testimonials } from '../data/testimonials.js';
 const heal = site.forms.heal;
-const register = heal.url + '?usp=pp_url&' + heal.entry + '=Website-Nadi';
+const register = site.registration.heal.path;   // on-site form (was the HEAL Google Form)
 const feats = testimonials.filter(x => x.tag === 'nadi-shodhana').slice(0, 2);
 const eventsUrl = site.eventsCsvUrl || "";
 const settingsUrl = site.settingsCsvUrl || "";
@@ -105,7 +105,7 @@ const workshops = [
         ))}
         <p class="note" id="noUpcoming" style="display:none">New workshop dates are being scheduled — register and we'll invite you to the next one, or see the <a href="/events/" style="color:var(--teal)">schedule</a>.</p>
       </div>
-      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register FREE</a></div>
+      <div class="cta-row"><a class="cta" href={register}>Register FREE</a></div>
       <p class="wa-fallback">Any questions? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
     </div>
 
@@ -116,7 +116,7 @@ const workshops = [
         <details><summary>Do I need any experience?</summary><p>None at all. It's taught step by step — beginners are welcome.</p></details>
         <details><summary>Is Nadi Shodhana safe?</summary><p>Practised correctly, yes. The workshop teaches the do's and don'ts so you practise safely.</p></details>
         <details><summary>How long is it?</summary><p>A focused, guided workshop lasting around 90 minutes.</p></details>
-        <details><summary>How do I join?</summary><p><a href={register} target="_blank" rel="noopener">Register here</a> — you'll then be added to the workshop WhatsApp group, where the invite and joining link are shared before the session.</p></details>
+        <details><summary>How do I join?</summary><p><a href={register}>Register here</a> — you'll then be added to the workshop WhatsApp group, where the invite and joining link are shared before the session.</p></details>
       </div>
     </div>
 

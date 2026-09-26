@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site.js';
 const shakti = site.forms.shakti;
-const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Pranayama';
+const register = site.registration.shakti.path + '?src=Website-Pranayama';
 ---
 <Base title="Pranayama Sessions · Yoga Shakti" description="Dedicated pranayama sessions with Ashish Anant — the yogic science of breath. Starting soon." active="/sessions/">
   <main class="wrap page">
@@ -13,7 +13,7 @@ const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Pranayam
 
     <div class="section">
       <div class="video-soon">Starting soon — register below and we'll invite you the moment these sessions open.</div>
-      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register your interest</a></div>
+      <div class="cta-row"><a class="cta" href={register}>Register your interest</a></div>
       <p class="wa-fallback">Questions? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
     </div>
 

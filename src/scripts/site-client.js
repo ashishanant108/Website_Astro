@@ -33,6 +33,16 @@ window.setConsent = function(yes){
   if(yes) loadGA();
 };
 
+// Carry the visitor's ?src (e.g. ?src=ig from the Instagram bio) into every on-site form link,
+// so a registration made two pages later is still credited to the right platform.
+document.addEventListener('DOMContentLoaded', function(){
+  const src = new URLSearchParams(location.search).get('src');
+  if(!src || !/^[A-Za-z0-9-]{2,40}$/.test(src)) return;
+  document.querySelectorAll('a[href^="/sessions/register/"],a[href^="/nadi-shodhana/register/"],a[href^="/guide/"]').forEach(function(a){
+    try{ const u = new URL(a.getAttribute('href'), location.origin); u.searchParams.set('src', src); a.setAttribute('href', u.pathname + u.search + u.hash); }catch(e){}
+  });
+});
+
 // Show banner only if a choice hasn't been made and GA is configured.
 document.addEventListener('DOMContentLoaded', function(){
   let choice=null; try{ choice=localStorage.getItem('ys_consent'); }catch(e){}

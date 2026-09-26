@@ -4,7 +4,7 @@ import { site } from '../../data/site.js';
 import ScheduleFeed from '../../components/ScheduleFeed.astro';
 import { testimonials } from '../../data/testimonials.js';
 const shakti = site.forms.shakti;
-const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Sessions';
+const register = site.registration.shakti.path;   // on-site form (was the SHAKTI Google Form)
 const money = (n) => (n ? '₹' + Number(n).toLocaleString('en-IN') + '/mo' : '');
 const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
 ---
@@ -75,7 +75,7 @@ const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
     <div class="section">
       <h2>Reserve your spot</h2>
       <p class="lead">Registering adds you to the sessions group, where the joining link is shared before each class.</p>
-      <div class="cta-row"><a class="cta" href={register} target="_blank" rel="noopener">Register</a></div>
+      <div class="cta-row"><a class="cta" href={register}>Register</a></div>
       <p class="wa-fallback">Prefer to ask first? <a href={site.whatsappDirect} target="_blank" rel="noopener">Message us on WhatsApp →</a></p>
     </div>
 
@@ -86,7 +86,7 @@ const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
         <details><summary>I'm a complete beginner. Can I join?</summary><p>Absolutely. Sessions are gentle and guided — suitable for beginners and seasoned practitioners alike.</p></details>
         <details><summary>When are the sessions?</summary><p>See the <a href="/events/" style="color:var(--teal)">schedule</a> for current days and timings.</p></details>
         <details><summary>What do I need?</summary><p>Just a yoga mat, a quiet space, and comfortable clothing.</p></details>
-        <details><summary>How do I get the joining link?</summary><p><a href={register} target="_blank" rel="noopener">Register once here</a> and you're added to the sessions group, where the joining link is shared before each class.</p></details>
+        <details><summary>How do I get the joining link?</summary><p><a href={register}>Register once here</a> and you're added to the sessions group, where the joining link is shared before each class.</p></details>
       </div>
     </div>
 
