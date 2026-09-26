@@ -14,18 +14,18 @@ export const site = {
 
   // Events auto-feed: paste the two "Publish to web -> CSV" links from the YS Events sheet.
   // Blank = the Events page uses the built-in list below (still auto-hides past dates).
-  eventsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvZckWDo3m-moJOLo0XvpG3P-qEuxt400z4C2TrDK9uJM1dYUCrHfeD7ixhBApex2p3tG2JKzh4QU6/pub?gid=1405667229&single=true&output=csv",     // published CSV of the "Events" tab
-  settingsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvZckWDo3m-moJOLo0XvpG3P-qEuxt400z4C2TrDK9uJM1dYUCrHfeD7ixhBApex2p3tG2JKzh4QU6/pub?gid=1885619701&single=true&output=csv",   // published CSV of the "Settings" tab (B1 = months ahead)
+  eventsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQurwDFxEAjf94Per8cVx0Uo3xmliRXFq2DRg_98H7yaBg0OZ_RUQaHVEAiXPVniyPBLsdJyGiUOn8K/pub?gid=675903072&single=true&output=csv",     // published CSV of the "Events" tab
+  settingsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQurwDFxEAjf94Per8cVx0Uo3xmliRXFq2DRg_98H7yaBg0OZ_RUQaHVEAiXPVniyPBLsdJyGiUOn8K/pub?gid=301183497&single=true&output=csv",   // published CSV of the "Settings" tab (B1 = months ahead)
   eventsFallbackMonths: 6,
   // Weekly timetable + pricing: published CSV of the "Schedule" tab. Blank = use `schedule` below.
-  scheduleCsvUrl: "",
+  scheduleCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQurwDFxEAjf94Per8cVx0Uo3xmliRXFq2DRg_98H7yaBg0OZ_RUQaHVEAiXPVniyPBLsdJyGiUOn8K/pub?gid=2000180042&single=true&output=csv",
   // Built-in fallback for the weekly timetable (the sheet's Schedule tab overrides it live).
   // key must match the Key column in the sheet. was = regular price in ₹/month (blank = no strike-through).
   schedule: [
     { key: "morning", days: "Mon, Wed & Fri", time: "6:00–7:00 AM IST", was: 2000, now: "FREE", show: true },
     { key: "evening", days: "Sunday",         time: "5:00 PM IST",      was: 1000, now: "FREE", show: true }
   ],
-  statsCsvUrl: "",      // published CSV of the "Stats" tab (for a future "by the numbers" section)
+  statsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQurwDFxEAjf94Per8cVx0Uo3xmliRXFq2DRg_98H7yaBg0OZ_RUQaHVEAiXPVniyPBLsdJyGiUOn8K/pub?gid=1155328677&single=true&output=csv",      // published CSV of the "Stats" tab (for a future "by the numbers" section)
 
   // Hero video: drop a calm 6–10s muted clip at /public/assets/hero.mp4 and set the path
   // below to turn the hero image into an autoplay video that settles on the still photo.
