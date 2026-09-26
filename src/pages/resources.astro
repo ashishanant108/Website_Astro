@@ -25,18 +25,19 @@ const guide = "/guide/?src=website";
       <div class="card">
         <span class="badge">Guides &amp; Downloads</span>
         <h3>Reference material &amp; guides</h3>
-        <ul class="rlist">
-          <li><a href={guide}>Yogic Breathing Guide</a> — a simple yet powerful conscious breathing process.
-            <div class="chips">
-              <span class="chip">Reduces stress &amp; anxiety</span>
-              <span class="chip">Calms the nervous system</span>
-              <span class="chip">Sharper focus &amp; memory</span>
-              <span class="chip">Lowers blood pressure</span>
-              <span class="chip">Stronger breathing</span>
+        <div class="guide-feature">
+          <a class="gf-cover" href={guide} aria-hidden="true" tabindex="-1"><img src="/assets/guide-cover.jpg" alt="" width="560" height="840" loading="lazy" /></a>
+          <div class="gf-body">
+            <span class="gf-tag">Free PDF · 3 steps · 5 minutes a day</span>
+            <h4><a href={guide}>The Yogic Breathing Guide</a></h4>
+            <p class="gf-desc">A simple yet powerful conscious breathing process.</p>
+            <div class="gf-benefits"><span>Reduces stress &amp; anxiety</span><span>Calms the nervous system</span><span>Sharper focus &amp; memory</span><span>Lowers blood pressure</span><span>Stronger breathing</span></div>
+            <div class="gf-actions">
+              <a class="btn" href={guide}>Get the guide →</a>
+              <a class="gf-link" href="/research/">See the research →</a>
             </div>
-            <a href="/research/">See the research &rarr;</a>
-          </li>
-        </ul>
+          </div>
+        </div>
         <p class="note" style="margin-top:8px">More guides, downloads and reference material will be added here soon.</p>
       </div>
     </div>
@@ -71,5 +72,18 @@ const guide = "/guide/?src=website";
   <style>
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
     .chip { background: #e8f0f2; color: var(--teal); font-weight: 500; font-size: 13px; padding: 5px 12px; border-radius: 20px; line-height: 1.3; }
+    .guide-feature { display: grid; grid-template-columns: 132px 1fr; gap: 20px; align-items: center; margin: 6px 0 4px; }
+    .gf-cover img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 6px 16px rgba(43,43,43,.10); }
+    .gf-tag { display: inline-block; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: #2e5b34; margin-bottom: 4px; }
+    .guide-feature h4 { font-size: 20px; font-weight: 500; margin: 0 0 4px; }
+    .guide-feature h4 a { color: var(--ink); text-decoration: none; }
+    .guide-feature h4 a:hover { color: var(--teal); }
+    .gf-desc { margin: 0 0 6px !important; color: var(--ink) !important; flex: none !important; }
+    .gf-benefits { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+    .gf-benefits span { background: #fff; border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 4px 11px; border-radius: 20px; line-height: 1.35; }
+    .gf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+    .gf-actions .btn { align-self: auto; }
+    .gf-link { font-size: 14px; color: var(--teal); }
+    @media (max-width: 560px) { .guide-feature { grid-template-columns: 96px 1fr; gap: 14px; align-items: start; } .guide-feature h4 { font-size: 18px; } }
   </style>
 </Base>

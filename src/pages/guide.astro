@@ -76,12 +76,14 @@ const waIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentCol
       </div>
 
       <aside class="reg-side">
-        <div class="card cover pre-only">
-          <img src="/assets/guide-cover.jpg" alt="Cover of The Yogic Breathing Guide" width="560" height="840" loading="eager" />
-          <span class="cover-tag">3 steps · 5 minutes a day</span>
-        </div>
-        <div class="card pre-only">
-          <h3>What's inside</h3>
+        <div class="card inside pre-only">
+          <div class="inside-head">
+            <img class="inside-cover" src="/assets/guide-cover.jpg" alt="Cover of The Yogic Breathing Guide" width="560" height="840" />
+            <div>
+              <span class="inside-tag">3 steps · 5 minutes a day</span>
+              <h3>What's inside</h3>
+            </div>
+          </div>
           <ul class="ticks">
             <li>The full, natural three-part breath: belly, chest and shoulder</li>
             <li>How to join them into one smooth, calming wave</li>
@@ -100,7 +102,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentCol
           <p>Live Yoga Sessions with Ashish Anant, complimentary. Breath, movement and stillness, guided in real time.</p>
           <a class="btn ghost" href="/sessions/yoga/?src=Guide">See the sessions →</a>
         </div>
-        <div class="card teacher">
+        <div class="card teacher post-only">
           <img src="/assets/ashish-avatar.jpg" alt="Ashish Anant" width="56" height="56" />
           <div><b>Ashish Anant</b><p>{teacher}</p></div>
         </div>
@@ -193,9 +195,10 @@ const waIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentCol
     .gthanks .t-act .btn { margin: 0; }
     .gthanks .btn.ghost { display: inline-flex; align-items: center; gap: 8px; }
     .gthanks .t-sign { margin-top: 14px; }
-    .reg-root .cover { padding: 0 !important; overflow: hidden; position: relative; }
-    .reg-root .cover img { display: block; width: 100%; height: auto; }
-    .reg-root .cover-tag { position: absolute; left: 14px; bottom: 14px; background: #2e5b34; color: #fff; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 5px 12px; }
+    .reg-root .inside-head { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center; margin-bottom: 12px; }
+    .reg-root .inside-head h3 { margin: 0 !important; }
+    .reg-root .inside-cover { width: 64px; height: auto; border-radius: 8px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(43,43,43,.10); }
+    .reg-root .inside-tag { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #2e5b34; margin-bottom: 2px; }
     .reg-root .side-note { margin: 8px 0 0 !important; font-size: 13px !important; }
     @media (max-width: 560px) { .gform .phone select { flex-basis: 84px; width: 84px; } }
   </style>
