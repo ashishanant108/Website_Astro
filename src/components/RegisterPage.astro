@@ -52,7 +52,7 @@ const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatada
 
       {heal ? (
         <div class="card pre-only">
-          <h3>In the workshop</h3>
+          <h3>About the Nadi Shodhana workshop</h3>
           <ul class="ticks">
             <li>Equally valuable for first-timers and for those deepening their practice</li>
             <li>Taught as per tradition, step by step, with the do's and don'ts</li>
@@ -75,14 +75,14 @@ const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatada
         </div>
       )}
 
-      <div class="card pre-only">
+      {!heal && (<div class="card pre-only">
         <h3>Keep ready</h3>
         <ul class="ticks">
           <li>A mat or a folded blanket</li>
           <li>Comfortable clothes</li>
           <li>A silent, distraction-free space</li>
         </ul>
-      </div>
+      </div>)}
 
       <div class="card post-only">
         {heal ? (
