@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import RegisterForm from '../../components/RegisterForm.astro';
+---
+<Base title="Register · Nadi Shodhana Workshop · Yoga Shakti" description="Register for the complimentary Nadi Shodhana workshop, the yogic cleansing breath, taught step by step by Ashish Anant." bodyClass="theme-heal" active="/nadi-shodhana/" ogImage="https://ashishanant.com/assets/og-nadi.jpg" ogImageAlt="FREE Nadi Shodhana Workshop — The Healing Breath. Calm, sleep, health, clarity; rooted in the Yogic & Tantric traditions.">
+  <main class="wrap page">
+    <div class="kicker">Complimentary workshop</div>
+    <h1>Register for Nadi Shodhana: The Healing Breath</h1>
+    <p class="lead">Register once. We'll add you to the workshop group on WhatsApp, where the invite and joining link are shared before the session.</p>
+
+    <div class="section">
+      <div class="grid cols-2 reg-grid">
+        <div class="card">
+          <span class="badge">Takes about a minute</span>
+          <h3>Your details</h3>
+          <RegisterForm type="heal" button="Register for the workshop →" />
+        </div>
+        <div class="card">
+          <span class="badge">What happens next</span>
+          <h3>Simple and unhurried</h3>
+          <ol class="rlist steps">
+            <li>You register here, once.</li>
+            <li>You join the workshop WhatsApp group.</li>
+            <li>Before the workshop, the invite and joining link are shared there.</li>
+            <li>You learn the practice step by step, including how to do it safely.</li>
+          </ol>
+          <p class="note" style="margin-top:10px">No experience needed. <a href="/nadi-shodhana/">More about the workshop →</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <style>
+    .reg-grid { align-items: start; }
+    .steps { padding-left: 20px; }
+    .steps li { margin-bottom: 6px; }
+    @media (max-width: 720px) { .reg-grid { grid-template-columns: 1fr; } }
+  </style>
+</Base>

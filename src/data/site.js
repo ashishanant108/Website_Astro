@@ -17,6 +17,14 @@ export const site = {
   eventsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvZckWDo3m-moJOLo0XvpG3P-qEuxt400z4C2TrDK9uJM1dYUCrHfeD7ixhBApex2p3tG2JKzh4QU6/pub?gid=1405667229&single=true&output=csv",     // published CSV of the "Events" tab
   settingsCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvZckWDo3m-moJOLo0XvpG3P-qEuxt400z4C2TrDK9uJM1dYUCrHfeD7ixhBApex2p3tG2JKzh4QU6/pub?gid=1885619701&single=true&output=csv",   // published CSV of the "Settings" tab (B1 = months ahead)
   eventsFallbackMonths: 6,
+  // Weekly timetable + pricing: published CSV of the "Schedule" tab. Blank = use `schedule` below.
+  scheduleCsvUrl: "",
+  // Built-in fallback for the weekly timetable (the sheet's Schedule tab overrides it live).
+  // key must match the Key column in the sheet. was = regular price in ₹/month (blank = no strike-through).
+  schedule: [
+    { key: "morning", days: "Mon, Wed & Fri", time: "6:00–7:00 AM IST", was: 2000, now: "FREE", show: true },
+    { key: "evening", days: "Sunday",         time: "5:00 PM IST",      was: 1000, now: "FREE", show: true }
+  ],
   statsCsvUrl: "",      // published CSV of the "Stats" tab (for a future "by the numbers" section)
 
   // Hero video: drop a calm 6–10s muted clip at /public/assets/hero.mp4 and set the path
@@ -31,6 +39,13 @@ export const site = {
   forms: {
     shakti: { url: "https://docs.google.com/forms/d/e/1FAIpQLSdF5ib8TpBWRSy9AC2S5EigYn1itvVHiPHT8XaBpkOXQBxCsw/viewform", entry: "entry.1379156727" },
     heal:   { url: "https://docs.google.com/forms/d/e/1FAIpQLSc7w2bCU0zpoVQRrd5SDrQ2QstUF_4MHDyXXBCN5R1-6e0i8Q/viewform", entry: "entry.1672993159" }
+  },
+
+  // Native on-site registration (replaces the Google Forms once switched over).
+  // waGroup = the WhatsApp sub-group link shown on the thank-you screen (blank = we say we'll message them).
+  registration: {
+    shakti: { path: "/sessions/register/",      defaultSource: "Website-Sessions", waGroup: "" },
+    heal:   { path: "/nadi-shodhana/register/", defaultSource: "Website-Nadi",     waGroup: "" }
   },
 
   contact: {

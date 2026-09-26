@@ -1,0 +1,202 @@
+---
+// Native registration form — SHAKTI (live yoga sessions) and HEAL (Nadi Shodhana workshop).
+// Field parity with the Google Forms it replaces. Posts to the Apps Script Web App (site.WEBAPP_URL)
+// with type:"shakti"|"heal"; the script logs it to the same sheet + runs the same follow-up.
+import { site, SRC_MAP } from '../data/site.js';
+const { type = 'shakti', button = 'Register →' } = Astro.props;
+const reg = site.registration[type];
+const WEBAPP_URL = site.WEBAPP_URL || '';
+const defaultSource = reg.defaultSource;
+const waGroup = reg.waGroup || '';
+const waDirect = site.whatsappDirect;
+const langs = type === 'heal' ? ['English', 'Hindi', 'Either is ok'] : ['English', 'Hindi', 'Either is fine'];
+const ages = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+const codes = ['+91', '+1', '+44', '+971', '+65', '+61'];
+const reasons = ['Stress/anxiety', 'BP/Hypertension', 'Weight', 'Flexibility/mobility', 'General wellness', 'Other'];
+const fid = 'rf-' + type;
+---
+<div class="rform-wrap" id={fid}>
+  <form class="rform" novalidate>
+    <label class="fld">
+      <span>Full name <b class="req" aria-hidden="true">*</b></span>
+      <input name="name" type="text" autocomplete="name" maxlength="80" required />
+    </label>
+
+    <div class="fld">
+      <span id={fid + '-ph'}>WhatsApp number <b class="req" aria-hidden="true">*</b></span>
+      <div class="phone" role="group" aria-labelledby={fid + '-ph'}>
+        <select name="cc" aria-label="Country code" required>
+          {codes.map((c) => <option value={c}>{c}</option>)}
+          <option value="other">Other</option>
+        </select>
+        <input name="ccOther" type="text" inputmode="numeric" maxlength="4" placeholder="e.g. 63" aria-label="Your country dialing code (digits)" hidden />
+        <input name="mobile" type="tel" autocomplete="tel-national" inputmode="numeric" maxlength="15" placeholder="Mobile number" aria-label="Mobile number" required />
+      </div>
+      <small class="hint">Your active WhatsApp number — without the country code, no spaces. This is how we'll send you the joining details.</small>
+    </div>
+
+    <div class="row2">
+      <label class="fld">
+        <span>City <em>(optional)</em></span>
+        <input name="city" type="text" autocomplete="address-level2" maxlength="60" />
+      </label>
+      <label class="fld">
+        <span>Age group <b class="req" aria-hidden="true">*</b></span>
+        <select name="age" required>
+          <option value="">Select…</option>
+          {ages.map((a) => <option value={a}>{a}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <div class="row2">
+      <label class="fld">
+        <span>Preferred language <em>(optional)</em></span>
+        <select name="language">
+          <option value="">Select…</option>
+          {langs.map((l) => <option value={l}>{l}</option>)}
+        </select>
+      </label>
+      <label class="fld">
+        <span>What brings you here? <em>(optional)</em></span>
+        <select name="reason">
+          <option value="">Select…</option>
+          {reasons.map((r) => <option value={r}>{r}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <label class="fld">
+      <span>Any health conditions we should know about? <em>(optional)</em></span>
+      <textarea name="health" rows="3" maxlength="500" placeholder="e.g., BP, past surgery, injuries"></textarea>
+      <small class="hint">This helps us guide you safely. It stays private and is used only for that.</small>
+    </label>
+
+    <label class="consent">
+      <input name="consent" type="checkbox" required />
+      <span>I agree that Yoga Shakti may contact me on WhatsApp about this {type === 'heal' ? 'workshop' : 'programme'}, and I've read the <a href="/privacy/">privacy policy</a>.</span>
+    </label>
+
+    <!-- honeypot: hidden from humans, catches bots -->
+    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <p class="err" role="alert" hidden></p>
+    <button class="btn rbtn" type="submit">{button}</button>
+    <p class="fineprint">We use your details only for this registration and occasional practice invitations. No spam; you can ask us to remove them at any time.</p>
+  </form>
+
+  <div class="rthanks card" hidden tabindex="-1">
+    <h2>Namaste — you're registered. 🌿</h2>
+    {waGroup ? (
+      <>
+        <p>One last step: join the WhatsApp group. That's where the joining link is shared before each {type === 'heal' ? 'workshop' : 'session'}.</p>
+        <p><a class="cta" href={waGroup} target="_blank" rel="noopener">Join the WhatsApp group →</a></p>
+      </>
+    ) : (
+      <p>We'll message you on WhatsApp shortly with the group link and joining details.</p>
+    )}
+    <p class="note">Questions? <a href={waDirect} target="_blank" rel="noopener">Message us on WhatsApp</a>.</p>
+  </div>
+</div>
+
+<script define:vars={{ fid, type, WEBAPP_URL, SRC_MAP, defaultSource }}>
+  (function () {
+    var wrap = document.getElementById(fid);
+    if (!wrap) return;
+    var form = wrap.querySelector('form');
+    var err = wrap.querySelector('.err');
+    var btn = wrap.querySelector('.rbtn');
+    var thanks = wrap.querySelector('.rthanks');
+    var label = btn.textContent;
+
+    // SOURCE: known ?src shortcut -> SRC_MAP; otherwise a safe tag passes through (e.g. Website-Events)
+    var raw = new URLSearchParams(location.search).get('src') || '';
+    var source = SRC_MAP[raw.toLowerCase()] || (/^[A-Za-z0-9-]{2,40}$/.test(raw) ? raw : defaultSource);
+
+    form.cc.addEventListener('change', function () {
+      var o = form.cc.value === 'other';
+      form.ccOther.hidden = !o;
+      if (o) form.ccOther.focus();
+    });
+
+    function fail(msg, el) { err.textContent = msg; err.hidden = false; if (el) el.focus(); }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.hidden = true;
+      if (form.company.value) return; // bot
+
+      var name = form.name.value.trim();
+      var cc = form.cc.value === 'other' ? form.ccOther.value.replace(/\D/g, '') : form.cc.value.replace('+', '');
+      var mobile = form.mobile.value.replace(/\D/g, '').replace(/^0+/, '');
+      if (!name) return fail('Please enter your name.', form.name);
+      if (!cc) return fail('Please type your country dialing code (digits only).', form.ccOther);
+      if (mobile.length < 6 || mobile.length > 14) return fail('Please enter your WhatsApp number (digits only, without the country code).', form.mobile);
+      if (!form.age.value) return fail('Please choose your age group.', form.age);
+      if (!form.consent.checked) return fail('Please tick the box so we can contact you on WhatsApp.', form.consent);
+      if (!WEBAPP_URL) return fail('Registration is not connected yet — please message us on WhatsApp.');
+
+      btn.disabled = true; btn.textContent = 'Registering…';
+      var payload = {
+        type: type,
+        name: name.slice(0, 80),
+        countryCode: '+' + cc,
+        mobile: mobile,
+        whatsapp: '+' + cc + mobile,
+        city: form.city.value.trim().slice(0, 60),
+        ageGroup: form.age.value,
+        language: form.language.value,
+        reason: form.reason.value,
+        health: form.health.value.trim().slice(0, 500),
+        consent: true,
+        source: source,
+        page: location.pathname
+      };
+
+      fetch(WEBAPP_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).then(function () {
+        try { if (window.gtag) gtag('event', 'generate_lead', { form: type, source: source }); } catch (e2) {}
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.focus();
+        thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = label;
+        fail('Something went wrong sending your details. Please try again, or message us on WhatsApp.');
+      });
+    });
+  })();
+</script>
+
+<style>
+  .rform .fld { display: block; margin-bottom: 14px; }
+  .rform .fld > span { display: block; font-weight: 500; font-size: 14px; margin-bottom: 5px; color: var(--ink); }
+  .rform em { color: var(--muted); font-style: normal; font-weight: 400; }
+  .rform .req { color: #a3341f; font-weight: 500; }
+  .rform input[type=text], .rform input[type=tel], .rform select, .rform textarea {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px;
+    font: inherit; color: var(--ink); background: #fff; box-sizing: border-box;
+  }
+  .rform textarea { resize: vertical; min-height: 76px; }
+  .rform input:focus, .rform select:focus, .rform textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,74,94,.12); }
+  .rform .phone { display: flex; gap: 8px; }
+  .rform .phone select { flex: 0 0 96px; width: 96px; }
+  .rform .phone input[name=ccOther] { flex: 0 0 84px; width: 84px; }
+  .rform .phone input[name=mobile] { flex: 1 1 auto; min-width: 0; }
+  .rform .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  .rform .hint { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.45; }
+  .rform .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.5; margin: 4px 0 14px; }
+  .rform .consent input { margin-top: 3px; width: 18px; height: 18px; flex: 0 0 18px; accent-color: var(--teal); }
+  .rform .consent a { color: var(--teal); }
+  .rform .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .rform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
+  .rform .rbtn { width: 100%; }
+  .rform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+  .rthanks { text-align: center; }
+  .rthanks h2 { margin-top: 0; }
+  .rthanks:focus { outline: none; }
+  @media (max-width: 560px) { .rform .row2 { grid-template-columns: 1fr; } }
+</style>

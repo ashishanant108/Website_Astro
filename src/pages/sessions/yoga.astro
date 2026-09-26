@@ -1,9 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site.js';
+import ScheduleFeed from '../../components/ScheduleFeed.astro';
 import { testimonials } from '../../data/testimonials.js';
 const shakti = site.forms.shakti;
 const register = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Sessions';
+const money = (n) => (n ? '₹' + Number(n).toLocaleString('en-IN') + '/mo' : '');
 const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
 ---
 <Base title="Live Yoga Sessions · Yoga Shakti" description="Live, guided yoga sessions with Ashish Anant — breath, movement and stillness, in real time, together. Free for now." active="/sessions/" ogImage="https://ashishanant.com/assets/og-sessions.jpg" ogImageAlt="FREE live yoga with Ashish Anant — breath, movement and stillness. Beginner-friendly; all levels.">
@@ -46,14 +48,12 @@ const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
     <div class="section">
       <h2>Sessions &amp; timings</h2>
       <div class="offers">
-        <div class="offer">
-          <div class="o-name">Every Wed &amp; Sat<small>6:00–7:00 AM IST</small></div>
-          <div class="price"><span class="was">₹1,500/mo</span><span class="free">FREE</span></div>
-        </div>
-        <div class="offer">
-          <div class="o-name">Every Sunday<small>5:00 PM IST</small></div>
-          <div class="price"><span class="was">₹1,000/mo</span><span class="free">FREE</span></div>
-        </div>
+        {site.schedule.map((s) => (
+          <div class="offer" data-sched={s.key} hidden={!s.show}>
+            <div class="o-name"><span data-f="when">Every {s.days}</span><small data-f="time">{s.time}</small></div>
+            <div class="price"><span class="was" data-f="was" hidden={!s.was}>{money(s.was)}</span><span class="free" data-f="now">{s.now}</span></div>
+          </div>
+        ))}
       </div>
       <p class="note">Complimentary for now. Held at India- and US-friendly times so friends in both regions can join comfortably. See the full <a href="/events/" style="color:var(--teal)">schedule</a>.</p>
     </div>
@@ -91,4 +91,5 @@ const feats = testimonials.filter(x => x.tag === 'sessions').slice(0, 2);
     </div>
 
   </main>
+  <ScheduleFeed />
 </Base>

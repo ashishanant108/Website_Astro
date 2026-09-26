@@ -5,6 +5,9 @@ import { testimonials } from '../data/testimonials.js';
 const heal = site.forms.heal;
 const guide = heal.url + '?usp=pp_url&' + heal.entry + '=Website';
 const yt = "https://www.youtube.com/@YOGASHAKTIwithAshishAnant?sub_confirmation=1";
+import ScheduleFeed from '../components/ScheduleFeed.astro';
+const morning = site.schedule[0];
+const money = (n) => (n ? '₹' + Number(n).toLocaleString('en-IN') + '/mo' : '');
 ---
 <Base active="/">
   <section class="home-hero">
@@ -84,7 +87,7 @@ const yt = "https://www.youtube.com/@YOGASHAKTIwithAshishAnant?sub_confirmation=
         <div class="card">
           <span class="badge">Live · Weekly</span>
           <h3>Yoga Sessions</h3>
-          <div class="price-mini"><span class="was">₹1,500/mo</span><span class="free">FREE</span></div>
+          <div class="price-mini" data-sched={morning.key}><span class="was" data-f="was" hidden={!morning.was}>{money(morning.was)}</span><span class="free" data-f="now">{morning.now}</span></div>
           <p>Live, guided practice — experience transformation through breath, movement and stillness, in real time, together.</p>
           <a class="btn ghost" href="/sessions/yoga/">Learn more →</a>
         </div>
@@ -164,4 +167,5 @@ const yt = "https://www.youtube.com/@YOGASHAKTIwithAshishAnant?sub_confirmation=
       }
     }
   </script>
+  <ScheduleFeed />
 </Base>

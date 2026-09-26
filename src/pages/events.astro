@@ -1,15 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site.js';
+import ScheduleFeed from '../components/ScheduleFeed.astro';
 const heal = site.forms.heal;
 const healReg = heal.url + '?usp=pp_url&' + heal.entry + '=Website-Events';
 const shakti = site.forms.shakti;
 const sessReg = shakti.url + '?usp=pp_url&' + shakti.entry + '=Website-Events';
 
-const recurring = [
-  { when: "Every Wed & Sat", time: "6:00–7:00 AM IST" },
-  { when: "Every Sunday", time: "5:00 PM IST" }
-];
+// Weekly timetable: built-in values from site.js; the sheet's Schedule tab overrides them live (ScheduleFeed).
+const recurring = site.schedule.map((s) => ({ key: s.key, when: "Every " + s.days, time: s.time, show: s.show }));
 // Built-in fallback (used when no CSV feed is configured). ISO date drives auto-hide.
 const workshops = [
   { title: "Nadi Shodhana — The Healing Breath", date: "2026-11-29", when: "29 Nov 2026", time: "7:00 PM IST" },
@@ -30,8 +29,8 @@ const fallbackMonths = site.eventsFallbackMonths || 6;
       <h2>Weekly Yoga Sessions</h2>
       <div class="ev">
         {recurring.map((e) => (
-          <div class="evrow">
-            <div class="evwhen">{e.when}<br /><span style="color:var(--muted);font-weight:400">{e.time}</span></div>
+          <div class="evrow" data-sched={e.key} hidden={!e.show}>
+            <div class="evwhen"><span data-f="when">{e.when}</span><br /><span data-f="time" style="color:var(--muted);font-weight:400">{e.time}</span></div>
             <div><p>Guided practice — breath, movement, stillness.</p></div>
           </div>
         ))}
@@ -56,6 +55,7 @@ const fallbackMonths = site.eventsFallbackMonths || 6;
     </div>
 
   </main>
+  <ScheduleFeed />
 
   <script define:vars={{ eventsUrl, settingsUrl, fallbackMonths }}>
     (function () {

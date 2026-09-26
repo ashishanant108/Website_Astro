@@ -1,0 +1,37 @@
+---
+// Live weekly timetable + pricing from the Google Sheet "Schedule" tab (published CSV).
+// Any element with data-sched="<key>" and children data-f="when|time|was|now" is updated in place;
+// Show on site? = No hides the element. If the feed is blank/unreachable, the built-in values stay.
+import { site } from '../data/site.js';
+const url = site.scheduleCsvUrl || '';
+---
+<script define:vars={{ url }}>
+  (function () {
+    if (!url) return;
+    function parseCSV(t){const rows=[];let row=[],cur='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
+      if(q){if(c==='"'){if(t[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+      else{if(c==='"')q=true;else if(c===','){row.push(cur);cur='';}else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';}else if(c!=='\r')cur+=c;}}
+      if(cur!==''||row.length){row.push(cur);rows.push(row);}return rows;}
+    function money(v){const n=parseFloat(String(v).replace(/[^0-9.]/g,''));return isNaN(n)?'':'₹'+n.toLocaleString('en-IN')+'/mo';}
+    fetch(url+(url.includes('?')?'&':'?')+'cb='+Date.now()).then(r=>r.ok?r.text():Promise.reject()).then(function(txt){
+      const rows=parseCSV(txt);
+      const h=rows.findIndex(r=>r.map(x=>x.toLowerCase().trim()).includes('key'));
+      if(h<0) return;
+      const H=rows[h].map(x=>x.toLowerCase().trim());
+      const ix=n=>H.findIndex(x=>x.startsWith(n));
+      const iK=ix('key'),iD=ix('days'),iT=ix('time'),iW=ix('regular price'),iN=ix('price now'),iS=ix('show');
+      for(let r=h+1;r<rows.length;r++){
+        const row=rows[r],key=(row[iK]||'').trim().toLowerCase(); if(!key) continue;
+        const show=((row[iS]||'yes').trim().toLowerCase())!=='no';
+        document.querySelectorAll('[data-sched="'+key+'"]').forEach(function(el){
+          el.hidden=!show; if(!show) return;
+          const set=(f,v)=>el.querySelectorAll('[data-f="'+f+'"]').forEach(n=>{n.textContent=v;});
+          if(row[iD]) set('when','Every '+row[iD].trim());
+          if(row[iT]) set('time',row[iT].trim());
+          const was=money(row[iW]||''); el.querySelectorAll('[data-f="was"]').forEach(n=>{n.textContent=was;n.hidden=!was;});
+          const now=(row[iN]||'').trim(); if(now) set('now',/^[0-9.,]+$/.test(now)?money(now):now);
+        });
+      }
+    }).catch(function(){});
+  })();
+</script>
