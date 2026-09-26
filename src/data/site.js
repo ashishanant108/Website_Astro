@@ -44,8 +44,8 @@ export const site = {
   // Native on-site registration (replaces the Google Forms once switched over).
   // waGroup = the WhatsApp sub-group link shown on the thank-you screen (blank = we say we'll message them).
   registration: {
-    shakti: { path: "/sessions/register/",      defaultSource: "Website-Sessions", waGroup: "" },
-    heal:   { path: "/nadi-shodhana/register/", defaultSource: "Website-Nadi",     waGroup: "" }
+    shakti: { path: "/sessions/register/",      defaultSource: "Website-Sessions", waGroup: "https://chat.whatsapp.com/Bw1tcHDpqcvJqFRCP2I2tp" },
+    heal:   { path: "/nadi-shodhana/register/", defaultSource: "Website-Nadi",     waGroup: "https://chat.whatsapp.com/E4TKKeTqnDC3cI13wqdT1M" }
   },
 
   contact: {

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import RegisterForm from '../../components/RegisterForm.astro';
+import ScheduleFeed from '../../components/ScheduleFeed.astro';
 ---
 <Base title="Register · Live Yoga Sessions · Yoga Shakti" description="Register for the complimentary live yoga sessions with Ashish Anant: breath, movement and stillness, guided in real time." active="/sessions/" ogImage="https://ashishanant.com/assets/og-sessions.jpg" ogImageAlt="FREE live yoga with Ashish Anant — breath, movement and stillness. Beginner-friendly; all levels.">
   <main class="wrap page">
@@ -29,6 +30,7 @@ import RegisterForm from '../../components/RegisterForm.astro';
       </div>
     </div>
   </main>
+  <ScheduleFeed />
   <style>
     .reg-grid { align-items: start; }
     .steps { padding-left: 20px; }
