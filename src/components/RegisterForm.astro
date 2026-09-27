@@ -3,7 +3,7 @@
 // Posts to the Apps Script Web App (site.WEBAPP_URL); the script logs it to Database_Log and,
 // if an email is given, emails the WhatsApp group link as a backup.
 import { site, SRC_MAP } from '../data/site.js';
-const { type = 'shakti', button = 'Register →' } = Astro.props;
+const { type = 'shakti', button = 'Register →' } = Astro.props;
 const reg = site.registration[type];
 const WEBAPP_URL = site.WEBAPP_URL || '';
 const defaultSource = reg.defaultSource;
