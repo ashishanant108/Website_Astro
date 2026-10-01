@@ -5,6 +5,8 @@
   <url><loc>https://ashishanant.com/lineage/</loc><priority>0.7</priority></url>
   <url><loc>https://ashishanant.com/sessions/</loc><priority>0.9</priority></url>
   <url><loc>https://ashishanant.com/sessions/yoga/</loc><priority>0.9</priority></url>
+  <url><loc>https://ashishanant.com/sessions/register/</loc><priority>0.8</priority></url>
+  <url><loc>https://ashishanant.com/nadi-shodhana/register/</loc><priority>0.8</priority></url>
   <url><loc>https://ashishanant.com/sessions/pranayama/</loc><priority>0.6</priority></url>
   <url><loc>https://ashishanant.com/nadi-shodhana/</loc><priority>0.9</priority></url>
   <url><loc>https://ashishanant.com/events/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
