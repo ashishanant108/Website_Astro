@@ -177,7 +177,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       }).then(function () {
-        try { if (window.gtag) gtag('event', 'generate_lead', { form: type, source: source }); } catch (e2) {}
+        try { if (window.trackLead) window.trackLead(type === 'heal' ? 'nadi-shodhana' : 'yoga-sessions', source); } catch (e2) {}
         var first = name.split(/\s+/)[0];
         thanks.querySelector('.t-name').textContent = first ? ', ' + first : '';
         if (email) thanks.querySelector('.t-mailnote').hidden = false;

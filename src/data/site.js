@@ -10,6 +10,7 @@ export const site = {
   signoff: "॥ SHIVOHAM ॥",
 
   GA_ID: "G-LW2ETQ7QGN",        // GA4 id (analytics on; loads after cookie consent)
+  META_PIXEL_ID: "1083751777597344",   // Meta Pixel (loads only after cookie consent; no advanced matching)
   WEBAPP_URL: "https://script.google.com/macros/s/AKfycbwhnfVyoPvF7ymlbBuypAagnBkn0zHjA0y-HnIYJMls7PGzIlt8RSGRONoPpos4hLUYyQ/exec",   // Apps Script /exec URL (native guide form + click logging)
 
   // Events auto-feed: paste the two "Publish to web -> CSV" links from the YS Events sheet.

@@ -149,7 +149,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentCol
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         }).then(function () {
-          try { if (window.gtag) gtag('event', 'generate_lead', { magnet: 'yogic-breathing-guide', source: source }); } catch (e2) {}
+          try { if (window.trackLead) window.trackLead('yogic-breathing-guide', source); } catch (e2) {}
           var first = name.split(/\s+/)[0];
           thanks.querySelector('.t-name').textContent = first ? ', ' + first : '';
           thanks.querySelector('.em').textContent = email;
