@@ -128,6 +128,17 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
     // Lead ID from a comment→DM link (?ref=L…) so the engine updates that lead instead of adding a new one
     var ref = qs.get('ref') || '';
     if (!/^[A-Za-z0-9-]{3,40}$/.test(ref)) ref = '';
+    var lastReg = null; // set after a successful registration; used to track the WhatsApp join click
+
+    // WhatsApp join-click tracking (12 Oct 2026): tells the funnel engine this registrant tapped
+    // "Join the WhatsApp group", so their Database_Log row moves Form_Submitted -> WA_Confirmed.
+    wrap.querySelectorAll('.rthanks .cta.wa').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (!WEBAPP_URL || !lastReg) return;
+        try { navigator.sendBeacon(WEBAPP_URL + '?ping=wa', JSON.stringify(lastReg)); } catch (e1) {}
+        try { if (window.gtag) window.gtag('event', 'join_whatsapp', { offer: type }); } catch (e2) {}
+      });
+    });
 
     form.cc.addEventListener('change', function () {
       var o = form.cc.value === 'other';
@@ -177,6 +188,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       }).then(function () {
+        lastReg = { type: type, whatsapp: payload.whatsapp, ref: ref, page: location.pathname };
         try { if (window.trackLead) window.trackLead(type === 'heal' ? 'nadi-shodhana' : 'yoga-sessions', source); } catch (e2) {}
         var first = name.split(/\s+/)[0];
         thanks.querySelector('.t-name').textContent = first ? ', ' + first : '';
