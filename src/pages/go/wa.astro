@@ -1,0 +1,50 @@
+---
+// /go/wa/?k=<offer>&ref=<Lead ID>
+// Tracked "Join the WhatsApp group" link for emails (and anywhere else outside the thank-you page).
+// 1) tells the funnel engine this lead tapped the link (same ?ping=wa message as the thank-you page),
+// 2) forwards to that offer's WhatsApp group.
+// Works for every offer in site.registration that has a waGroup, now and in future — no change needed here.
+// Only links from site.js are ever opened (no open redirect). Unknown offer → the announcements community.
+import { site } from '../../data/site.js';
+const groups = {};
+for (const [k, v] of Object.entries(site.registration || {})) if (v && v.waGroup) groups[k] = v.waGroup;
+const fallback = site.whatsappCommunity;
+const WEBAPP_URL = site.WEBAPP_URL || '';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Opening WhatsApp… · Yoga Shakti</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #FAF6EF; color: #2B2B2B;
+           font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; text-align: center; padding: 24px; }
+    a.btn { display: inline-block; margin-top: 14px; padding: 12px 22px; border-radius: 999px; background: #1f8f4e;
+            color: #fff; text-decoration: none; font-weight: 500; }
+    p { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <p>Opening the WhatsApp group… 🙏</p>
+    <a class="btn" id="go" href={fallback}>Tap here if it doesn't open</a>
+  </main>
+  <script define:vars={{ groups, fallback, WEBAPP_URL }}>
+    (function () {
+      var qs = new URLSearchParams(location.search);
+      var k = (qs.get('k') || '').toLowerCase();
+      var ref = qs.get('ref') || '';
+      if (!/^[A-Za-z0-9-]{3,40}$/.test(ref)) ref = '';
+      var dest = groups[k] || fallback;
+      document.getElementById('go').href = dest;
+      if (WEBAPP_URL && ref) {
+        try { navigator.sendBeacon(WEBAPP_URL + '?ping=wa', JSON.stringify({ type: k, ref: ref, via: 'email' })); } catch (e) {}
+      }
+      try { if (window.gtag) window.gtag('event', 'join_whatsapp', { offer: k, via: 'email' }); } catch (e) {}
+      setTimeout(function () { location.replace(dest); }, 350); // small pause so the ping is sent first
+    })();
+  </script>
+</body>
+</html>
