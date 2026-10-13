@@ -15,8 +15,8 @@ const nav = [
     <a class="brandmark" href="/" aria-label="Yoga Shakti with Ashish Anant">
       <img src="/assets/logo-full.png" alt="Yoga Shakti with Ashish Anant" />
     </a>
-    <button class="menutoggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
-    <nav class="menu" id="menu">
+    <button class="menutoggle" aria-label="Menu" aria-controls="menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.getElementById('menu').classList.toggle('open'))">☰</button>
+    <nav class="menu" id="menu" aria-label="Main">
       {nav.map((n) => <a href={n.href} class={active === n.href ? 'active' : ''}>{n.label}</a>)}
       <a class="btn-teal" href="/sessions/yoga/">Join</a>
     </nav>

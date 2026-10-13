@@ -42,8 +42,8 @@ a{color:inherit}
 .fnav{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:18px}
 .fnav a{font-size:13px;color:var(--muted);text-decoration:none}
 .fnav a:hover{color:var(--teal)}
-.om{margin-top:16px;font-size:11.5px;color:#b3a892;letter-spacing:.1em}
-.om a{color:#b3a892;text-decoration:underline;letter-spacing:normal}
+.om{margin-top:16px;font-size:11.5px;color:#7a6f58;letter-spacing:.1em}
+.om a{color:#7a6f58;text-decoration:underline;letter-spacing:normal}
 
 @media (max-width:1024px){
   .menutoggle{display:block}
@@ -97,7 +97,7 @@ a{color:inherit}
 .offer .o-name{font-size:15px;font-weight:400}
 .offer .o-name small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .price{white-space:nowrap;text-align:right}
-.price .was{color:#b0a89a;text-decoration:line-through;font-size:14px;margin-right:8px}
+.price .was{color:#766d5f;text-decoration:line-through;font-size:14px;margin-right:8px}
 .price .free{color:#1a7a4f;font-weight:500;font-size:16px;letter-spacing:.04em}
 .free-badge{display:inline-block;background:#e6f5ec;color:#1a7a4f;border:.5px solid #bfe3cd;border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;letter-spacing:.06em}
 
@@ -126,8 +126,10 @@ a{color:inherit}
 .tnav:hover{border-color:var(--gold)}
 .tnav[disabled]{opacity:.3;cursor:default}
 .tdots{display:flex;gap:8px;justify-content:center;margin-top:14px}
-.tdots button{width:9px;height:9px;border-radius:50%;border:0;background:#d8cdb3;cursor:pointer;padding:0}
-.tdots button[aria-selected="true"]{background:var(--teal)}
+.tdots{gap:2px}
+.tdots button{width:24px;height:24px;border:0;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center}
+.tdots button::before{content:"";width:9px;height:9px;border-radius:50%;background:#d8cdb3}
+.tdots button[aria-selected="true"]::before{background:var(--teal)}
 
 /* ---------- video placeholder ---------- */
 .video-soon{margin-top:14px;background:#fff;border:1px dashed var(--gold);border-radius:12px;padding:34px 18px;text-align:center;color:var(--muted);font-size:13.5px}
@@ -148,7 +150,7 @@ a{color:inherit}
 .btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:12px 22px;border-radius:26px;text-decoration:none;font-size:15px;font-weight:500;border:1.5px solid var(--gold);background:var(--gold);color:#3A2A08;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 .btn.teal{background:var(--teal);border-color:var(--teal);color:#fff}
-.btn.red{background:#FF0000;border-color:#FF0000;color:#fff}
+.btn.red{background:#B3261E;border-color:#B3261E;color:#fff}
 .btn.teal.ghost-teal{background:transparent;color:var(--teal);border-color:var(--teal)}
 .btn svg{width:18px;height:18px}
 
@@ -197,7 +199,7 @@ a{color:inherit}
 .rlist li{font-size:14.5px;line-height:1.6;margin-bottom:5px;color:#4a4640}
 .card .btn{align-self:flex-start}
 .card .price-mini{font-size:13px;margin-bottom:10px}
-.card .price-mini .was{color:#b0a89a;text-decoration:line-through;margin-right:6px}
+.card .price-mini .was{color:#766d5f;text-decoration:line-through;margin-right:6px}
 .card .price-mini .free{color:#1a7a4f;font-weight:500}
 
 /* ---------- traditional theme (Guru Lineage) ---------- */
@@ -376,7 +378,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,.btn:focus-visible,.c
   .reg-root .tt td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
   .reg-root .tt tr:last-child td { border-bottom: 0; }
   .reg-root .tt-price { text-align: right; white-space: nowrap; }
-  .reg-root .tt .was { color: #b0a89a; text-decoration: line-through; margin-right: 6px; font-size: 13px; }
+  .reg-root .tt .was { color: #766d5f; text-decoration: line-through; margin-right: 6px; font-size: 13px; }
   .reg-root .tt .free { color: #1a7a4f; font-weight: 500; }
   .reg-root .ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; font-size: 14px; }
   .reg-root .ticks li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }

@@ -113,7 +113,7 @@ const money = (n) => (n ? '₹' + Number(n).toLocaleString('en-IN') + '/mo' : ''
       <div class="rule"></div>
       <div class="tcarousel">
         <button class="tnav tprev" type="button" aria-label="Previous testimonials">‹</button>
-        <div class="tctrack" id="tctrack">
+        <div class="tctrack" id="tctrack" tabindex="0" role="region" aria-label="Testimonials">
           {testimonials.filter((t) => t.home !== false).map((t) => (
             <div class="tcard">
               <div class="q">“{t.quote}”</div>

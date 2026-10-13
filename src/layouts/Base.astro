@@ -78,7 +78,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
   <div id="maincontent" tabindex="-1"><slot /></div>
   <Footer />
 
-  <div id="consent">
+  <aside id="consent" aria-label="Cookie choice">
     <div class="row">
       <span>May we use cookies to understand what helps visitors and to measure our posts and ads (Google, Meta)? Only if you're comfortable. <a href="/privacy/">Privacy note</a>.</span>
       <span>
@@ -86,7 +86,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         <button class="no" onclick="setConsent(false)">No, thanks</button>
       </span>
     </div>
-  </div>
+  </aside>
 
   <script is:inline>
     (function(){

@@ -12,60 +12,60 @@ const studies = [
       },
       {
         title: "Effect of short-term practice of pranayamic breathing exercises on cognition, anxiety, general well-being and heart rate variability",
-        src: "PubMed, 2014",
+        src: "Journal of the Indian Medical Association, 2013 · randomised, 96 medical students",
         url: "https://pubmed.ncbi.nlm.nih.gov/24968492/",
-        take: "Several weeks of slow pranayama practice significantly improved anxiety and general wellbeing, and raised heart-rate variability — a marker of a calm, resilient nervous system."
+        take: "Six weeks of pranayama (Bhastrika and Anulom Vilom) improved anxiety and general wellbeing, and shifted heart-rate variability towards parasympathetic (&ldquo;rest and digest&rdquo;) activity. The comparison group, which practised Surya Namaskar, did not show these changes in anxiety or heart-rate variability."
       }
     ]
   },
   {
-    benefit: "Lowers blood pressure",
+    benefit: "May help lower blood pressure",
     items: [
       {
-        title: "Effectiveness of Alternate Nostril Breathing on Blood Pressure: A Systematic Review and Meta-Analysis of Randomized Controlled Trials",
-        src: "Complementary Medicine Research (Karger), 2024",
+        title: "Effectiveness of Alternative Nostril Breathing on Blood Pressure: A Systematic Review and Meta-Analysis of Randomized Controlled Trials",
+        src: "Complementary Medicine Research (Karger), 2024 · 6 randomised trials, 525 people",
         url: "https://karger.com/cmr/article-abstract/31/5/449/910373/Effectiveness-of-Alternative-Nostril-Breathing-on",
-        take: "Pooling multiple randomized trials, alternate-nostril breathing (Nadi Shodhana) was associated with meaningful reductions in systolic and diastolic blood pressure."
+        take: "Pooling six randomised trials, alternate-nostril breathing was linked to lower blood pressure: about 7 mmHg systolic and 5 mmHg diastolic compared with control groups. Results varied between studies, and the authors call for more high-quality trials."
       },
       {
         title: "Alternate-Nostril Yoga Breathing Reduced Blood Pressure While Increasing Performance in a Vigilance Test",
-        src: "PubMed, 2017",
+        src: "Medical Science Monitor Basic Research, 2017 · 15 healthy men with yoga experience",
         url: "https://pubmed.ncbi.nlm.nih.gov/29284770/",
-        take: "A single session of alternate-nostril breathing lowered blood pressure and, at the same time, improved sustained attention on a demanding task."
+        take: "One 18-minute session of alternate-nostril breathing lowered systolic blood pressure. Participants also completed an attention test faster afterwards (as they did after quiet sitting), with no rise in errors."
       }
     ]
   },
   {
-    benefit: "Sharpens focus, memory &amp; emotional balance",
+    benefit: "Focus, memory &amp; emotional balance",
     items: [
       {
         title: "Pranayamas and Their Neurophysiological Effects",
-        src: "International Journal of Yoga, 2020",
+        src: "International Journal of Yoga, 2020 · systematic review",
         url: "https://pubmed.ncbi.nlm.nih.gov/33343147/",
-        take: "A review of how controlled breathing acts on the brain and autonomic nervous system — supporting attention, emotional regulation and mental steadiness."
+        take: "A systematic review of how different pranayamas act on the brain and the autonomic nervous system. Effects differ by technique (for example breath retention or a longer exhale), and the authors call for more focused studies."
       },
       {
         title: "Effect of short-term practice of pranayamic breathing exercises on cognition, anxiety, general well-being and heart rate variability",
-        src: "PubMed, 2014",
+        src: "Journal of the Indian Medical Association, 2013",
         url: "https://pubmed.ncbi.nlm.nih.gov/24968492/",
-        take: "The same trial above also recorded a significant improvement in cognition alongside the calming effects."
+        take: "The same trial (see above) also found better memory scores in the pranayama group after six weeks."
       }
     ]
   },
   {
-    benefit: "Strengthens respiratory function",
+    benefit: "Breathing &amp; lung function",
     items: [
       {
         title: "Effect of Yoga Breathing (Pranayama) on Exercise Tolerance in Patients with Chronic Obstructive Pulmonary Disease: A Randomized, Controlled Trial",
-        src: "PubMed, 2017",
+        src: "Journal of Alternative and Complementary Medicine, 2017 · pilot trial, 43 people with COPD",
         url: "https://pubmed.ncbi.nlm.nih.gov/28714735/",
-        take: "In a randomized trial, pranayama practice improved exercise tolerance and measures of breathing capacity — even in people with compromised lung function."
+        take: "Over 12 weeks, people who added pranayama to education walked further in a 6-minute walk test than those who had education alone, with small gains in breathing measures. A promising pilot; larger trials are needed."
       },
       {
         title: "Immediate Effect of Pranayama on Pulmonary Function in Healthy Adults: An Experimental Study",
-        src: "PubMed, 2025",
+        src: "Advances in Mind-Body Medicine, 2025 · 20 healthy students, no control group",
         url: "https://pubmed.ncbi.nlm.nih.gov/40982747/",
-        take: "Even a single guided pranayama session produced measurable improvements in pulmonary (lung) function in healthy adults."
+        take: "Lung-function readings were higher straight after one 60-minute pranayama session. A small, early study without a comparison group, so treat it as a first signal."
       }
     ]
   }
@@ -86,7 +86,7 @@ const studies = [
               <div class="study">
                 <p class="study-take" set:html={s.take}></p>
                 <p class="study-cite">
-                  <a href={s.url} target="_blank" rel="noopener" set:html={s.title}></a>
+                  <a href={s.url} target="_blank" rel="noopener"><span set:html={s.title} /><span class="visually-hidden"> (opens in a new tab)</span></a>
                   <br /><span class="study-src">{s.src}</span>
                 </p>
               </div>
@@ -97,6 +97,7 @@ const studies = [
     ))}
 
     <div class="section">
+      <p class="note"><b>How we choose studies.</b> Peer-reviewed papers only, each linked to its source. We describe what each study actually found, including its size and limits. Last reviewed: October 2026.</p>
       <p class="note"><b>A gentle note.</b> This page is educational and not medical advice. Yogic breathing supports wellbeing, but it is not a substitute for medical care. If you have a heart, lung or blood-pressure condition — or you are pregnant — please learn under guidance and check with your doctor. Results vary from person to person.</p>
     </div>
 

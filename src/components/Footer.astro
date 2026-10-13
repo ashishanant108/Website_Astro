@@ -20,7 +20,7 @@ const fnav = [
   <div class="footwrap">
     <div class="follow-label">Follow along</div>
     <Socials />
-    <nav class="fnav">
+    <nav class="fnav" aria-label="Footer">
       {fnav.map((n) => <a href={n.href}>{n.label}</a>)}
     </nav>
     <p class="foot-note">
