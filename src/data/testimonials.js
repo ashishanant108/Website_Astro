@@ -30,6 +30,15 @@ export const testimonials = [
     quote: "It's a wonderful opportunity to join Nadi Shodhana with Ashish ji. After practice I feel balanced energy, calmness, and ready for the demanding world outside. Nadi Shodhana gives strength and clarity, and has changed my life energies for good. I enjoy the welcoming group energy and Ashish ji's calm teaching style, and I'm deeply grateful for his selfless service and kindness."
   },
   {
+    id: "vijay",
+    name: "Vijay",
+    place: "Mumbai",
+    photo: "/assets/vijay.jpg",
+    tag: "sessions",
+    excerpt: "I also feel calmer, more focused, and refreshed after each session.",
+    quote: "I joined Yoga Shakti with Ashish Anant five months ago, and yoga has become an important part of my daily routine. What I love most about Ashish ji's teaching is the way he explains every asana in such a simple and practical manner. His guidance on breathing, posture and technique has helped me become more aware of my body and practise with confidence. I have personally felt improvements in my flexibility, strength, energy levels and overall well-being. I also feel calmer, more focused, and refreshed after each session."
+  },
+  {
     id: "radha",
     name: "Radha",
     place: "India",
