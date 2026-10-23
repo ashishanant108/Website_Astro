@@ -67,11 +67,11 @@ export const site = {
   ],
 
   socials: [
-    { label: "YouTube",   icon: "brand-youtube",   color: "#FF0000", href: "https://www.youtube.com/@YOGASHAKTIwithAshishAnant?sub_confirmation=1" },
-    { label: "Instagram", icon: "brand-instagram", color: "#E1306C", href: "https://www.instagram.com/yogashaktiwithashishanant/" },
-    { label: "Facebook",  icon: "brand-facebook",  color: "#1877F2", href: "https://www.facebook.com/profile.php?id=61591079892753" },
+    { label: "YouTube",   icon: "brand-youtube",   color: "#FF0000", href: "https://www.youtube.com/@tattvashaktiyoga?sub_confirmation=1" },
+    { label: "Instagram", icon: "brand-instagram", color: "#E1306C", href: "https://www.instagram.com/tattvashaktiyoga/" },
+    { label: "Facebook",  icon: "brand-facebook",  color: "#1877F2", href: "https://www.facebook.com/tattvashaktiyoga" },
     { label: "WhatsApp",  icon: "brand-whatsapp",  color: "#25D366", href: "https://chat.whatsapp.com/LVShguYTaB64N99IV1qMxf" },
-    { label: "Threads",   icon: "brand-threads",   color: "#000000", href: "https://www.threads.com/@yogashaktiwithashishanant" }
+    { label: "Threads",   icon: "brand-threads",   color: "#000000", href: "https://www.threads.com/@tattvashaktiyoga" }
   ]
 };
 
