@@ -15,10 +15,10 @@ const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatada
 ---
 <main class="wrap page reg-root" data-type={type}>
   <div class="pre-only">
-    <div class="kicker">{heal ? 'Complimentary workshop' : 'Complimentary · live with Ashish Anant'}</div>
-    <h1>{heal ? 'Register for Nadi Shodhana: The Healing Breath' : 'Register for Live Yoga Sessions'}</h1>
+    <div class="kicker">{heal ? 'FREE live workshop · on Zoom' : 'Complimentary · live with Ashish Anant'}</div>
+    <h1>{heal ? 'Register FREE: Nadi Shodhana, The Healing Breath' : 'Register for Live Yoga Sessions'}</h1>
     <p class="lead">{heal
-      ? "Register once. We'll add you to the workshop group on WhatsApp, where the invite and joining link are shared before the session."
+      ? "Live with Ashish Anant, step by step. Just your name and WhatsApp number: the Zoom link is shared in our WhatsApp group before the session."
       : "Register once. We'll add you to the sessions group on WhatsApp, where the joining link is shared before each class."}</p>
     <div class="next-bar" data-next-card hidden>
       <span><b>{heal ? 'Next workshop' : 'Next live class'}:</b> <span data-next-date></span></span>
@@ -29,7 +29,7 @@ const teacher = 'Disciple of Ma Shakti Devpriya Anandnath ji & Acharya Agyaatada
   <div class="reg-grid">
     <div class="card reg-main">
       <div class="pre-only">
-        <span class="badge">Takes about a minute</span>
+        <span class="badge">{heal ? 'Takes 30 seconds' : 'Takes about a minute'}</span>
         <h3>Your details</h3>
       </div>
       <RegisterForm type={type} button={heal ? 'Register for the workshop →' : 'Register for the sessions →'} />

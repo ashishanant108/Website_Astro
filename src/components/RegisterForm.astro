@@ -11,12 +11,13 @@ const waGroup = reg.waGroup || '';
 const waDirect = site.whatsappDirect;
 const heal = type === 'heal';
 const shareUrl = 'https://wa.me/?text=' + encodeURIComponent((heal
-  ? 'I just registered for the complimentary Nadi Shodhana workshop with Ashish Anant. Join me: https://ashishanant.com/nadi-shodhana/register/?src=share'
+  ? 'I just registered for the FREE Nadi Shodhana workshop with Ashish Anant. Join me: https://ashishanant.com/nadi-shodhana/register/?src=share'
   : 'I just joined the complimentary live yoga sessions with Ashish Anant. Join me: https://ashishanant.com/sessions/register/?src=share'));
 const ages = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
 const codes = ['+91', '+1', '+44', '+971', '+65', '+61'];
 const reasons = ['Stress/anxiety', 'BP/Hypertension', 'Weight', 'Flexibility/mobility', 'General wellness', 'Other'];
 const fid = 'rf-' + type;
+const MoreTag = heal ? 'details' : 'div';  // workshop form: only name + WhatsApp + consent up front
 const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 8.9c0 1.8 1.3 3.5 1.5 3.7s2.6 4 6.3 5.4c2.3.9 2.3.6 2.7.6s1.4-.6 1.6-1.1.2-1 .1-1.1z"/></svg>';
 ---
 <div class="rform-wrap" id={fid}>
@@ -39,6 +40,8 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
       <small class="hint">Your active WhatsApp number — without the country code, no spaces. This is how we'll send you the joining details.</small>
     </div>
 
+    <MoreTag class="more">
+    {heal && <summary>Add more details <em>(optional)</em></summary>}
     <label class="fld">
       <span>Email <em>(optional)</em></span>
       <input name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" />
@@ -51,8 +54,8 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
         <input name="city" type="text" autocomplete="address-level2" maxlength="60" />
       </label>
       <label class="fld">
-        <span>Age group <b class="req" aria-hidden="true">*</b></span>
-        <select name="age" required>
+        <span>Age group {heal ? <em>(optional)</em> : <b class="req" aria-hidden="true">*</b>}</span>
+        <select name="age" required={!heal}>
           <option value="">Select…</option>
           {ages.map((a) => <option value={a}>{a}</option>)}
         </select>
@@ -73,9 +76,11 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
       <small class="hint">This helps us guide you safely. It stays private and is used only for that.</small>
     </label>
 
+    </MoreTag>
+
     <label class="consent">
       <input name="consent" type="checkbox" required />
-      <span>I agree that Yoga Shakti may contact me on WhatsApp about this {heal ? 'workshop' : 'programme'}, and I've read the <a href="/privacy/">privacy policy</a>.</span>
+      <span>I agree that Tattva Shakti Yoga may contact me on WhatsApp about this {heal ? 'workshop' : 'programme'}, and I've read the <a href="/privacy/">privacy policy</a>.</span>
     </label>
 
     <!-- honeypot: hidden from humans, catches bots -->
@@ -161,7 +166,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
       if (!cc) return fail('Please type your country dialing code (digits only).', form.ccOther);
       if (mobile.length < 6 || mobile.length > 14) return fail('Please enter your WhatsApp number (digits only, without the country code).', form.mobile);
       if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please check your email address, or leave it empty.', form.email);
-      if (!form.age.value) return fail('Please choose your age group.', form.age);
+      if (type !== 'heal' && !form.age.value) return fail('Please choose your age group.', form.age);
       if (!form.consent.checked) return fail('Please tick the box so we can contact you on WhatsApp.', form.consent);
       if (!WEBAPP_URL) return fail('Registration is not connected yet — please message us on WhatsApp.');
 
@@ -207,6 +212,9 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
 </script>
 
 <style>
+  details.more { margin: 4px 0 14px; }
+  details.more > summary { cursor: pointer; font-weight: 600; color: var(--teal, #0E4A5E); padding: 8px 0; }
+  details.more[open] > summary { margin-bottom: 8px; }
   .rform .fld { display: block; margin-bottom: 14px; }
   .rform .fld > span { display: block; font-weight: 500; font-size: 14px; margin-bottom: 5px; color: var(--ink); }
   .rform em { color: var(--muted); font-style: normal; font-weight: 400; }
