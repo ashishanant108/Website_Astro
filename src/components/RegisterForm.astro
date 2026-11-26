@@ -17,7 +17,12 @@ const ages = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
 const codes = ['+91', '+1', '+44', '+971', '+65', '+61'];
 const reasons = ['Stress/anxiety', 'BP/Hypertension', 'Weight', 'Flexibility/mobility', 'General wellness', 'Other'];
 const fid = 'rf-' + type;
-const MoreTag = heal ? 'details' : 'div';  // workshop form: only name + WhatsApp + consent up front
+const MoreTag = heal ? 'details' : 'div';
+// One-tap WhatsApp registration (generic wording, no date, so it works for every workshop / session)
+const waNumber = (String(waDirect).match(/wa\.me\/(\d+)/) || [])[1] || '';
+const waRegister = waNumber ? 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(heal
+  ? "Namaste \uD83D\uDE4F I'd like to join the next FREE Nadi Shodhana workshop. My name is "
+  : "Namaste \uD83D\uDE4F I'd like to join the FREE live yoga sessions. My name is ") : '';  // workshop form: only name + WhatsApp + consent up front
 const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 8.9c0 1.8 1.3 3.5 1.5 3.7s2.6 4 6.3 5.4c2.3.9 2.3.6 2.7.6s1.4-.6 1.6-1.1.2-1 .1-1.1z"/></svg>';
 ---
 <div class="rform-wrap" id={fid}>
@@ -88,6 +93,13 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
 
     <p class="err" role="alert" hidden></p>
     <button class="btn rbtn" type="submit">{button}</button>
+    {waRegister && (
+      <div class="wa-alt">
+        <span class="or">or</span>
+        <a class="btn wa-btn" href={waRegister} target="_blank" rel="noopener"><Fragment set:html={waIcon} /> Register on WhatsApp</a>
+        <small class="hint">One tap opens a chat with Ashish. Just add your name and send.</small>
+      </div>
+    )}
     <p class="fineprint">We'll only use your details for this registration and occasional practice invitations. No spam — unsubscribe anytime.</p>
   </form>
 
@@ -106,7 +118,7 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
         <div class="t-act" data-cal-buttons></div>
         {!heal && <div class="small">Each button adds a repeating weekly event, so every session is blocked in one go.</div>}</div></li>
     </ol>
-    {waGroup ? <p class="t-note">Please join the group now, before you close this page.</p>
+    {waGroup ? <p class="t-note">Important: the {heal ? 'Zoom' : 'joining'} link is shared only in this group. Please join now, before you close this page.</p>
              : <p>We'll message you on WhatsApp shortly with the group link and joining details.</p>}
     {heal && <p>We are glad that you have chosen this step in your yogic journey. 🌿</p>}
     {!heal && <p>See you on the mat 🧘‍♂️</p>}
@@ -237,6 +249,11 @@ const waIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentCol
   .rform .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .rform .err { color: #a3341f; font-size: 14px; margin: 4px 0 10px; }
   .rform .rbtn { width: 100%; }
+  .wa-alt { text-align: center; margin-top: 12px; }
+  .wa-alt .or { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .wa-alt .wa-btn { width: 100%; background: transparent; border-color: #1E8E4E; color: #1E8E4E; font-weight: 600; }
+  .wa-alt .wa-btn:hover { background: #1E8E4E; color: #fff; }
+  .wa-alt .hint { display: block; margin-top: 6px; }
   .rform .fineprint { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
   .rthanks h2 { margin: 0 0 4px; font-size: 24px; font-weight: 400; }
   .rthanks:focus { outline: none; }
